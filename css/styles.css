@@ -1,0 +1,696 @@
+/* ********************************* todo x todo ********************************* */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background: white;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+}
+
+
+:root {
+    /* Colores principales */
+    --color-primario: #9ed3ff;
+    --color-azul: #007bff;
+    --color-azul-oscuro: #0056b3;
+    --color-texto-claro: white;
+    --color-verde: #28a745;
+    --color-administrador: #888;
+
+    /* Colores menú */
+    --color-fondo-menu: #1761a0;
+    --color-hover-menu: #9ed3ff;
+
+    /* Bordes y radios */
+    --borde-radio: 5px;
+    --border-radius-grande: 15px;
+    --border-radius-pequeno: 4px;
+
+    /* Espaciado y tamaño */
+    --padding-boton: 8px 18px;
+    --padding-vertical: 5px;
+    --padding-horizontal: 20px;
+
+    /* Transiciones */
+    --transition: 0.3s ease;
+
+    /* Tamaños mínimos */
+    --min-width-menu: 30px;
+    --min-height-menu: 30px;
+}
+
+
+
+
+/* CABECERAS */
+
+/* Cabecera (invitado)/Cabecera_invitado.php */
+header.cabecera-invitado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--color-primario);
+}
+
+header.cabecera-invitado .logo {
+    flex: 0 0 auto;
+}
+
+header.cabecera-invitado .logo img {
+    height: clamp(50px, 10vw, 100px);
+    width: clamp(50px, 10vw, 100px);
+}
+
+header.cabecera-invitado .titulo-web-invitado {
+    flex: 1 1 auto;
+    text-align: center;
+    color: var(--color-azul);
+}
+
+header.cabecera-invitado .acceso-usuario {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+header.cabecera-invitado .acceso-usuario>a {
+    padding: clamp(5px, 1vw, 10px) clamp(10px, 2vw, 20px);
+    border-radius: clamp(4px, 1vw, 8px);
+    color: var(--color-texto-claro);
+    text-decoration: none;
+    transition: background 0.3s;
+    font-weight: 600;
+    display: inline-block;
+
+}
+
+header.cabecera-invitado>.acceso-usuario>.btn-inicio-sesion {
+    background: var(--color-azul);
+
+}
+
+header.cabecera-invitado>.acceso-usuario>.btn-registro {
+    background: var(--color-verde);
+}
+
+@media (max-width: 800px) {
+    .cabecera-invitado {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .titulo-web-invitado {
+        text-align: center;
+    }
+
+    .acceso-usuario {
+        justify-content: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* //////////////////////// menu_invitado / menu_invitado.php //////////////////////// */
+/* Variables para colores y tamaños principales */
+/* Estilo del menu hamburguesa */
+.menu-toggle {
+    display: none;
+}
+
+.menu-icon {
+    margin-left: 10px;
+    display: none;
+    font-size: 30px;
+    color: white;
+    /* Ajusta color */
+}
+
+/* Estilo del menu horizontal */
+nav.menu-horizontal {
+    background: var(--color-azul);
+}
+
+nav.menu-horizontal ul {
+    display: flex;
+    list-style: none;
+    justify-self: center;
+    align-items: center;
+}
+
+nav.menu-horizontal ul li {
+    display: inline-block;
+}
+
+nav.menu-horizontal a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    margin: 10px;
+    height: 45 ;
+}
+
+nav.menu-horizontal a img {
+    height: clamp(30px, 6vw, 50px);
+    width: clamp(30px, 6vw, 50px);
+    display: block;
+
+}
+
+nav.menu-horizontal a:hover {
+    scale: 1.30;
+    transition: 0.7s ease;
+    -webkit-transition: 0.7s ease;
+    -moz-transition: 0.7s ease;
+    -ms-transition: 0.7s ease;
+    -o-transition: 0.7s ease;
+}
+
+nav.menu-horizontal a p {
+    /* Para quitar márgenes si es necesario */
+    color: var(--color-texto-claro);
+    font-size: clamp(12px, 1.5vw, 16px);
+    text-align: center;
+}
+
+/* Móvil: oculta el menú horizontal y muestra hamburguesa */
+@media (max-width: 600px) {
+    .menu-icon {
+        display: block;
+    }
+
+    nav.menu-horizontal ul {
+        position: fixed;
+        left: 0px;
+        background: var(--color-azul);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+        -webkit-transition: transform 0.3s ease;
+        -moz-transition: transform 0.3s ease;
+        -ms-transition: transform 0.3s ease;
+        -o-transition: transform 0.3s ease;
+    }
+
+    nav.menu-horizontal ul li {
+        padding: 10px 0;
+    }
+
+    /* Si checkbox está marcado, muestra menú */
+    .menu-toggle:checked+.menu-icon+ul {
+        transform: translateX(0%);
+        -webkit-transform: translateX(0%);
+        -moz-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        -o-transform: translateX(0%);
+    }
+}
+
+
+
+
+
+
+
+
+/* /////////////////////////////// Main (invitado)/centro_invitado.php ////////////////// */
+/* ============ Estilos específicos para el centro de invitado =========== */
+main.main-container {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 15px;
+    padding: 30px;
+}
+
+/* Estilos del contenido principal */
+main>article.contenido-principal {
+    background-color: var(--color-primario);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+
+main>article.contenido-principal>h2 {
+    color: var(--color-azul-oscuro);
+    margin-bottom: 20px;
+}
+
+main>article.contenido-principal>p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Estilos de la barra lateral */
+main aside.sidebar {
+    background-color: var(--color-primario);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main aside.sidebar h2 {
+    color: var(--color-azul-oscuro);
+    margin-top: 0;
+    text-align: center;
+    border-bottom: 2px solid var(--color-azul);
+    padding-bottom: 10px;
+}
+
+
+
+
+
+
+/* //////////////////////////////  Centro (invitado)/form_login.php ////////////////// */
+
+/* ======================== Formularios comunes login y registro ======================== */
+
+/* Estilos del formulario login */
+.form-container-login {
+    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-azul) 100%);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
+    /* Sombra con azul translúcido */
+    margin: 50px auto;
+    width: 450px;
+    text-align: center;
+    transition: transform 0.3s;
+    max-width: 90%;
+    /* Responsive para móviles */
+}
+
+.form-container-login:hover {
+    transform: translateY(-5px);
+}
+
+
+h2 {
+    color: var(--color-azul);
+    /* Cambiado a --color-azul */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.form-group-login {
+    text-align: left;
+    /* Alinea labels a la izquierda para mejor legibilidad */
+    margin-bottom: 15px;
+}
+
+.form-group-login label {
+    display: block;
+    font-weight: bold;
+    color: var(--color-azul);
+    /* Cambiado a --color-azul */
+    margin-bottom: 7px;
+}
+
+.form-group-login input {
+    width: 100%;
+    padding: 12px;
+    /* Ajustado para labels */
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+    font-size: 16px;
+    color: #333;
+    /* Texto del input en gris oscuro para contraste */
+}
+
+.form-group-login input:focus {
+    border-color: var(--color-primario);
+    outline: none;
+}
+
+.form-group-login input::placeholder {
+    color: rgba(0, 123, 255, 0.7);
+    /* Placeholder en tono suave de --color-azul */
+}
+
+/* Icono de error-email error-password */
+.error-icon {
+    color: rgb(185, 0, 0);
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+.mensaje-error {
+    color: darkred;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+    height: 18px;
+}
+
+.form-container-login p {
+    font-size: 12px;
+    color: red;
+    margin: 10px 0 20px 0;
+    text-align: left;
+}
+
+.btn-form-acceso {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--color-azul) 0%, var(--color-azul-oscuro) 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: opacity 0.3s;
+    margin-top: 10px;
+}
+
+.btn-form-acceso:hover {
+    opacity: 0.9;
+    background: linear-gradient(135deg, var(--color-azul-oscuro) 0%, var(--color-azul) 100%);
+    /* Invierte para hover */
+}
+
+
+/* =================== Centro (invitado)/form-registro-usuario.php ===================== */
+
+/* Estilo general para el contenedor del formulario */
+.form-container-registro {
+    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-azul) 100%);
+    /*Fondoazulclaro*/
+    padding: 20px;
+    border-radius: 10px;
+    /*Bordesredondeadosconprefijoparacompatibilidad*/
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*Sombrasutil*/
+    max-width: 800px;
+    /*Anchomáximopararesponsividad*/
+    margin: 50px auto;
+    /*Centrarenlapágina*/
+    font-family: Arial, sans-serif;
+    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -ms-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container-registro:hover {
+    transform: translateY(-5px);
+}
+
+.form-container-registro h2 {
+    color: var(--color-azul);
+    /* Azul oscuro para el título */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group-registro {
+    display: flex;
+    flex: 1;
+    /* Usamos flexbox para alinear elementos */
+    -webkit-display: flex;
+    -ms-flex: flex;
+    /* Prefijo para IE */
+    flex-wrap: wrap;
+    /* Permite que se envuelva en pantallas pequeñas */
+}
+
+.input-group-registro {
+    flex: 1;
+    /* Cada grupo ocupa espacio igual */
+    margin: 0 10px 10px 0;
+    /* Espaciado */
+    min-width: 200px;
+    /* Mínimo para evitar que se rompa en móviles */
+}
+
+.input-group-registro label {
+    display: block;
+    /* Etiquetas como bloques */
+    color: var(--color-azul);
+    margin-bottom: 7px;
+    /* Azul para las etiquetas */
+    font-weight: bold;
+}
+
+.input-group-registro input,
+.input-group-registro select {
+    width: 100%;
+    /* Ancho completo */
+    padding: 10px;
+    border: 1px solid var(--color-azul-oscuro);
+    /* Borde azul oscuro */
+    border-radius: 5px;
+    /* Bordes redondeados */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    box-sizing: border-box;
+    /* Incluye padding en el ancho */
+    transition: border-color 0.3s ease;
+    /* Transición suave con prefijo */
+    -webkit-transition: border-color 0.3s ease;
+    -moz-transition: border-color 0.3s ease;
+    -o-transition: border-color 0.3s ease;
+}
+
+.input-group-registro input:focus,
+.input-group-registro select:focus {
+    border-color: var(--color-azul);
+    /* Cambio de borde al enfocar */
+    outline: none;
+    /* Quitar outline predeterminado */
+}
+
+/* Estilo para imágenes de error */
+.img-error-form {
+    width: 20px;
+    /* Tamaño de la imagen */
+    vertical-align: middle;
+    /* Alinear verticalmente */
+    margin-left: 5px;
+}
+
+/* Estilo para spans de error */
+span[id^="error_"] {
+    color: red;
+    /* Color rojo para errores */
+    font-size: 0.9em;
+    display: block;
+    /* Mostrar como bloque */
+    margin-top: 5px;
+}
+
+.btn-form-registro {
+    background: linear-gradient(135deg, var(--color-azul) 0%, var(--color-azul-oscuro) 100%);
+    /* Fondo azul */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    /* Bordes redondeados */
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    cursor: pointer;
+    /* Cursor de mano */
+    width: 100%;
+    /* Ancho completo */
+    transition: background-color 0.3s ease;
+    /* Transición para hover */
+    -webkit-transition: background-color 0.3s ease;
+    -moz-transition: background-color 0.3s ease;
+    -o-transition: background-color 0.3s ease;
+}
+
+.btn-form-registro:hover {
+    background: linear-gradient(135deg, var(--color-azul-oscuro) 0%, var(--color-azul) 100%);
+    /* Cambio a azul oscuro en hover */
+}
+
+.form-group-registro select {
+    appearance: none;
+    /* Quitar estilo predeterminado */
+    -webkit-appearance: none;
+    /* Prefijo para WebKit */
+    -moz-appearance: none;
+    /* Prefijo para Mozilla */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23007bff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    /* Flecha personalizada */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+    /* Espacio para la flecha */
+}
+
+@media (max-width: 600px) {
+    .form-group-registro {
+        flex-direction: column;
+        /* Apilar en móviles */
+    }
+
+    .input-group-registro {
+        margin: 0 0 10px 0;
+        /* Ajustar márgenes */
+    }
+}
+
+
+
+
+
+
+
+/* ======================== Listas categorías y productos ======================== */
+
+/* --------- Estilos para la sección de categorías de productos --------- */
+.categorias-productos {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--color-primario);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--color-azul-oscuro);
+}
+
+.categorias-productos h2 {
+    text-align: center;
+    color: var(--color-azul);
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.lista-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.categoria {
+    background: var(--color-azul);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 86, 179, 0.5);
+    width: 210px;
+    padding: 15px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -ms-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.categoria a {
+    color: var(--color-texto-claro);
+    text-decoration: none;
+    display: block;
+}
+
+.categoria a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 123, 255, 0.7);
+}
+
+.categoria h3 {
+    color: var(--color-texto-claro);
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.categoria p {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--color-primario);
+    margin-top: 0;
+}
+
+/* Responsive para dispositivos pequeños */
+@media (max-width: 600px) {
+    .lista-categorias {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .categoria {
+        width: 90%;
+    }
+}
+
+/* --------- Estilos para la sección de productos en una categoría --------- */
+
+
+
+
+/* ======================== Footer ======================== */
+
+.footer-contenido a:hover {
+    color: var(--color-azul);
+    text-decoration: underline;
+}
+
+
+footer {
+    margin-top: auto;
+    /* Empuja el footer al fondo */
+}
+
+
+.footer-contenido {
+    background-color: var(--color-primario);
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 5px solid var(--color-azul);
+    margin-top: auto;
+    /* empuja footer abajo */
+}
+
+.footer-contenido>div {
+    margin: 0.3rem 0;
+}
