@@ -175,7 +175,7 @@ nav.menu-horizontal a {
     align-items: center;
     text-decoration: none;
     margin: 10px;
-    height: 45 ;
+    height: 45;
 }
 
 nav.menu-horizontal a img {
@@ -244,7 +244,7 @@ nav.menu-horizontal a p {
 
 
 
-/* /////////////////////////////// Main (invitado)/centro_invitado.php ////////////////// */
+/* *  Main (invitado)/centro_invitado.php * */
 /* ============ Estilos específicos para el centro de invitado =========== */
 main.main-container {
     display: grid;
