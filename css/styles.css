@@ -13,678 +13,699 @@ body {
 }
 
 body {
-    background: white;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-
 }
 
 
-:root {
-    /* Colores principales */
-    --color-primario: #9ed3ff;
-    --color-azul: #007bff;
-    --color-azul-oscuro: #0056b3;
-    --color-texto-claro: white;
-    --color-verde: #28a745;
-    --color-administrador: #888;
+/* /\ /\ /\ /\ /\_/\ /\ /\ /\ /\_/\ /\ /\ CABECERAS /\ /\ /\_/\ /\ /\ /\ /\_/\ /\ /\ /\ /\ */
 
-    /* Colores menú */
-    --color-fondo-menu: #1761a0;
-    --color-hover-menu: #9ed3ff;
+/* /\ /\ /\ /\ /\_/\ /\ /\ /\ /\ Cabecera (invitado)/Cabecera_invitado.php /\ /\ /\ /\ /\_/\ /\ /\ /\ /\ */
 
-    /* Bordes y radios */
-    --borde-radio: 5px;
-    --border-radius-grande: 15px;
-    --border-radius-pequeno: 4px;
-
-    /* Espaciado y tamaño */
-    --padding-boton: 8px 18px;
-    --padding-vertical: 5px;
-    --padding-horizontal: 20px;
-
-    /* Transiciones */
-    --transition: 0.3s ease;
-
-    /* Tamaños mínimos */
-    --min-width-menu: 30px;
-    --min-height-menu: 30px;
-}
-
-
-
-
-/* CABECERAS */
-
-/* Cabecera (invitado)/Cabecera_invitado.php */
 header.cabecera-invitado {
+    position: relative;
+    background-color: #9ed3ff;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: var(--color-primario);
+    justify-content: space-between;
+    padding: 15px 30px;
 }
 
-header.cabecera-invitado .logo {
-    flex: 0 0 auto;
+header.cabecera-invitado div.logo a img {
+    height: 90px;
+    width: 90px;
 }
 
-header.cabecera-invitado .logo img {
-    height: clamp(50px, 10vw, 100px);
-    width: clamp(50px, 10vw, 100px);
+header.cabecera-invitado h1.titulo-web-invitado {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    font-size: 2rem;
+    color: #0056b3;
+    font-family: consolas, monospace;
+    pointer-events: none;
+    /* opcional, para que no interfiera con clics */
 }
 
-header.cabecera-invitado .titulo-web-invitado {
-    flex: 1 1 auto;
-    text-align: center;
-    color: var(--color-azul);
-}
-
-header.cabecera-invitado .acceso-usuario {
-    flex: 0 0 auto;
+header.cabecera-invitado nav.acceso-usuario {
     display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
+    gap: 10px;
 }
 
-header.cabecera-invitado .acceso-usuario>a {
-    padding: clamp(5px, 1vw, 10px) clamp(10px, 2vw, 20px);
-    border-radius: clamp(4px, 1vw, 8px);
-    color: var(--color-texto-claro);
+header.cabecera-invitado nav.acceso-usuario a.btn-inicio-sesion {
+    padding: 8px 18px;
+    border-radius: 5px;
+    background: #007bff;
+    color: #9ed3ff;
     text-decoration: none;
     transition: background 0.3s;
-    font-weight: 600;
-    display: inline-block;
-
 }
 
-header.cabecera-invitado>.acceso-usuario>.btn-inicio-sesion {
-    background: var(--color-azul);
-
+header.cabecera-invitado nav.acceso-usuario a.btn-inicio-sesion:hover {
+    background: #0056b3;
+    transition: background 0.8s;
+    color: white;
 }
 
-header.cabecera-invitado>.acceso-usuario>.btn-registro {
-    background: var(--color-verde);
+header.cabecera-invitado nav.acceso-usuario a.btn-registro {
+    padding: 8px 18px;
+    border-radius: 5px;
+    background: #28a745;
+    color: #9ed3ff;
+    text-decoration: none;
+    transition: background 0.3s;
 }
 
-@media (max-width: 800px) {
+header.cabecera-invitado nav.acceso-usuario a.btn-registro:hover {
+    background: #1e7e34;
+    transition: background 0.8s;
+    color: white;
+}
+
+
+/* media queries para moviles y tablets cabecera invitado */
+/* Para tablets (ancho entre 768px y 1024px) */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
     .cabecera-invitado {
         flex-direction: column;
-        gap: 10px;
-        align-items: center;
+        align-items: flex-start;
     }
 
-    .titulo-web-invitado {
-        text-align: center;
+    h1.titulo-web-invitado {
+        position: static;
+        transform: none;
+        margin: 10px 0;
+        font-size: 1.5rem;
     }
 
     .acceso-usuario {
-        justify-content: center;
+        margin-top: 10px;
+    }
+}
+
+/* Para móviles (ancho menor a 768px) */
+@media only screen and (max-width: 767px) {
+    header.cabecera-invitado {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header.cabecera-invitado h1.titulo-web-invitado {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    header.cabecera-invitado div.logo {
+        margin-bottom: 5px;
+    }
+
+    header.cabecera-invitado nav.acceso-usuario {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
     }
 }
 
 
 
 
-
-
-
-
-
-
-
-
-
-/* //////////////////////// menu_invitado / menu_invitado.php //////////////////////// */
-/* Variables para colores y tamaños principales */
-/* Estilo del menu hamburguesa */
-.menu-toggle {
-    display: none;
-}
-
-.menu-icon {
-    margin-left: 10px;
-    display: none;
-    font-size: 30px;
-    color: white;
-    /* Ajusta color */
-}
-
-/* Estilo del menu horizontal */
+/* - - - - - menu_invitado/menu_invitado.php - - - - - */
 nav.menu-horizontal {
-    background: var(--color-azul);
+    background: #1761a0;
 }
 
 nav.menu-horizontal ul {
     display: flex;
+    margin: 0;
     list-style: none;
-    justify-self: center;
+    padding: 0 20px;
+    justify-content: center;
     align-items: center;
+    height: 60px;
 }
 
-nav.menu-horizontal ul li {
-    display: inline-block;
+nav.menu-horizontal li {
+    margin: 0 20px;
 }
 
 nav.menu-horizontal a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: #fff;
     text-decoration: none;
-    margin: 10px;
-    height: 45;
-}
-
-nav.menu-horizontal a img {
-    height: clamp(30px, 6vw, 50px);
-    width: clamp(30px, 6vw, 50px);
-    display: block;
-
-}
-
-nav.menu-horizontal a:hover {
-    scale: 1.30;
-    transition: 0.7s ease;
-    -webkit-transition: 0.7s ease;
-    -moz-transition: 0.7s ease;
-    -ms-transition: 0.7s ease;
-    -o-transition: 0.7s ease;
-}
-
-nav.menu-horizontal a p {
-    /* Para quitar márgenes si es necesario */
-    color: var(--color-texto-claro);
-    font-size: clamp(12px, 1.5vw, 16px);
-    text-align: center;
-}
-
-/* Móvil: oculta el menú horizontal y muestra hamburguesa */
-@media (max-width: 600px) {
-    .menu-icon {
-        display: block;
-    }
-
-    nav.menu-horizontal ul {
-        position: fixed;
-        left: 0px;
-        background: var(--color-azul);
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        -webkit-transform: translateX(-100%);
-        -moz-transform: translateX(-100%);
-        -ms-transform: translateX(-100%);
-        -o-transform: translateX(-100%);
-        -webkit-transition: transform 0.3s ease;
-        -moz-transition: transform 0.3s ease;
-        -ms-transition: transform 0.3s ease;
-        -o-transition: transform 0.3s ease;
-    }
-
-    nav.menu-horizontal ul li {
-        padding: 10px 0;
-    }
-
-    /* Si checkbox está marcado, muestra menú */
-    .menu-toggle:checked+.menu-icon+ul {
-        transform: translateX(0%);
-        -webkit-transform: translateX(0%);
-        -moz-transform: translateX(0%);
-        -ms-transform: translateX(0%);
-        -o-transform: translateX(0%);
-    }
-}
-
-/* *  Main (invitado)/centro_invitado.php * */
-/* == Estilos específicos para el centro de invitado == */
-main.main-container {
-    display: grid;
-    grid-template-columns: 70% 30%;
-    gap: 15px;
-    padding: 30px;
-}
-
-/* Estilos del contenido principal */
-main>article.contenido-principal {
-    background-color: var(--color-primario);
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -ms-border-radius: 8px;
-    -o-border-radius: 8px;
-}
-
-main>article.contenido-principal>h2 {
-    color: var(--color-azul-oscuro);
-    margin-bottom: 20px;
-}
-
-main>article.contenido-principal>p {
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-/* Estilos de la barra lateral */
-main aside.sidebar {
-    background-color: var(--color-primario);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-main aside.sidebar h2 {
-    color: var(--color-azul-oscuro);
-    margin-top: 0;
-    text-align: center;
-    border-bottom: 2px solid var(--color-azul);
-    padding-bottom: 10px;
-}
-
-
-
-
-
-
-/* //////////////////////////////  Centro (invitado)/form_login.php ////////////////// */
-
-/* ======================== Formularios comunes login y registro ======================== */
-
-/* Estilos del formulario login */
-.form-container-login {
-    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-azul) 100%);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
-    /* Sombra con azul translúcido */
-    margin: 50px auto;
-    width: 450px;
-    text-align: center;
-    transition: transform 0.3s;
-    max-width: 90%;
-    /* Responsive para móviles */
-}
-
-.form-container-login:hover {
-    transform: translateY(-5px);
-}
-
-
-h2 {
-    color: var(--color-azul);
-    /* Cambiado a --color-azul */
-    margin-bottom: 20px;
-    font-size: 24px;
-}
-
-.form-group-login {
-    text-align: left;
-    /* Alinea labels a la izquierda para mejor legibilidad */
-    margin-bottom: 15px;
-}
-
-.form-group-login label {
-    display: block;
-    font-weight: bold;
-    color: var(--color-azul);
-    /* Cambiado a --color-azul */
-    margin-bottom: 7px;
-}
-
-.form-group-login input {
-    width: 100%;
-    padding: 12px;
-    /* Ajustado para labels */
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    box-sizing: border-box;
-    transition: border-color 0.3s;
-    font-size: 16px;
-    color: #333;
-    /* Texto del input en gris oscuro para contraste */
-}
-
-.form-group-login input:focus {
-    border-color: var(--color-primario);
-    outline: none;
-}
-
-.form-group-login input::placeholder {
-    color: rgba(0, 123, 255, 0.7);
-    /* Placeholder en tono suave de --color-azul */
-}
-
-/* Icono de error-email error-password */
-.error-icon {
-    color: rgb(185, 0, 0);
-    font-size: 14px;
-    display: block;
-    margin-top: 5px;
-}
-
-.mensaje-error {
-    color: darkred;
-    font-size: 14px;
-    display: block;
-    margin-top: 5px;
-    height: 18px;
-}
-
-.form-container-login p {
-    font-size: 12px;
-    color: red;
-    margin: 10px 0 20px 0;
-    text-align: left;
-}
-
-.btn-form-acceso {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, var(--color-azul) 0%, var(--color-azul-oscuro) 100%);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: opacity 0.3s;
-    margin-top: 10px;
-}
-
-.btn-form-acceso:hover {
-    opacity: 0.9;
-    background: linear-gradient(135deg, var(--color-azul-oscuro) 0%, var(--color-azul) 100%);
-    /* Invierte para hover */
-}
-
-
-/* =================== Centro (invitado)/form-registro-usuario.php ===================== */
-
-/* Estilo general para el contenedor del formulario */
-.form-container-registro {
-    background: linear-gradient(135deg, var(--color-primario) 0%, var(--color-azul) 100%);
-    /*Fondoazulclaro*/
-    padding: 20px;
-    border-radius: 10px;
-    /*Bordesredondeadosconprefijoparacompatibilidad*/
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /*Sombrasutil*/
-    max-width: 800px;
-    /*Anchomáximopararesponsividad*/
-    margin: 50px auto;
-    /*Centrarenlapágina*/
-    font-family: Arial, sans-serif;
-    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
-    -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
-    -ms-transition: transform 0.3s ease, box-shadow 0.3s ease;
-    -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-container-registro:hover {
-    transform: translateY(-5px);
-}
-
-.form-container-registro h2 {
-    color: var(--color-azul);
-    /* Azul oscuro para el título */
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.form-group-registro {
-    display: flex;
-    flex: 1;
-    /* Usamos flexbox para alinear elementos */
-    -webkit-display: flex;
-    -ms-flex: flex;
-    /* Prefijo para IE */
-    flex-wrap: wrap;
-    /* Permite que se envuelva en pantallas pequeñas */
-}
-
-.input-group-registro {
-    flex: 1;
-    /* Cada grupo ocupa espacio igual */
-    margin: 0 10px 10px 0;
-    /* Espaciado */
-    min-width: 200px;
-    /* Mínimo para evitar que se rompa en móviles */
-}
-
-.input-group-registro label {
-    display: block;
-    /* Etiquetas como bloques */
-    color: var(--color-azul);
-    margin-bottom: 7px;
-    /* Azul para las etiquetas */
-    font-weight: bold;
-}
-
-.input-group-registro input,
-.input-group-registro select {
-    width: 100%;
-    /* Ancho completo */
-    padding: 10px;
-    border: 1px solid var(--color-azul-oscuro);
-    /* Borde azul oscuro */
-    border-radius: 5px;
-    /* Bordes redondeados */
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    box-sizing: border-box;
-    /* Incluye padding en el ancho */
-    transition: border-color 0.3s ease;
-    /* Transición suave con prefijo */
-    -webkit-transition: border-color 0.3s ease;
-    -moz-transition: border-color 0.3s ease;
-    -o-transition: border-color 0.3s ease;
-}
-
-.input-group-registro input:focus,
-.input-group-registro select:focus {
-    border-color: var(--color-azul);
-    /* Cambio de borde al enfocar */
-    outline: none;
-    /* Quitar outline predeterminado */
-}
-
-/* Estilo para imágenes de error */
-.img-error-form {
-    width: 20px;
-    /* Tamaño de la imagen */
-    vertical-align: middle;
-    /* Alinear verticalmente */
-    margin-left: 5px;
-}
-
-/* Estilo para spans de error */
-span[id^="error_"] {
-    color: red;
-    /* Color rojo para errores */
-    font-size: 0.9em;
-    display: block;
-    /* Mostrar como bloque */
-    margin-top: 5px;
-}
-
-.btn-form-registro {
-    background: linear-gradient(135deg, var(--color-azul) 0%, var(--color-azul-oscuro) 100%);
-    /* Fondo azul */
-    color: white;
-    /* Texto blanco */
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    /* Bordes redondeados */
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    cursor: pointer;
-    /* Cursor de mano */
-    width: 100%;
-    /* Ancho completo */
-    transition: background-color 0.3s ease;
-    /* Transición para hover */
-    -webkit-transition: background-color 0.3s ease;
-    -moz-transition: background-color 0.3s ease;
-    -o-transition: background-color 0.3s ease;
-}
-
-.btn-form-registro:hover {
-    background: linear-gradient(135deg, var(--color-azul-oscuro) 0%, var(--color-azul) 100%);
-    /* Cambio a azul oscuro en hover */
-}
-
-.form-group-registro select {
-    appearance: none;
-    /* Quitar estilo predeterminado */
-    -webkit-appearance: none;
-    /* Prefijo para WebKit */
-    -moz-appearance: none;
-    /* Prefijo para Mozilla */
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23007bff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-    /* Flecha personalizada */
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 30px;
-    /* Espacio para la flecha */
-}
-
-@media (max-width: 600px) {
-    .form-group-registro {
-        flex-direction: column;
-        /* Apilar en móviles */
-    }
-
-    .input-group-registro {
-        margin: 0 0 10px 0;
-        /* Ajustar márgenes */
-    }
-}
-
-
-
-
-
-
-
-/* ======================== Listas categorías y productos ======================== */
-
-/* --------- Estilos para la sección de categorías de productos --------- */
-.categorias-productos {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background: var(--color-primario);
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--color-azul-oscuro);
-}
-
-.categorias-productos h2 {
-    text-align: center;
-    color: var(--color-azul);
-    margin-bottom: 25px;
-    font-weight: 700;
-    font-size: 2rem;
-}
-
-.lista-categorias {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    padding: 5px 20px;
+    border-radius: 15px;
+    min-width: 30px;
+    min-height: 30px;
+    transition: background .65s;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
 }
 
-.categoria {
-    background: var(--color-azul);
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 86, 179, 0.5);
-    width: 210px;
-    padding: 15px 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
-    -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
-    -ms-transition: transform 0.3s ease, box-shadow 0.3s ease;
-    -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
+nav.menu-horizontal a:hover {
+    background: #9ed3ff;
 }
 
-.categoria a {
-    color: var(--color-texto-claro);
-    text-decoration: none;
+nav.menu-horizontal a img {
+    height: 50px;
+    width: 50px;
     display: block;
 }
 
-.categoria a:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 123, 255, 0.7);
+
+/* -> -> -> -> -> ->  Centro (invitado)/form_login.php <- <- <- <- <- */
+div.form-container-login {
+    max-width: auto;
+    max-height: auto;
+    margin: 1.5rem 750px;
+    padding: 2rem;
+    background: #9ed3ff;
+    border-radius: 20px;
+
 }
 
-.categoria h3 {
-    color: var(--color-texto-claro);
-    margin-bottom: 8px;
-    font-size: 1.25rem;
+div.form-container-login h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+div.form-container-login div.form-group-login {
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+div.form-container-login div.form-group-login label {
+    display: block;
+    margin-bottom: 0.5rem;
     font-weight: 600;
 }
 
-.categoria p {
-    font-size: 0.9rem;
-    font-style: italic;
-    color: var(--color-primario);
-    margin-top: 0;
+div.form-container-login div.form-group-login input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid black;
+    border-radius: 34px;
+    font-size: 1rem;
 }
 
-/* Responsive para dispositivos pequeños */
-@media (max-width: 600px) {
+div.form-container-login div.form-group-login input:focus {
+    outline: none;
+    border: 2px solid #007bff;
+    transition: border-color 0.4s, box-shadow 0.4s;
+    box-shadow: 0 0 0 7px rgba(52, 152, 219, 0.2);
+}
+
+button.btn-form-acceso {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button.btn-form-acceso:hover {
+    background: #0056b3;
+}
+
+/* -> -> -> -> -> Centro (invitado)/form_registro.php <- <- <- <- <- */
+
+div.form-container-registro {
+    max-width: 580px;
+    max-height: 1700px;
+    margin: 0.5rem auto;
+    padding: 2rem;
+    background: #9ed3ff;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+div.form-container-registro h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+div.form-container-registro div.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+div.form-container-registro div.form-group div.input-group {
+    flex: 1 1 calc(50% - 1rem);
+    min-width: 250px;
+}
+
+div.form-container-registro div.form-group div.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+}
+
+div.form-container-registro div.form-group div.input-group input,
+div.form-container-registro div.form-group div.input-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 1rem;
+
+}
+
+div.form-container-registro div.form-group div.input-group input:focus,
+div.form-container-registro div.form-group div.input-group select:focus {
+    outline: none;
+    box-shadow: 0 0 0 7px rgba(52, 152, 219, 0.2);
+}
+
+button.btn-form-registro {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button.btn-form-registro:hover {
+    background-color: #1e7e34;
+}
+
+
+/* - - - - - Errores_form_invitado - - - - - */
+div.form-container-registro form img.img-error-form {
+    vertical-align: middle;
+    margin-left: 8px;
+    height: 20px;
+    width: 20px;
+}
+
+
+/* - - - - - centro_categorias/categorias_productos.php - - - - - */
+.lista-categorias {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    /* espacio entre elementos */
+}
+
+.categoria {
+    border: 1px solid #ccc;
+    padding: 0.8rem;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+@media (max-width: 1200px) {
     .lista-categorias {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .categoria {
-        width: 90%;
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
-/* --------- Estilos para la sección de productos en una categoría --------- */
-
-
-
-
-/* ======================== Footer ======================== */
-
-.footer-contenido a:hover {
-    color: var(--color-azul);
-    text-decoration: underline;
+@media (max-width: 700px) {
+    .lista-categorias {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 
-footer {
-    margin-top: auto;
-    /* Empuja el footer al fondo */
+/* - - - - - centro/productos.php - - - - - */
+
+/* Contenedor general */
+div.categorias-productos,
+div.productos-categoria {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 15px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
 }
 
+/* Títulos */
+div.productos-categoria h2,
+div.categorias-productos h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    border-bottom: 5px solid #27ae60;
+    padding-bottom: 10px;
+}
 
-.footer-contenido {
-    background-color: var(--color-primario);
+/* Lista de categorías */
+div.lista-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+article.categoria {
+    background-color: #e9f5ec;
+    border: 1px solid #27ae60;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(39, 174, 96, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+article.categoria:hover {
+    background-color: #27ae60;
+    color: white;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.5);
+}
+
+article.categoria a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+article.categoria h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+article.categoria p {
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+
+/* Lista de productos */
+div.lista-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+article.producto {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.3s ease;
+}
+
+article.producto:hover {
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+article.producto img {
+    width: 100%;
+    max-width: 180px;
+    height: 140px;
+    object-fit: contain;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+article.producto h3 {
+    font-size: 1.1em;
+    margin: 10px 0 7px;
+    text-align: center;
+    color: #27ae60;
+}
+
+article.producto p {
+    font-size: 0.9em;
+    color: #555;
+    text-align: center;
+    margin: 5px 0;
+}
+
+article.producto p:last-of-type {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Enlace "Volver a categorías" */
+div.productos-categoria p a {
+    display: inline-block;
+    margin-top: 25px;
+    color: #27ae60;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+div.productos-categoria p a:hover {
+    color: #196f3d;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+
+    .lista-categorias,
+    .lista-productos {
+        grid-template-columns: 1fr;
+    }
+
+    .producto img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+/*--------------------------------------pie invitado-----------------------------------------*/
+div.footer-contenido {
+    background-color: #f8f9fa;
+    color: #555;
     display: flex;
     flex-direction: column;
     padding: 1.5rem 1rem;
     font-size: 0.9rem;
     text-align: center;
-    border-top: 5px solid var(--color-azul);
+    border-top: 5px solid #ddd;
     margin-top: auto;
-    /* empuja footer abajo */
+    /* SOLO esta línea empuja el footer al final */
 }
 
-.footer-contenido>div {
+div.footer-contenido a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 0.4rem;
+}
+
+div.footer-contenido a:hover {
+    text-decoration: underline;
+}
+
+div.footer-contenido>div {
     margin: 0.3rem 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ---------------------------------- Cabecera_administrador ---------------------------------- */
+header.cabecera-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%);
+    padding: 15px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-bottom: 3px solid #4a4a4a;
+    min-height: 70px;
+}
+
+/* LOGO Y TECNOLOGÍAS */
+div.logo-admin {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+div.logo-admin img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+div.logo-admin img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+/* INFORMACIÓN DEL ADMINISTRADOR */
+div.info-admin {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: #e0e0e0;
+}
+
+span.rol-admin {
+    background: linear-gradient(135deg, #666 0%, #777 100%);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+span.nombre-admin {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f5f5f5;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+span.hora-admin {
+    font-size: 14px;
+    color: #bbb;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+/* FORMULARIO CERRAR SESIÓN */
+form.cerrar-sesion-admin {
+    display: inline-block;
+    margin: 0;
+}
+
+button.btn-cerrar-sesion-admin {
+    background: linear-gradient(135deg, #666 0%, #777 100%);
+    border: 1px solid #888;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button.btn-cerrar-sesion-admin:hover {
+    background: linear-gradient(135deg, #777 0%, #888 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+button.btn-cerrar-sesion-admin img {
+    height: 50px;
+    width: 50px;
+    filter: brightness(0.9);
+    transition: filter 0.3s ease;
+}
+
+button.btn-cerrar-sesion-admin:hover img {
+    filter: brightness(1.2);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    header.cabecera-admin {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+        min-height: auto;
+    }
+
+    div.logo-admin {
+        justify-content: center;
+    }
+
+    div.logo-admin img {
+        height: 30px;
+    }
+
+    div.info-admin {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    span.nombre-admin,
+    span.hora-admin {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    header.cabecera-admin {
+        padding: 10px;
+    }
+
+    div.info-admin {
+        gap: 8px;
+    }
+
+    div.logo-admin {
+        gap: 10px;
+    }
+
+    div.logo-admin img {
+        height: 25px;
+    }
+}
+
+/* /\ /\ /\ /\ /\_/\ Cabecera (usuario logueado)/Cabecera_usuario_logueado.php /\ /\ /\ /\ /\_ */
+/* Contenedor cabecera */
+header.cabecera-usuario-logueado {
+    background-color: #9ed3ff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+}
+
+/* Logo */
+header.cabecera-usuario-logueado div.logo a img {
+    height: 90px;
+    width: 90px;
+    vertical-align: middle;
+}
+
+header.cabecera-usuario-logueado form.cerrar-sesion-usuario button.btn-cerrar-sesion-usuario {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+header.cabecera-usuario-logueado form.cerrar-sesion-usuario button.btn-cerrar-sesion-usuario img {
+    height: 70px;
+    width: 70px;
+    vertical-align: middle;
 }
