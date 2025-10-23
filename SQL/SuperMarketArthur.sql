@@ -1,3 +1,4 @@
+-- Active: 1702844389704@@127.0.0.1@3306@supermarketarthur
 CREATE DATABASE if NOT exists supermarketarthur;
 USE supermarketarthur;
 
@@ -22,7 +23,7 @@ CREATE TABLE supermarketarthur.usuarios (
 );
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `pass`, `apellido1`, `apellido2`, `provincia`, `localidad`, `cp`, `calle`, `numero`, `telefono`, `email`, `tipo_doc`, `num_doc`, `fecha_nacimiento`, `fecha_registro`, `tipo_usu`) 
-	VALUES (NULL, 'root', '$2y$10$.x4pBBCYOsl17wKgdZyX0erdcZmm6D7iBqytg6vDh.1l/z7sYMVTC', 'root1', 'root2', 'toledo', 'villacañas', '45860', 'Arturo', '01', '600000001', 'root@mysql.es', 'DNI', '83727913R', '2002-01-04', '2025-07-28 17:07:26', 'a');
+	VALUES (NULL, 'root', 'root', 'root1', 'root2', 'toledo', 'villacañas', '45860', 'Arturo', '01', '600000001', 'root@mysql.es', 'DNI', '83727913R', '2002-01-04', '2025-07-28 17:07:26', 'a');
 
 -- Tabla de usuarios
 CREATE TABLE supermarketarthur.direcciones (

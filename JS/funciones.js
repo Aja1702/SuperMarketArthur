@@ -42,10 +42,25 @@ document.addEventListener('DOMContentLoaded',
                 let errorMsg = '';
                 if (valor === "") {
                     errorMsg = "Campo vacío!!";
+                } else if (valor.length < 8) {
+                    errorMsg = "La contraseña debe tener al menos 8 caracteres.";
+                } else if (!/[A-Z]/.test(valor)) {
+                    errorMsg = "La contraseña debe contener al menos una letra mayúscula.";
+                } else if (!/[a-z]/.test(valor)) {
+                    errorMsg = "La contraseña debe contener al menos una letra minúscula.";
+                } else if (!/[0-9]/.test(valor)) {
+                    errorMsg = "La contraseña debe contener al menos un número.";
+                } else if (!/[\W_]/.test(valor)) {
+                    errorMsg = "La contraseña debe contener al menos un carácter especial.";
+                } else {
+                    errorMsg = "";
                 }
                 errorPassword.textContent = errorMsg;
                 return errorMsg === "";
             }
+
+
+
 
             // Validar campo individual al cambiar
             email.addEventListener('input',
@@ -66,11 +81,17 @@ document.addEventListener('DOMContentLoaded',
                     const validoPass = validarPassword();
                     if (!(validoEmail && validoPass)) {
                         e.preventDefault();
+                        // Para mostrar el error:
                         mensajeError.textContent = 'NO VALIDO EL INICIO DE SESIÓN';
+                        mensajeError.style.display = 'block';
+                        // El formulario no se envía correctamente
                     } else {
                         mensajeError.textContent = '';
+                        mensajeError.style.display = 'none';
+                        // El formulario se envía correctamente
                     }
-                });
+                }
+            );
         }
     }
 );
@@ -146,6 +167,7 @@ document.addEventListener('DOMContentLoaded',
             //todos los errores de validadcion
 
             //funcion mostrar/ocultar imagen error
+
             function mostrarError(id, mostrar) {
                 const img = document.getElementById(id);
                 if (img) {
@@ -218,7 +240,8 @@ document.addEventListener('DOMContentLoaded',
                 }
             );
 
-            //para el primer apellido, desbloquea el apellido2,·,·,· si es valido el primer apellido
+            // para el primer apellido, 
+            // desbloquea el apellido2,·,·,· si es valido el primer apellido
             apellido1.addEventListener('input',
                 function () {
                     const apellido1 = this.value.trim();
