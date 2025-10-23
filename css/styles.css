@@ -237,15 +237,8 @@ nav.menu-horizontal a p {
     }
 }
 
-
-
-
-
-
-
-
 /* *  Main (invitado)/centro_invitado.php * */
-/* ============ Estilos específicos para el centro de invitado =========== */
+/* == Estilos específicos para el centro de invitado == */
 main.main-container {
     display: grid;
     grid-template-columns: 70% 30%;
