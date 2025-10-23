@@ -1,0 +1,69 @@
+:root {
+
+    /* Colores para html general y body general */
+    --bg-color: #e8f0fe;
+    /* azul suave de fondo */
+    --text-color: #1a73e8;
+    /* azul principal texto */
+    --accent-color: #1558d6;
+    /* azul oscuro para botones y enlaces */
+    --border-color: #a8c1f7;
+    /* azul claro para bordes */
+
+
+
+    /* Temas base para invitado (azul), logueado (naranja), administrador (gris) */
+    /* Invitado - azules */
+    --bg-color-invitado: #e8f0fe;
+    /* azul suave de fondo */
+    --text-color-invitado: #1a73e8;
+    /* azul principal texto */
+    --accent-color-invitado: #1558d6;
+    /* azul oscuro para botones y enlaces */
+    --border-color-invitado: #a8c1f7;
+    /* azul claro para bordes */
+
+    /* Logueado - naranjas */
+    --bg-color-logueado: #fff4e5;
+    /* naranja muy claro de fondo */
+    --text-color-logueado: #f57c00;
+    /* naranja principal texto */
+    --accent-color-logueado: #ef6c00;
+    /* naranja oscuro para botones y enlaces */
+    --border-color-logueado: #ffb74d;
+    /* naranja suave para bordes */
+
+    /* Administrador - grises */
+    --bg-color-admin: #f5f5f5;
+    /* gris claro para fondo */
+    --text-color-admin: #424242;
+    /* gris oscuro para texto */
+    --accent-color-admin: #616161;
+    /* gris medio para botones y enlaces */
+    --border-color-admin: #bdbdbd;
+    /* gris suave para bordes */
+}
+
+/* Ejemplo para aplicar segun clase en html o body */
+html {
+    font-size: 16px;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-size: var(--font-size-base);
+    color: var(--color-principal);
+    padding: var(--padding-base);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
