@@ -66,3 +66,269 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
+/* Estilos para el usuario invitado */
+
+/* estilos HEADER */
+
+/* Usar variables CSS definidas en :root para coherencia */
+
+.cabecera-invitado {
+    background-color: var(--bg-color-invitado);
+    color: var(--text-color-invitado);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 4px solid var(--border-color-invitado);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cabecera-invitado .logo img {
+    max-height: 50px;
+    width: auto;
+}
+
+.titulo-web-invitado {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-left: 1rem;
+    flex-grow: 1;
+}
+
+.acceso-usuario {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.acceso-usuario a {
+    color: var(--accent-color-invitado);
+    background-color: transparent;
+    border: 2px solid var(--accent-color-invitado);
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.acceso-usuario a.btn-carrito {
+    font-weight: 700;
+}
+
+.acceso-usuario a:hover,
+.acceso-usuario a:focus {
+    background-color: var(--accent-color-invitado);
+    color: white;
+}
+
+/* Responsive: para pantallas pequeñas */
+@media (max-width: 600px) {
+    .cabecera-invitado {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .titulo-web-invitado {
+        margin: 0.5rem 0;
+    }
+
+    .acceso-usuario {
+        width: 100%;
+        justify-content: space-around;
+        text-align: center;
+    }
+}
+
+/* Estilos nav */
+.menu-horizontal {
+    background-color: var(--bg-color-invitado);
+    border-bottom: 2px solid var(--border-color-invitado);
+    position: relative;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ocultar checkbox, se usa solo para toggle */
+.menu-toggle {
+    display: none;
+}
+
+/* Icono hamburguesa */
+.menu-icon {
+    display: none;
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: var(--accent-color-invitado);
+    user-select: none;
+}
+
+/* Lista de navegación estilo horizontal */
+.menu-horizontal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0.5rem 0;
+    gap: 2rem;
+}
+
+.menu-horizontal ul li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color-invitado);
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.menu-horizontal ul li a img {
+    height: 28px;
+    margin-bottom: 0.2rem;
+}
+
+/* Hover y focus */
+.menu-horizontal ul li a:hover,
+.menu-horizontal ul li a:focus {
+    color: var(--accent-color-invitado);
+}
+
+/* Responsive para móviles */
+@media (max-width: 700px) {
+    .menu-icon {
+        display: block;
+    }
+
+    .menu-horizontal ul {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--bg-color-invitado);
+        flex-direction: column;
+        gap: 0;
+        display: none;
+        border-top: 2px solid var(--border-color-invitado);
+    }
+
+    .menu-horizontal ul li {
+        text-align: center;
+        border-bottom: 1px solid var(--border-color-invitado);
+    }
+
+    /* Mostrar menú cuando checkbox esté activo */
+    .menu-toggle:checked+.menu-icon+ul {
+        display: flex;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos para el usuario logueado */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos para el usuario administrador */
