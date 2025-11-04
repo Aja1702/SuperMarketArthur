@@ -1,227 +1,195 @@
 :root {
+    /* colores para el usuario invitado (azules) */
+    --color-invitado-bg: #007bff;
+    /* azul */
+    --color-invitado-text: #fff;
 
-    /* Colores para html general y body general */
-    --bg-color: #e8f0fe;
-    /* azul suave de fondo */
-    --text-color: #1a73e8;
-    /* azul principal texto */
-    --accent-color: #1558d6;
-    /* azul oscuro para botones y enlaces */
-    --border-color: #a8c1f7;
-    /* azul claro para bordes */
+    /* colores para el usuario registrado (naranjas) */
+    --color-usuario-bg: #ff6600;
+    /* naranja */
+    --color-usuario-text: #fff;
 
-
-    /* Temas base para invitado (azul), logueado (naranja), administrador (gris) */
-    /* Invitado - azules */
-    --bg-color-invitado: #e8f0fe;
-    /* azul suave de fondo */
-    --text-color-invitado: #1a73e8;
-    /* azul principal texto */
-    --accent-color-invitado: #1558d6;
-    /* azul oscuro para botones y enlaces */
-    --border-color-invitado: #a8c1f7;
-    /* azul claro para bordes */
-
-    /* Logueado - naranjas */
-    --bg-color-logueado: #fff4e5;
-    /* naranja muy claro de fondo */
-    --text-color-logueado: #f57c00;
-    /* naranja principal texto */
-    --accent-color-logueado: #ef6c00;
-    /* naranja oscuro para botones y enlaces */
-    --border-color-logueado: #ffb74d;
-    /* naranja suave para bordes */
-
-    /* Administrador - grises */
-    --bg-color-admin: #f5f5f5;
-    /* gris claro para fondo */
-    --text-color-admin: #424242;
-    /* gris oscuro para texto */
-    --accent-color-admin: #616161;
-    /* gris medio para botones y enlaces */
-    --border-color-admin: #bdbdbd;
-    /* gris suave para bordes */
-}
-
-/* Ejemplo para aplicar segun clase en html o body */
-html {
-    font-size: 16px;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    font-family: 'Open Sans', sans-serif;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    height: 100%;
-    width: 100%;
+    /* colores para el administrador (grises) */
+    --color-administrador-bg: #6c757d;
+    /* gris */
+    --color-administrador-text: #fff;
 }
 
 body {
-    font-size: var(--font-size-base);
-    color: var(--color-principal);
-    padding: var(--padding-base);
-}
-
-* {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-color: white;
 }
 
-/* Estilos para el usuario invitado */
+/* Estilos para los encabezados */
 
-/* estilos HEADER */
-
-/* Usar variables CSS definidas en :root para coherencia */
+/* Encabezado invitado */
 
 .cabecera-invitado {
-    background-color: var(--bg-color-invitado);
-    color: var(--text-color-invitado);
+    background-color: var(--color-invitado-bg);
+    color: var(--color-invitado-text);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    border-bottom: 4px solid var(--border-color-invitado);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .cabecera-invitado .logo img {
-    max-height: 80px;
+    height: 50px;
     width: auto;
 }
 
 .titulo-web-invitado {
     font-size: 1.8rem;
     font-weight: 700;
-    text-align: center;
-    margin-left: 1rem;
+    margin-left: 15px;
     flex-grow: 1;
 }
 
-.acceso-usuario {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-
 .acceso-usuario a {
-    color: var(--accent-color-invitado);
-    background-color: transparent;
-    border: 2px solid var(--accent-color-invitado);
-    padding: 0.4rem 1rem;
-    border-radius: 5px;
+    color: var(--color-invitado-text);
     text-decoration: none;
+    margin-left: 1rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
     font-weight: 600;
     transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.acceso-usuario a.btn-carrito {
-    font-weight: 700;
+    border: 2px solid transparent;
 }
 
 .acceso-usuario a:hover,
 .acceso-usuario a:focus {
-    background-color: var(--accent-color-invitado);
-    color: white;
+    background-color: var(--color-invitado-text);
+    color: var(--color-invitado-bg);
+    border-color: var(--color-invitado-bg);
+    outline: none;
 }
 
-/* Responsive: para pantallas pequeñas */
-@media (max-width: 600px) {
+.btn-carrito {
+    font-size: 1.2rem;
+}
+
+/* Responsive para pantallas como las tabletss */
+/* Responsive para pantallas como las tablets */
+@media (min-width: 400px) and (max-width: 1024px) {
     .cabecera-invitado {
         flex-direction: column;
         align-items: center;
     }
 
     .titulo-web-invitado {
-        margin: 0.5rem 0;
+        margin: 10px 0;
+        align-items: center;
     }
 
-    .acceso-usuario {
-        width: 100%;
-        justify-content: space-around;
-        text-align: center;
+    .acceso-usuario a {
+        margin-left: 0;
+        margin-right: 1rem;
+        align-items: center;
     }
 }
 
-/* Estilos nav */
+
+
+
+
+
+
+
+
+
+/* Estilos para los menús */
+
+/* Estilos para el menú invitado */
 .menu-horizontal {
-    background-color: var(--bg-color-invitado);
-    border-bottom: 2px solid var(--border-color-invitado);
+    background-color: var(--color-invitado-bg);
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 1000;
 }
 
-/* Ocultar checkbox, se usa solo para toggle */
-.menu-toggle {
-    display: none;
-}
-
-/* Icono hamburguesa */
-.menu-icon {
-    display: none;
-    font-size: 2rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    color: var(--accent-color-invitado);
-    user-select: none;
-}
-
-/* Lista de navegación estilo horizontal */
 .menu-horizontal ul {
+    margin: 0;
+    padding: 0;
     list-style: none;
     display: flex;
     justify-content: center;
-    margin: 0;
-    padding: 0.5rem 0;
-    gap: 2rem;
+    align-items: center;
 }
 
-.menu-horizontal ul li a {
+.menu-horizontal li {
+    margin: 0 14px;
+}
+
+.menu-horizontal a {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: var(--text-color-invitado);
+    color: var(--color-invitado-text);
     font-weight: 600;
-    transition: color 0.3s ease;
+    padding: 10px 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.menu-horizontal ul li a img {
-    height: 28px;
-    margin-bottom: 0.2rem;
+.menu-horizontal a:hover,
+.menu-horizontal a:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
 }
 
-/* Hover y focus */
-.menu-horizontal ul li a:hover,
-.menu-horizontal ul li a:focus {
-    color: var(--accent-color-invitado);
+.menu-horizontal a img {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 4px;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
 }
 
-/* Responsive para móviles */
-@media (max-width: 700px) {
+/* Adaptación responsive: menú hamburguesa */
+.menu-toggle {
+    display: none;
+}
+
+.menu-icon {
+    display: none;
+}
+
+/* Opcional: estilos para menú desplegable en móviles */
+@media (max-width: 768px) {
+    .menu-horizontal ul {
+        flex-direction: column;
+        background-color: var(--color-invitado-bg);
+        position: absolute;
+        top: 60px;
+        width: 100%;
+        left: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .menu-toggle:checked+.menu-icon+ul {
+        max-height: 500px;
+        /* ajusta según cantidad de items */
+    }
+
     .menu-icon {
         display: block;
+        font-size: 28px;
+        color: var(--color-invitado-text);
+        cursor: pointer;
+        padding: 16px;
     }
 
-    .menu-horizontal ul {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: var(--bg-color-invitado);
-        flex-direction: column;
-        gap: 0;
-        display: none;
-        border-top: 2px solid var(--border-color-invitado);
-    }
-
-    .menu-horizontal ul li {
-        text-align: center;
-        border-bottom: 1px solid var(--border-color-invitado);
-    }
-
-    /* Mostrar menú cuando checkbox esté activo */
-    .menu-toggle:checked+.menu-icon+ul {
-        display: flex;
+    .menu-horizontal li {
+        margin: 12px 0;
     }
 }
 
@@ -234,6 +202,7 @@ body {
 
 
 
+/* Estilos para los centros */
 
 
 
@@ -255,80 +224,4 @@ body {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Estilos para el usuario logueado */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Estilos para el usuario administrador */
+/* Estilos para los pies de página */
