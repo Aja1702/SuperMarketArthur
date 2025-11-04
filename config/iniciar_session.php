@@ -7,6 +7,11 @@ $database = "supermarketarthur";
 
 $conn = mysqli_connect($servername, $username, $password, $database);
 
-if (!$conn) {
-    die("Error de conexión: " . mysqli_connect_error());
+try {
+    $conn = new PDO("mysql:dbname=$database;charset=utf8mb4", $username, $password);
+    // Configurar PDO para lanzar excepciones en errores
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "";
+} catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
 }
