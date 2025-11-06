@@ -11,24 +11,28 @@
 
     <?php
     // Conexión (desde tu iniciar_session.php o similar)
-    require 'config/iniciar_session.php';
+    include './config/iniciar_session.php';
 
     // Categorías deseadas
-    $categorias = ['alimentos', 'bebida', 'pan', 'frutos secos', 'postres', 'comida animal', 'hogar'];
+    $categorias = ['Frutas frescas', 'Verduras frescas', 'Pan del día', 'Snacks salados', 'Helados y postres congelados', 'Alimentación para gatos', 'Higiene y cuidado'];
 
     // Preparar placeholders para IN
     $placeholders = rtrim(str_repeat('?,', count($categorias)), ',');
 
     // Consulta SQL para obtener un producto por categoría
     $sql = "
-            SELECT p.id_producto, p.nombre_producto, p.precio, p.url_imagen, c.nombre_categoria 
-            AS categoria
-            FROM productos p
-            JOIN categorias c 
-            ON p.categoria_id = c.id
-            WHERE c.nombre_categoria IN ($placeholders)
-            GROUP BY p.id_categoria
-            LIMIT 7
+        SELECT p.id_producto, p.nombre_producto, p.precio, p.url_imagen, c.nombre_categoria 
+        AS categoria
+        FROM productos p
+        JOIN categorias c ON p.id_categoria = c.id_categoria
+        JOIN (
+            SELECT id_categoria, MIN(id_producto) AS min_producto_id
+            FROM productos
+            GROUP BY id_categoria
+            ) mp 
+        ON p.id_categoria = mp.id_categoria AND p.id_producto = mp.min_producto_id
+        WHERE c.nombre_categoria IN ($placeholders)
+        ORDER BY c.nombre_categoria;
         ";
 
     $stmt = $pdo->prepare($sql);
@@ -42,8 +46,8 @@
         <div class="productos-lista">
             <?php foreach ($productosDestacados as $producto): ?>
                 <article class="producto">
-                    <img src="./img/productos/<?php echo htmlspecialchars($producto['imagen']); ?>" alt="<?php echo htmlspecialchars($producto['nombre']); ?>" />
-                    <h4><?php echo htmlspecialchars($producto['nombre']); ?></h4>
+                    <img src="<?php echo htmlspecialchars($producto['url_imagen']); ?>" alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>" />
+                    <h4><?php echo htmlspecialchars($producto['nombre_producto']); ?></h4>
                     <p class="precio">€<?php echo number_format($producto['precio'], 2, ',', '.'); ?> / unidad</p>
                     <a href="./?vistaMenu=categorias_productos&categoria=<?php echo urlencode($producto['categoria']); ?>" class="btn btn-ver-mas">Ver más</a>
                 </article>

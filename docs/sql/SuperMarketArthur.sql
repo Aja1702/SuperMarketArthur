@@ -151,16 +151,6 @@ CREATE TABLE supermarketarthur.valoraciones (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
 
--- tabla de imagenes de productos
-CREATE TABLE supermarketarthur.imagenes_producto (
-    id_imagen INT AUTO_INCREMENT PRIMARY KEY,
-    id_producto INT NOT NULL,
-    url_imagen VARCHAR(255) NOT NULL,
-    orden INT DEFAULT 1,
-    es_principal BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
-);
-
 -- Tabla de favoritos
 CREATE TABLE supermarketarthur.favoritos (
     id_favorito INT AUTO_INCREMENT PRIMARY KEY,
