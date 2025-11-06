@@ -1,28 +1,40 @@
-<nav class="menu-horizontal">
+<nav class="menu-horizontal" role="navigation" aria-label="Menú principal SuperMarketArthur">
     <ul>
         <li>
-            <a href="../../SuperMarketArthur/">
-                <img src="./img/menu_nav/home.png" alt="Inicio">
+            <a href="../../SuperMarketArthur/" class="menu-link">
+                <img src="./img/menu_nav/home.png" alt="" aria-hidden="true" />
                 <span>Inicio</span>
             </a>
         </li>
         <li>
-            <a href="./?vistaMenu=categorias_productos">
-                <img src="./img/menu_nav/tienda.png" alt="Productos">
+            <a href="./?vistaMenu=categorias_productos" class="menu-link">
+                <img src="./img/menu_nav/tienda.png" alt="" aria-hidden="true" />
                 <span>Productos</span>
             </a>
         </li>
         <li>
-            <a href="./?vistaMenu=ofertas"><img src="./img/menu_nav/ofertas.png" alt="Ofertas"><span>Ofertas</span></a>
+            <a href="./?vistaMenu=ofertas" class="menu-link">
+                <img src="./img/menu_nav/ofertas.png" alt="" aria-hidden="true" />
+                <span>Ofertas</span>
+            </a>
         </li>
         <li>
-            <a href="./?vistaMenu=sobre_nosotros"><img src="./img/menu_nav/sobre_nosotros.png" alt="Sobre nosotros"><span>Sobre nosotros</span></a>
+            <a href="./?vistaMenu=sobre_nosotros" class="menu-link">
+                <img src="./img/menu_nav/sobre_nosotros.png" alt="" aria-hidden="true" />
+                <span>Sobre nosotros</span>
+            </a>
         </li>
         <li>
-            <a href="./?vistaMenu=soporte"><img src="./img/menu_nav/soporte.png" alt="Soporte"><span>Soporte</span></a>
+            <a href="./?vistaMenu=soporte" class="menu-link">
+                <img src="./img/menu_nav/soporte.png" alt="" aria-hidden="true" />
+                <span>Soporte</span>
+            </a>
         </li>
         <li>
-            <a href="./?vistaMenu=contacto"><img src="./img/menu_nav/contacto.png" alt="Contacto"><span>Contacto</span></a>
+            <a href="./?vistaMenu=contacto" class="menu-link">
+                <img src="./img/menu_nav/contacto.png" alt="" aria-hidden="true" />
+                <span>Contacto</span>
+            </a>
         </li>
     </ul>
 </nav>

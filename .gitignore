@@ -1,0 +1,17 @@
+# Ignorar la carpeta vendor (dependencias)
+vendor/
+
+# Ignorar archivos de entorno con variables sensibles
+.env
+
+# Ignorar carpetas y archivos del editor VSCode
+.vscode/
+
+# Ignorar archivos temporales y de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar logs y cachés
+*.log
+cache/
+tmp/
