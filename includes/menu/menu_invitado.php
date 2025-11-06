@@ -15,7 +15,7 @@
         <li>
             <a href="./?vistaMenu=ofertas" class="menu-link">
                 <img src="./img/menu_nav/ofertas.png" alt="" aria-hidden="true" />
-                <span>Ofertas</span>
+                <span>Ofertas y destacados</span>
             </a>
         </li>
         <li>
