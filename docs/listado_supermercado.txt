@@ -1,13 +1,4 @@
-    	10. Pescado blanco  
-      		Merluza  
-      		Bacalao  
-      		Lenguado  
-      		Rape  
-      		Pescadilla  
-      		Lubina  
-      		Dorada  
-      		Rodaballo  
-    	11. Pescado azul  
+11. Pescado azul  
       		Salmón  
       		Atún  
       		Sardinas  
@@ -16,7 +7,7 @@
       		Anchoas  
       		Jurel  
       		Boquerones  
-    	12. Mariscos  
+12. Mariscos  
       		Gambas  
       		Langostinos  
       		Mejillones  
@@ -31,12 +22,12 @@
       		Pulpo  
       		Calamares  
       		Sepia  
-    	13. Ahumados  
+13. Ahumados  
       		Salmón ahumado  
       		Bacalao ahumado  
       		Trucha ahumada  
       		Atún ahumado   
-    	14. Pan del día  
+14. Pan del día  
       		Barra de pan  
       		Pan de pueblo  
       		Pan integral  
@@ -47,7 +38,7 @@
       		Panecillos  
       		Baguette  
       		Chapata  
-    	15. Bollos y pasteles  
+15. Bollos y pasteles  
       		Croissants  
       		Napolitanas  
       		Ensaimadas  
@@ -59,25 +50,25 @@
       		Tarta de manzana  
       		Tarta de queso  
       		Pasteles variados  
-    	16. Empanadas y empanadillas  
+16. Empanadas y empanadillas  
       		Empanada gallega  
       		Empanada de atún  
       		Empanadillas de carne  
       		Empanadillas de pollo  
-    	17. Panes especiales  
+17. Panes especiales  
       		Pan de ajo  
       		Pan de cebolla  
       		Pan de aceitunas  
       		Pan de tomate  
       		Pan de espelta
-	18. Huevos y ovoproductos  
+18. Huevos y ovoproductos  
 	    	Huevos camperos  
     		Huevos ecológicos  
     		Huevos de codorniz  
     		Claras pasteurizadas  
     		Yemas pasteurizadas  
     		Ovoproductos líquidos    
-  	19. Leche  
+19. Leche  
     		Leche entera  
     		Leche semidesnatada  
     		Leche desnatada  
@@ -90,7 +81,7 @@
       		Bebida de arroz  
       		Bebida de coco  
       		Bebida de avellanas  
- 	20. Quesos  
+20. Quesos  
     		Queso fresco  
     		Queso de untar  
     		Queso curado  
@@ -108,7 +99,7 @@
     		Queso emmental  
     		Queso ricotta  
     		Queso feta  
-  	21. Yogures y postres lácteos  
+21. Yogures y postres lácteos  
     		Yogur natural  
     		Yogur azucarado  
     		Yogur desnatado  
@@ -117,21 +108,21 @@
     		Yogur con frutas  
     		Yogur bífidus  
     		Yogur sin lactosa
-		Flan  
+			Flan  
       		Natillas  
       		Arroz con leche  
       		Cuajada  
       		Mousse  
       		Pudding  
       		Kéfir  
-  	22. Mantequillas y margarinas  
+22. Mantequillas y margarinas  
     		Mantequilla tradicional  
     		Mantequilla sin sal  
     		Mantequilla con sal  
     		Margarina  
     		Untables vegetales  
     		Mantequilla light  
-	23. Arroces, pastas y legumbres  
+23. Arroces, pastas y legumbres  
     		Arroz blanco  
     		Arroz integral  
     		Arroz basmati  
@@ -146,8 +137,8 @@
     		Quinoa  
     		Bulgur  
     		Polenta  
-  	24. Conservas y semiconservas  
-		Atún en aceite  
+24. Conservas y semiconservas  
+			Atún en aceite  
       		Sardinas en lata  
       		Mejillones en escabeche  
       		Anchoas en aceite  
@@ -164,7 +155,7 @@
       		Callos en conserva  
       		Chorizo en lata  
       		Jamón cocido en lata  
-    	25. Salsas y purés  
+25. Salsas y purés  
       		Tomate frito  
       		Salsa boloñesa  
       		Salsa carbonara  
@@ -173,8 +164,7 @@
       		Salsa pesto  
       		Puré de patatas  
       		Puré de verduras
-  
-  	26. Aceites y vinagres  
+26. Aceites y vinagres  
     		Aceite de oliva virgen extra  
     		Aceite de oliva suave  
     		Aceite de girasol  
@@ -184,10 +174,10 @@
     		Vinagre de vino  
     		Vinagre balsámico  
     		Vinagre de manzana  
-   		Vinagre de arroz  
+   			Vinagre de arroz  
     		Vinagre de Jerez  
     		Vinagre de Módena  
-  	27. Harinas y preparados  
+27. Harinas y preparados  
     		Harina de trigo  
     		Harina integral  
     		Harina de espelta  
@@ -204,7 +194,7 @@
     		Azúcar moreno  
     		Edulcorantes  
     		Stevia  
-  	28. Caldos y sopas  
+28. Caldos y sopas  
     		Caldo de pollo  
     		Caldo de carne  
     		Caldo de verduras  
@@ -213,7 +203,7 @@
     		Cremas de verduras  
     		Purés preparados  
     		Sopas instantáneas  
-  	29. Especias y condimentos  
+29. Especias y condimentos  
     		Sal fina  
     		Sal gruesa  
     		Sal marina  
@@ -237,20 +227,20 @@
     		Cebolla en polvo  
     		Mezcla de especias para paella  
     		Mezcla de especias para barbacoa    
-  	30. Aguas  
+30. Aguas  
     		Agua mineral natural  
     		Agua con gas  
     		Agua saborizada  
     		Agua mineral infantil  
     		Agua mineral en botellas grandes  
     		Agua mineral en botellas pequeñas  
-  	31. Refrescos  
+31. Refrescos  
     		Refrescos con gas (cola, naranja, limón, tónica, ginger ale)  
     		Refrescos sin gas (té frío, bebidas isotónicas)  
     		Bebidas energéticas  
     		Bebidas deportivas  
     		Bebidas zero azúcar  
-  	32. Zumos y néctares  
+32. Zumos y néctares  
     		Zumo de naranja  
     		Zumo de piña  
     		Zumo de manzana  
@@ -260,9 +250,9 @@
     		Néctar de frutas  
     		Batidos de frutas  
     		Smoothies  
-  	33. Cafés e infusiones  
+33. Cafés e infusiones  
     		Café molido  
-   		Café en grano  
+   			Café en grano  
     		Café soluble  
     		Café descafeinado  
     		Café en cápsulas  
@@ -276,7 +266,7 @@
     		Rooibos  
     		Cacao soluble  
     		Chocolate a la taza  
-  	34. Cervezas y sidras  
+34. Cervezas y sidras  
     		Cerveza rubia  
     		Cerveza negra  
     		Cerveza tostada  
@@ -285,7 +275,7 @@
     		Cerveza importada  
     		Sidra natural  
     		Sidra espumosa  
-  	35. Vinos y licores  
+35. Vinos y licores  
     		Vino tinto joven  
     		Vino tinto crianza  
     		Vino tinto reserva  
@@ -296,13 +286,13 @@
     		Vino dulce  
     		Vermut  
     		Licores (orujo, pacharán, anís, licor de hierbas)  
-   		Ginebra  
+			Ginebra  
     		Ron  
     		Whisky  
     		Vodka  
     		Tequila  
     		Brandy  
-	36. Galletas y bizcochos  
+36. Galletas y bizcochos  
     		Galletas María  
     		Galletas de chocolate  
     		Galletas integrales  
@@ -311,7 +301,7 @@
     		Sobaos  
     		Barritas de cereales  
     		Barritas energéticas  
-  	37. Chocolates y caramelos  
+37. Chocolates y caramelos  
     		Chocolate negro  
     		Chocolate con leche  
     		Chocolate blanco  
@@ -323,7 +313,7 @@
     		Regaliz  
     		Turrones  
     		Mazapanes  
-  	38. Snacks salados  
+38. Snacks salados  
     		Patatas fritas  
     		Palitos salados  
     		Frutos secos (almendras, nueces, avellanas, cacahuetes, pistachos)  
@@ -333,7 +323,7 @@
     		Aperitivos de maíz  
     		Galletitas saladas  
     		Snacks de queso  
-  	39. Repostería y productos para hornear  
+39. Repostería y productos para hornear  
     		Preparados para tartas  
     		Coberturas de chocolate  
     		Rellenos de frutas  
@@ -343,7 +333,7 @@
     		Virutas de chocolate  
     		Levadura de repostería  
     		Moldes y cápsulas   
-  	40. Verduras y hortalizas congeladas  
+40. Verduras y hortalizas congeladas  
     		Espinacas  
     		Guisantes congelados 
     		Judías verdes  
@@ -352,7 +342,7 @@
     		Menestra  
     		Zanahorias  
     		Patatas fritas congeladas  
-  	41. Pescados y mariscos congelados  
+41. Pescados y mariscos congelados  
     		Filetes de merluza  
     		Filetes de bacalao  
     		Gambas peladas  
@@ -360,13 +350,13 @@
     		Anillas de calamar  
     		Langostinos  
     		Pulpo cocido  
-  	42. Carnes y aves congeladas  
+42. Carnes y aves congeladas  
     		Pechugas de pollo  
     		Hamburguesas  
     		Albóndigas  
     		Nuggets de pollo  
     		Costillas  
-  	43. Platos preparados congelados  
+43. Platos preparados congelados  
     		Lasagna  
     		Pizza  
     		Croquetas  
@@ -376,14 +366,14 @@
     		Verduras salteadas  
     		Tortilla de patatas  
     		Pasta rellena  
-  	44. Helados y postres congelados  
+44. Helados y postres congelados  
     		Tarrinas de helado  
     		Helados de palo  
     		Helados de cucurucho  
     		Bombones helados  
     		Tartas heladas  
     		Sorbetes  
-	45. Limpieza general  
+45. Limpieza general  
     		Limpiador multiusos  
     		Limpiador desinfectante  
     		Limpiador de baños  
@@ -393,7 +383,7 @@
     		Ambientadores  
     		Desinfectantes  
     		Limpiador de muebles  
-  	46. Lavavajillas y lavadoras  
+46. Lavavajillas y lavadoras  
     		Detergente para lavadora  
     		Detergente líquido  
     		Detergente en polvo  
@@ -405,20 +395,19 @@
     		Pastillas para lavavajillas  
     		Sal para lavavajillas  
     		Abrillantador  
-  	47. Papel y celulosas  
+47. Papel y celulosas  
     		Papel higiénico  
     		Papel de cocina  
     		Servilletas  
     		Pañuelos de papel  
     		Toallitas húmedas  
-    		Rollos industriales  
-  		4. Bolsas y envases  
+    		Rollos industriales    
     		Bolsas de basura  
     		Bolsas de congelación  
     		Film transparente  
     		Papel de aluminio  
     		Envases para alimentos    
-  	48. Higiene personal  
+48. Higiene personal  
     		Gel de baño  
     		Jabón de manos  
     		Champú  
@@ -429,14 +418,14 @@
     		Cuchillas de afeitar  
     		Espuma de afeitar  
     		Maquinillas eléctricas  
-  	49. Cuidado bucal  
+49. Cuidado bucal  
     		Pasta de dientes  
     		Cepillos de dientes  
     		Hilo dental  
     		Colutorio  
     		Blanqueador dental  
     		Cepillo eléctrico  
-  	50. Cosmética y cuidado facial  
+50. Cosmética y cuidado facial  
     		Crema hidratante  
     		Crema antiarrugas  
     		Crema solar  
@@ -446,7 +435,7 @@
     		Tónico facial  
     		Mascarilla facial  
     		Bálsamo labial  
-  	51. Salud y parafarmacia  
+51. Salud y parafarmacia  
     		Vitaminas  
     		Suplementos nutricionales  
     		Termómetros  
@@ -456,7 +445,7 @@
     		Vendas  
     		Guantes desechables  
     		Test de embarazo    
-  	52. Alimentación para perros  
+52. Alimentación para perros  
     		Pienso seco  
     		Pienso húmedo  
     		Snacks de perros 
@@ -464,14 +453,14 @@
     		Comida natural  
     		Comida especial cachorros  
     		Comida especial senior  
-  	53. Alimentación para gatos  
+53. Alimentación para gatos  
     		Pienso seco  
     		Pienso húmedo  
     		Snacks de gatos
     		Comida natural  
     		Comida especial gatitos  
     		Comida especial gatos mayores  
-  	54. Accesorios  
+54. Accesorios  
     		Juguetes  
     		Camas  
     		Rascadores  
@@ -479,7 +468,7 @@
     		Collares y correas  
     		Comederos y bebederos  
     		Fuentes de agua  
-  	55. Higiene y cuidado  
+55. Higiene y cuidado  
     		Arena para gatos  
     		Champú para mascotas  
     		Toallitas  
