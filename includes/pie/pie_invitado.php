@@ -1,10 +1,10 @@
 <footer class="footer-contenido" role="contentinfo" aria-label="Pie de página SuperMarketArthur">
     <nav class="footer-enlaces">
-        <a href="/politica-privacidad.php">Política de Privacidad</a>
+        <a href="./politica-privacidad.php">Política de Privacidad</a>
         <span aria-hidden="true">|</span>
-        <a href="/terminos-condiciones.php">Términos y Condiciones</a>
+        <a href="./terminos-condiciones.php">Términos y Condiciones</a>
         <span aria-hidden="true">|</span>
-        <a href="/politica-cookies.php">Política de Cookies</a>
+        <a href="./politica-cookies.php">Política de Cookies</a>
     </nav>
     <div class="registro-llamada">
         <p>Regístrate o inicia sesión para aprovechar todas las funcionalidades.</p>
