@@ -1,170 +1,4 @@
-11. Pescado azul  
-      		Salmón  
-      		Atún  
-      		Sardinas  
-      		Caballa  
-      		Bonito  
-      		Anchoas  
-      		Jurel  
-      		Boquerones  
-12. Mariscos  
-      		Gambas  
-      		Langostinos  
-      		Mejillones  
-      		Almejas  
-      		Berberechos  
-      		Navajas  
-      		Ostras  
-      		Vieiras  
-      		Bogavante  
-      		Cigalas  
-      		Cangrejo  
-      		Pulpo  
-      		Calamares  
-      		Sepia  
-13. Ahumados  
-      		Salmón ahumado  
-      		Bacalao ahumado  
-      		Trucha ahumada  
-      		Atún ahumado   
-14. Pan del día  
-      		Barra de pan  
-      		Pan de pueblo  
-      		Pan integral  
-      		Pan de centeno  
-      		Pan de semillas  
-      		Pan sin gluten  
-      		Pan de molde  
-      		Panecillos  
-      		Baguette  
-      		Chapata  
-15. Bollos y pasteles  
-      		Croissants  
-      		Napolitanas  
-      		Ensaimadas  
-      		Donuts  
-      		Palmeras  
-      		Magdalenas  
-      		Muffins  
-      		Bizcochos  
-      		Tarta de manzana  
-      		Tarta de queso  
-      		Pasteles variados  
-16. Empanadas y empanadillas  
-      		Empanada gallega  
-      		Empanada de atún  
-      		Empanadillas de carne  
-      		Empanadillas de pollo  
-17. Panes especiales  
-      		Pan de ajo  
-      		Pan de cebolla  
-      		Pan de aceitunas  
-      		Pan de tomate  
-      		Pan de espelta
-18. Huevos y ovoproductos  
-	    	Huevos camperos  
-    		Huevos ecológicos  
-    		Huevos de codorniz  
-    		Claras pasteurizadas  
-    		Yemas pasteurizadas  
-    		Ovoproductos líquidos    
-19. Leche  
-    		Leche entera  
-    		Leche semidesnatada  
-    		Leche desnatada  
-    		Leche sin lactosa  
-    		Leche enriquecida (calcio, vitaminas)  
-    		Leche vegetal  
-      		Bebida de soja  
-      		Bebida de avena  
-      		Bebida de almendra  
-      		Bebida de arroz  
-      		Bebida de coco  
-      		Bebida de avellanas  
-20. Quesos  
-    		Queso fresco  
-    		Queso de untar  
-    		Queso curado  
-    		Queso semicurado  
-    		Queso tierno  
-    		Queso rallado  
-    		Queso en lonchas  
-    		Queso azul  
-    		Queso de cabra  
-    		Queso manchego  
-    		Queso mozzarella  
-    		Queso parmesano  
-    		Queso gouda  
-    		Queso cheddar  
-    		Queso emmental  
-    		Queso ricotta  
-    		Queso feta  
-21. Yogures y postres lácteos  
-    		Yogur natural  
-    		Yogur azucarado  
-    		Yogur desnatado  
-    		Yogur griego  
-    		Yogur de sabores  
-    		Yogur con frutas  
-    		Yogur bífidus  
-    		Yogur sin lactosa
-			Flan  
-      		Natillas  
-      		Arroz con leche  
-      		Cuajada  
-      		Mousse  
-      		Pudding  
-      		Kéfir  
-22. Mantequillas y margarinas  
-    		Mantequilla tradicional  
-    		Mantequilla sin sal  
-    		Mantequilla con sal  
-    		Margarina  
-    		Untables vegetales  
-    		Mantequilla light  
-23. Arroces, pastas y legumbres  
-    		Arroz blanco  
-    		Arroz integral  
-    		Arroz basmati  
-    		Arroz jazmín  
-    		Arroz para sushi  
-    		Pasta corta (macarrones, penne, fusilli)  
-    		Pasta larga (espaguetis, tallarines, fettuccine)  
-    		Pasta rellena (ravioli, tortellini, canelones)  
-    		Pasta sin gluten  
-    		Legumbres secas (lentejas, garbanzos, alubias, judías pintas, soja)  
-    		Couscous  
-    		Quinoa  
-    		Bulgur  
-    		Polenta  
-24. Conservas y semiconservas  
-			Atún en aceite  
-      		Sardinas en lata  
-      		Mejillones en escabeche  
-      		Anchoas en aceite  
-      		Caballa en conserva    
-      		Guisantes en conserva
-      		Maíz dulce  
-      		Tomate triturado  
-     		Pimientos asados  
-      		Espárragos  
-      		Alcachofas  
-      		Menestra  
-      		Champiñones    
-      		Carne de membrillo  
-      		Callos en conserva  
-      		Chorizo en lata  
-      		Jamón cocido en lata  
-25. Salsas y purés  
-      		Tomate frito  
-      		Salsa boloñesa  
-      		Salsa carbonara  
-      		Salsa barbacoa  
-      		Salsa de soja  
-      		Salsa pesto  
-      		Puré de patatas  
-      		Puré de verduras
-26. Aceites y vinagres  
+26. Aceites y vinagres  :
     		Aceite de oliva virgen extra  
     		Aceite de oliva suave  
     		Aceite de girasol  
@@ -177,7 +11,7 @@
    			Vinagre de arroz  
     		Vinagre de Jerez  
     		Vinagre de Módena  
-27. Harinas y preparados  
+27. Harinas y preparados  :
     		Harina de trigo  
     		Harina integral  
     		Harina de espelta  
@@ -194,7 +28,7 @@
     		Azúcar moreno  
     		Edulcorantes  
     		Stevia  
-28. Caldos y sopas  
+28. Caldos y sopas  :
     		Caldo de pollo  
     		Caldo de carne  
     		Caldo de verduras  
@@ -203,7 +37,7 @@
     		Cremas de verduras  
     		Purés preparados  
     		Sopas instantáneas  
-29. Especias y condimentos  
+29. Especias y condimentos  :
     		Sal fina  
     		Sal gruesa  
     		Sal marina  
@@ -227,7 +61,7 @@
     		Cebolla en polvo  
     		Mezcla de especias para paella  
     		Mezcla de especias para barbacoa    
-30. Aguas  
+30. Aguas  :
     		Agua mineral natural  
     		Agua con gas  
     		Agua saborizada  
