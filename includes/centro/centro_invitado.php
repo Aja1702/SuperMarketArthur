@@ -6,9 +6,6 @@
             <a href="./?userSession=registro" class="btn btn-registro-destacado">Regístrate ahora</a>
         </div>
     </section>
-
-
-
     <?php
     // Conexión (desde tu iniciar_session.php o similar)
     include './config/iniciar_session.php';
@@ -38,9 +35,7 @@
     $stmt = $pdo->prepare($sql);
     $stmt->execute($categorias);
     $productosDestacados = $stmt->fetchAll();
-
     ?>
-
     <section class="destacados">
         <h3>Productos Destacados</h3>
         <div class="productos-lista">
@@ -60,24 +55,6 @@
             <?php endforeach; ?>
         </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <section class="porque-elegirnos">
         <h3>¿Por qué elegir SuperMarketArthur?</h3>
         <ul>
