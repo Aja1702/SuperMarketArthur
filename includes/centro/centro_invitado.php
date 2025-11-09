@@ -32,7 +32,7 @@
             ) mp 
         ON p.id_categoria = mp.id_categoria AND p.id_producto = mp.min_producto_id
         WHERE c.nombre_categoria IN ($placeholders)
-        ORDER BY c.nombre_categoria;
+        ORDER BY p.nombre_producto ASC;
         ";
 
     $stmt = $pdo->prepare($sql);
@@ -47,9 +47,15 @@
             <?php foreach ($productosDestacados as $producto): ?>
                 <article class="producto">
                     <img src="<?php echo htmlspecialchars($producto['url_imagen']); ?>" alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>" />
-                    <h4><?php echo htmlspecialchars($producto['nombre_producto']); ?></h4>
-                    <p class="precio">€<?php echo number_format($producto['precio'], 2, ',', '.'); ?> / unidad</p>
-                    <a href="./?vistaMenu=categorias_productos&categoria=<?php echo urlencode($producto['categoria']); ?>" class="btn btn-ver-mas">Ver más</a>
+                    <h4>
+                        <?php echo htmlspecialchars($producto['nombre_producto']); ?>
+                    </h4>
+                    <p class="precio">
+                        €<?php echo number_format($producto['precio'], 2, ',', '.'); ?> / unidad
+                    </p>
+                    <a href="./?vistaMenu=categorias_productos&categoria=<?php echo urlencode($producto['categoria']); ?>" class="btn btn-ver-mas">
+                        Ver más
+                    </a>
                 </article>
             <?php endforeach; ?>
         </div>
