@@ -1,11 +1,15 @@
 <?php
 session_start();
-include '../../config/iniciar_session.php'; // tu archivo de conexión
+include '../config/iniciar_session.php'; // tu archivo de conexión
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $errores = '';
+
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        die('Error CSRF: Token inválido');
+    }
 
     // ✔ Validar que el email no esté vacío y que sea un email válido
     if ($email === '' || $password === '') {
@@ -13,12 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errores = 'Debe insertar un correo válido';
     } else {
-        $stmt = $conn->prepare("SELECT id_usuario, pass, tipo_usu FROM usuarios WHERE email = ?");
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $stmt = $pdo->prepare("SELECT id_usuario, pass, tipo_usu FROM usuarios WHERE email = ?");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($usuario = $result->fetch_assoc()) {
+        if ($usuario = $result) {
             $passBD = $usuario['pass'];
             $esHash = (strpos($passBD, '$') === 0); // Si empieza por '$', probablemente ya es un hash
 
@@ -26,12 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // 1. Si la contraseña en la BD es texto plano y coincide "Root_Arturo_2002"
                 !$esHash && $password === $passBD
             ) {
+
                 // Migramos al hash seguro
                 $nuevoHash = password_hash($password, PASSWORD_DEFAULT);
-                $updStmt = $conn->prepare("UPDATE usuarios SET pass=? WHERE id_usuario=?");
-                $updStmt->bind_param('si', $nuevoHash, $usuario['id_usuario']);
-                $updStmt->execute();
-                $updStmt->close();
+                $updStmt = $pdo->prepare("UPDATE usuarios SET pass=? WHERE id_usuario=?");
+                $updStmt->execute( [$nuevoHash, $usuario['id_usuario']] ); 
+                $updStmt = null;
 
                 // Login exitoso
                 $_SESSION['id_usuario'] = $usuario['id_usuario'];
@@ -51,9 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             $errores = 'Correo electrónico no encontrado en el sistema';
         }
-        $stmt->close();
+        $stmt = null;
     }
-    $conn->close();
+    $pdo = null;
 }
 if ($errores !== '') {
 ?>

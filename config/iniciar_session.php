@@ -13,9 +13,10 @@ $options = [
     PDO::ATTR_EMULATE_PREPARES   => false,
 ];
 
-try {
+try { // $pdo es para la conexión PDO, mas seguro que mysqli.
     $pdo = new PDO($dsn, $username, $password);
     // Configurar PDO para lanzar excepciones en errores
 } catch (PDOException $e) {
-    throw new PDOException($e->getMessage(), (int)$e->getCode());
+    throw new PDOException($e->getMessage(), 
+    (int)$e->getCode());
 }

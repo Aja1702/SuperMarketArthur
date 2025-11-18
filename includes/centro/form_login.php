@@ -1,6 +1,14 @@
+<?php
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['csrf_token'];
+?>
+
 <div class="form-container-login">
     <h2>Iniciar sesión</h2>
-    <form id="loginForm" method="post" action="./includes/centro/procesar_login.php">
+    <form id="loginForm" method="post" action="./controllers/procesar_login.php">
+        <input type="text" name="csrf_token" value="<?php echo htmlspecialchars($token); ?>">
         <div class="form-group-login">
             <label for="email">Correo electrónico * </label>
             <input type="text" id="email" name="email" autocomplete="email">

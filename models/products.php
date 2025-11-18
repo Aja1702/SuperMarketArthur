@@ -1,3 +1,4 @@
+<?php
 class Product {
 public function getAllProducts($conn) {
 $sql = "SELECT id, nombre, precio FROM productos";
