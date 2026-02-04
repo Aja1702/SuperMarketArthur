@@ -55,12 +55,22 @@
 
     // Mostrar contenido basado en parámetros GET con validación segura
     $vistaValidaUser = ['login', 'registro', 'perfil', 'recuperar'];
-    $vistaValidaMenu = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto'];
-
+    $vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto'];
+    $vistaValidaMenuAdmin = ['administrador', 'admin_productos', 'admin_pedidos', 'admin_usuarios', 'admin_stock', 'admin_config'];
+    $vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'favoritos', 'config_usuario'];
+    
+    // Validar y mostrar vistas de administrador
+    if ($tipo_usuario === 'administrador' && isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuAdmin)) {
+        $vista = $_GET['vistaMenu'];
+        include("./includes/centro/centro_{$vista}.php");
+    } else 
+    
+    
+    // Incluir formularios o vistas específicas basadas en parámetros GET con validación de usuarios
     if (isset($_GET['userSession']) && in_array($_GET['userSession'], $vistaValidaUser)) {
         $vista = $_GET['userSession'];
         include("./includes/centro/form_{$vista}.php");
-    } elseif (isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenu)) {
+    } elseif (isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuInvitado)) {
         $vista = $_GET['vistaMenu'];
         include("./includes/centro/centro_{$vista}.php");
     } else {
