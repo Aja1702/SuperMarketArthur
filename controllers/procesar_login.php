@@ -21,7 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($usuario = $result) {
+        if ($result) { 
+            $usuario = $result; 
             $passBD = $usuario['pass'];
             $esHash = (strpos($passBD, '$') === 0); // Si empieza por '$', probablemente ya es un hash
 
@@ -65,7 +66,7 @@ if ($errores !== '') {
             <span class="close-btn" onclick="closeAlert()">&times;</span>
             <p>
                 <?php
-                echo nl2br(htmlspecialchars($errores));
+                    echo nl2br(htmlspecialchars($errores));
                 ?>
             </p>
             <button onclick="closeAlert()">Cerrar</button>
