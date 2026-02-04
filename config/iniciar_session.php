@@ -1,6 +1,9 @@
 <?php
 // Conexión a la base de datos
+
+if (session_status() === PHP_SESSION_NONE) {
 session_start();
+}
 
 $host = "localhost";
 $servername = "localhost";

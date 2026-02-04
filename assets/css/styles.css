@@ -427,7 +427,7 @@ body {
     outline: none;
 }
 
-copyright p {
+.copyright p {
     margin-top: 1rem;
     font-size: 0.9rem;
     color: #90caf9;
