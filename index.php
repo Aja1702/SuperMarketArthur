@@ -8,8 +8,8 @@
     <meta name="description" content="Supermarket Arthur - Encuentra los mejores productos al mejor precio." />
     <meta name="keywords" content="supermercado, compras, productos, ofertas" />
     <title>Supermarket Arthur</title>
-    <link rel="icon" href="./img/logo/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="icon" href="./assets/img/logo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
 </head>
 
 <body>
