@@ -43,15 +43,15 @@ document.addEventListener('DOMContentLoaded',
                 if (valor === "") {
                     errorMsg = "Campo vacío!!";
                 } else if (valor.length < 8) {
-                    errorMsg = "La contraseña debe tener al menos 8 caracteres.";
+                    errorMsg = "Debe contener minimo 8 caracteres.";
                 } else if (!/[A-Z]/.test(valor)) {
-                    errorMsg = "La contraseña debe contener al menos una letra mayúscula.";
+                    errorMsg = "Debe contener minimo una letra mayúscula.";
                 } else if (!/[a-z]/.test(valor)) {
-                    errorMsg = "La contraseña debe contener al menos una letra minúscula.";
+                    errorMsg = "Debe contener minimo una letra minúscula.";
                 } else if (!/[0-9]/.test(valor)) {
-                    errorMsg = "La contraseña debe contener al menos un número.";
+                    errorMsg = "Debe contener minimo un número.";
                 } else if (!/[\W_]/.test(valor)) {
-                    errorMsg = "La contraseña debe contener al menos un carácter especial.";
+                    errorMsg = "Debe contener minimo un carácter especial.";
                 } else {
                     errorMsg = "";
                 }

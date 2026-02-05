@@ -13,6 +13,7 @@ $token = $_SESSION['csrf_token'];
             <label for="email">Correo electrónico * </label>
             <input type="text" id="email" name="email" autocomplete="email">
             <span class="error-icon" id="error-email" aria-live="polite"></span>
+            
             <label for="password">Contraseña *</label>
             <input type="password" id="password" name="password">
             <span class="error-icon" id="error-password" aria-live="polite"></span>

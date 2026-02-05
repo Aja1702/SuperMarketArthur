@@ -749,19 +749,13 @@ body {
 
 /* ICONOS DE ERROR SPAN */
 .error-icon {
-    display: block;
-    width: 20px;
-    height: 20px;
-    margin-top: 0.5rem;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23dc3545"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>') no-repeat center;
-    background-size: contain;
-    opacity: 0;
-    transition: opacity 0.3s;
+    color: #ed8936;
+    display: flex !important;     /* ✅ Cambia a flexbox */
+    align-items: center;          /* ✅ AHORA SÍ funciona */
+    justify-content: center;      /* ✅ Centra horizontal */
+    margin: 0.5rem auto 0 0;
 }
 
-.error-icon.visible {
-    opacity: 1;
-}
 
 /* CAMPOS OBLIGATORIOS */
 .form-container-login p {
@@ -774,21 +768,11 @@ body {
 
 /* MENSAJE DE ERROR SPAN */
 .mensaje-error {
-    display: block;
-    background: #f8d7da;
-    color: #721c24;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #f5c6cb;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
+    color: #f56565;
+    text-align: center;
+    align-items: center;
 }
 
-.mensaje-error.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
 
 /* BOTÓN */
 .btn-form-acceso {
