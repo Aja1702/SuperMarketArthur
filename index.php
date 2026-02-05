@@ -80,7 +80,7 @@
 
     include($rutas[$tipo_usuario]['pie']);
     ?>
-    <script type="module" src="./js/funciones.js"></script>
+    <script type="module" src="./assets/js/funciones.js"></script>
 </body>
 
 </html>
