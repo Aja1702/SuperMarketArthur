@@ -1,35 +1,37 @@
+
 <?php
-session_start();
-include '../sesion_bbdd/iniciar_session.php'; // tu conexión $conn
+
+ session_start();
+include '../config/iniciar_session.php'; // tu conexión $conn
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recibir y limpiar datos
-    $nombre      = trim($_POST['nombre'] ?? '');
-    $apellido1   = trim($_POST['apellido1'] ?? '');
-    $apellido2   = trim($_POST['apellido2'] ?? '');
-    $password    = $_POST['password'] ?? '';
-    $password2   = $_POST['confirm_password'] ?? '';
-    $provincia   = trim($_POST['provincia'] ?? '');
-    $localidad   = trim($_POST['localidad'] ?? '');
-    $cp          = trim($_POST['cp'] ?? '');
-    $calle       = trim($_POST['calle'] ?? '');
-    $numero      = trim($_POST['numero'] ?? '');
-    $telefono    = trim($_POST['tlfn'] ?? '');
-    $email       = strtolower(trim($_POST['email'] ?? ''));
-    $tipo_doc    = trim($_POST['tipo_doc'] ?? '');
-    $num_doc     = trim($_POST['caja_dni_nie'] ?? '');
-    $fecha_nac   = trim($_POST['fecha_nacer'] ?? '');
-    
+    $nombre       = trim($_POST['nombre'] ?? '');
+    $apellido1    = trim($_POST['apellido1'] ?? '');
+    $apellido2    = trim($_POST['apellido2'] ?? '');
+    $password     = $_POST['password'] ?? '';
+    $password2    = $_POST['confirm_password'] ?? '';
+    $provincia    = trim($_POST['provincia'] ?? '');
+    $localidad    = trim($_POST['localidad'] ?? '');
+    $cp           = trim($_POST['cp'] ?? '');
+    $calle        = trim($_POST['calle'] ?? '');
+    $numero       = trim($_POST['numero'] ?? '');
+    $telefono     = trim($_POST['tlfn'] ?? '');
+    $email        = strtolower(trim($_POST['email'] ?? ''));
+    $tipo_doc     = trim($_POST['tipo_doc'] ?? '');
+    $num_doc      = trim($_POST['caja_dni_nie'] ?? '');
+    $fecha_nac    = trim($_POST['fecha_nacer'] ?? '');
 
     $errores = [];
 
-    // Validaciones mínimas (puedes añadir más)
+    // Validaciones mínimas
     if (
         $nombre === '' || $apellido1 === '' || $provincia === '' || $localidad === '' ||
         $cp === '' || $calle === '' || $numero === '' || $email === '' || $tipo_doc === '' ||
         $num_doc === '' || $fecha_nac === '' || $password === '' || $password2 === ''
     ) {
-        $errores[] = "Todos los campos obligatorios deben estar completos (32).";
+        $errores[] = "Todos los campos obligatorios deben estar completos.";
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -44,46 +46,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores[] = "La contraseña debe tener al menos 8 caracteres.";
     }
 
-    // Comprobar duplicados
-    $stmt = $conn->prepare("SELECT id_usuario FROM usuarios WHERE email=? OR num_doc=?");
-    $stmt->bind_param("ss", $email, $num_doc);
-    $stmt->execute();
-    $stmt->store_result();
-    if ($stmt->num_rows > 0) {
-        $errores[] = "Ya existe un usuario con ese correo o documento. (53)";
+    // ✅ PDO: Comprobar duplicados
+    $stmt = $pdo->prepare("SELECT id_usuario FROM usuarios WHERE email = ? OR num_doc = ?");
+    $stmt->execute([$email, $num_doc]);
+    if ($stmt->rowCount() > 0) {
+        $errores[] = "Ya existe un usuario con ese correo o documento.";
     }
-    $stmt->close();
 
-    if (count($errores) === 0) {
+    if (empty($errores)) {
         // Hash de la contraseña
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        // INSERT seguro
-        $stmt = $conn->prepare("INSERT INTO usuarios 
+        // ✅ PDO: INSERT seguro
+        $stmt = $pdo->prepare("INSERT INTO usuarios 
             (nombre, apellido1, apellido2, pass, provincia, localidad, cp, calle, numero, telefono, email, tipo_doc, num_doc, fecha_nacimiento, tipo_usu)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'u')");
 
-        $stmt->bind_param("ssssssssssssss", $nombre, $apellido1, $apellido2, $hash, $provincia, $localidad, $cp, $calle, $numero, $telefono, $email, $tipo_doc, $num_doc, $fecha_nac);
+        $stmt->execute([$nombre, $apellido1, $apellido2, $hash, $provincia, $localidad, $cp, $calle, $numero, $telefono, $email, $tipo_doc, $num_doc, $fecha_nac]);
 
-        if ($stmt->execute()) {
-            // Opcional, inicia sesión directamente
-            $_SESSION['id_usuario'] = $stmt->insert_id;
+        if ($pdo->lastInsertId()) {
+            // Inicia sesión directamente
+            $_SESSION['id_usuario'] = $pdo->lastInsertId();
             $_SESSION['tipo_usu'] = 'u';
+            $_SESSION['usuario_nombre'] = $nombre;
+            
             header("Location: /SuperMarketArthur/");
             exit();
         } else {
-            $errores[] = "Error al registrar usuario.";
+            $errores[] = "Error al registrar usuario. Inténtalo de nuevo.";
         }
-        $stmt->close();
     }
-    $conn->close();
 
-    // Devuelve errores en el formulario
+    // Devolver errores al formulario
     if (!empty($errores)) {
-        foreach ($errores as $e) {
-            echo "<p style='color:red;'>" . htmlspecialchars($e) . "</p>";
-        }
-        echo "<a href='javascript:history.back()'>Volver</a>";
+        $_SESSION['registro_errores'] = $errores;
+        header("Location: ../registro.php");
         exit();
     }
 }
+?>

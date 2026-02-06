@@ -11,7 +11,7 @@ $nombre_usuario = $_SESSION['nombre'] ?? 'Usuario';
     <h2>
         Bienvenido
     </h2>
-    <form action="./sesion_bbdd/cerrar_session.php" method="post" class="cerrar-sesion-usuario">
+    <form action="./config/cerrar_session.php" method="post" class="cerrar-sesion-usuario">
         <button type="submit" title="Cerrar sesión" class="btn-cerrar-sesion-usuario">
             <img src="./IMG/apagar.png" alt="Cerrar sesión">
         </button>

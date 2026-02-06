@@ -1,6 +1,6 @@
 <div class="form-container-registro">
     <h2>Registro de usuario</h2>
-    <form id="registroForm" method="post" action="./centro/procesar_registro.php">
+    <form id="registroForm" method="post" action="./controllers/procesar_registro.php">
         <!-- Grupo de campos para nombre y apellidos -->
         <div class="form-group-registro">
             <div class="input-group-registro">
