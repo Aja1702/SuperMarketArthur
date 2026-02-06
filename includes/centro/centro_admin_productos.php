@@ -90,7 +90,7 @@
     <!-- TAB 2: NUEVO PRODUCTO -->
     <div id="nuevo-producto" class="tab-content">
         <form method="POST" action="controllers/admin_productos.php" enctype="multipart/form-data" class="form-producto">
-            <input type="hidden" name="accion" value="nuevo">
+            <input type="text" name="accion" value="nuevo">
             
             <div class="form-grid">
                 <div class="form-group">
@@ -143,14 +143,14 @@
 </div>
 
 <script>
-function mostrarTab(tab) {
+function mostrarTab(tab) { // Ocultar todas las pestañas y desactivar botones
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(tab + '-productos').classList.add('active');
     event.target.classList.add('active');
 }
 
-function eliminarProducto(id) {
+function eliminarProducto(id) { // Confirmar eliminación y enviar petición AJAX
     if(confirm('¿Eliminar este producto?')) {
         fetch('controllers/admin_productos.php', {
             method: 'POST',

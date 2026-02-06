@@ -2,7 +2,7 @@
     <ul class="menu-admin-lista">
         <!-- 1. DASHBOARD -->
         <li class="menu-item dashboard activo">
-            <a href="?vistaMenu=admin_dashboard" class="menu-link-admin" >
+            <a href="?vistaMenu=administrador" class="menu-link-admin" >
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>

@@ -15,18 +15,11 @@
     --color-administrador-text: #fff;
 }
 
-html,
 body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-
-
-body {
-    font-family: Arial, sans-serif;
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: auto 1fr auto;
+    font-family: 'Courier New', Courier, monospace;
     margin: 0;
     padding: 0;
     background-color: white;
@@ -36,8 +29,6 @@ body {
 /* Estilos para los encabezados */
 
 /* Encabezado invitado */
-
-/* Header invitado con colores azules */
 .header-invitado {
     background-color: #0d47a1;
     /* Azul oscuro principal */
@@ -48,19 +39,16 @@ body {
     padding: 1rem 2rem;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 .header-invitado .logo img {
     height: 100px;
     width: 120px;
 }
-
 .titulo-web-invitado {
     flex-grow: 1;
     margin-left: 1rem;
     font-size: 1.5rem;
     font-weight: 700;
 }
-
 .nav-invitado ul.menu-invitado {
     list-style: none;
     display: flex;
@@ -68,7 +56,6 @@ body {
     margin: 0;
     padding: 0;
 }
-
 .menu-invitado li a {
     color: #bbdefb;
     /* Azul claro */
@@ -78,7 +65,6 @@ body {
     font-weight: 600;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 .menu-invitado li a:hover,
 .menu-invitado li a:focus {
     background-color: #1976d2;
@@ -86,22 +72,18 @@ body {
     color: #ffffff;
     outline: none;
 }
-
 .btn-login {
     background-color: transparent;
     border: 2px solid #bbdefb;
 }
-
 .btn-registrarse {
     background-color: #2196f3;
     /* Azul vibrante */
     color: white;
 }
-
 .btn-registrarse.destacado {
     box-shadow: 0 4px 10px rgba(33, 150, 243, 0.7);
 }
-
 .btn-registrarse.destacado:hover,
 .btn-registrarse.destacado:focus {
     background-color: #1976d2;
@@ -109,7 +91,6 @@ body {
     color: white;
     outline: none;
 }
-
 /* responsive para moviles y tablets */
 @media (max-width: 768px) {
     .header-invitado {

@@ -4,7 +4,7 @@
         <div class="stat-card verde">
             <i class="fas fa-users"></i>
             <div>
-                <h3>Total Usuarios: <?php echo $pdo->query("SELECT COUNT(*) FROM usuarios")->fetchColumn(); ?></h3>
+                <h3>Total Usuarios: <?php echo $pdo->query("SELECT COUNT(*) FROM usuarios WHERE tipo_usu='u'")->fetchColumn(); ?></h3>
             </div>
         </div>
         
