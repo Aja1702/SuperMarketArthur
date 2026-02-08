@@ -1,3 +1,4 @@
+import { provinciasData, codigosPostales } from './provin_cp.js';
 
 //contenido form_login.php
 document.addEventListener('DOMContentLoaded',
@@ -229,7 +230,6 @@ document.addEventListener('DOMContentLoaded', function () {
 //contenido form_registro.php
 
 // Datos de provincias y localidades (totales)
-import { provinciasData, codigosPostales } from './provin_cp.js';
 document.addEventListener('DOMContentLoaded',
     function () {
         const form = document.getElementById('registroForm');
