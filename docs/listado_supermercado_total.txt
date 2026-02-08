@@ -1,0 +1,554 @@
+# LISTADO TOTAL DE CATEGORÍAS - SUPERMARKET ARTHUR (55 SECCIONES)
+
+1. Frutas frescas:
+    Plátanos
+    Manzanas Golden
+    Manzanas Royal Gala
+    Peras Conferencia
+    Naranjas de mesa
+    Mandarinas
+    Fresas
+    Uvas blancas
+    Kiwis
+    Piña
+    Sandía
+    Melón
+
+2. Verduras y hortalizas:
+    Tomates de ensalada
+    Tomates cherry
+    Lechuga iceberg
+    Patatas
+    Cebollas
+    Pimientos verdes
+    Pimientos rojos
+    Calabacín
+    Berenjena
+    Zanahorias
+    Pepino
+    Ajos
+
+3. Carnes de vacuno y porcino:
+    Filetes de ternera
+    Chuletón de buey
+    Carne picada de vacuno
+    Lomo de cerdo
+    Costillas de cerdo
+    Solomillo de cerdo
+    Panceta
+    Magro de cerdo
+
+4. Aves y corral:
+    Pechuga de pollo
+    Muslos de pollo
+    Pollo entero
+    Alas de pollo
+    Pechuga de pavo
+    Conejo entero
+
+5. Charcutería y embutidos:
+    Jamón serrano
+    Jamón cocido
+    Chorizo
+    Salchichón
+    Mortadela
+    Beicon
+    Lomo embuchado
+    Fuet
+
+6. Pescado fresco:
+    Salmón
+    Merluza
+    Dorada
+    Lubina
+    Bacalao
+    Atún
+    Boquerones
+    Sardinas
+
+7. Marisco y moluscos:
+    Gambas
+    Langostinos
+    Mejillones
+    Almejas
+    Pulpo
+    Calamares
+    Sepia
+
+8. Panadería artesanal:
+    Barra de pan
+    Pan de hogaza
+    Baguette
+    Pan integral
+    Pan de centeno
+    Pan de molde artesano
+
+9. Bollería y pastelería fresca:
+    Croissants
+    Napolitanas de chocolate
+    Ensaimadas
+    Donuts
+    Berlinas
+    Palmeras
+    Tortas de manteca
+    Tartas variadas
+
+10. Huevos y ovoproductos:
+    Huevos clase L
+    Huevos de codorniz
+    Huevos camperos
+    Clara de huevo pasteurizada
+
+11. Leche y bebidas vegetales:
+    Leche entera
+    Leche semidesnatada
+    Leche desnatada
+    Leche sin lactosa
+    Bebida de soja
+    Bebida de avena
+    Bebida de almendras
+
+12. Batidos y preparados lácteos:
+    Batido de chocolate
+    Batido de fresa
+    Batido de vainilla
+    Horchata
+    Nata para montar
+    Nata para cocinar
+
+13. Yogures naturales y con bífidus:
+    Yogur natural
+    Yogur desnatado
+    Yogur con bífidus natural
+    Yogur griego natural
+
+14. Yogures de sabores y con trozos:
+    Yogur de fresa
+    Yogur de macedonia
+    Yogur de limón
+    Yogur con trozos de fruta
+    Yogur de coco
+
+15. Postres lácteos y gelatinas:
+    Natillas de vainilla
+    Natillas de chocolate
+    Flan de huevo
+    Arroz con leche
+    Gelatina de fresa
+    Gelatina de limón
+
+16. Quesos tiernos y curados:
+    Queso tierno
+    Queso semiseco
+    Queso curado
+    Queso añejo
+    Queso en lonchas tipo Edam
+    Queso tipo Gouda
+
+17. Quesos frescos y para untar:
+    Queso fresco tipo Burgos
+    Queso de untar natural
+    Queso mascarpone
+    Queso requesón
+    Queso de untar a las finas hierbas
+
+18. Quesos internacionales:
+    Queso Parmesano
+    Queso Mozzarella
+    Queso Brie
+    Queso Camembert
+    Queso Roquefort
+    Queso Feta
+    Queso Cheddar
+
+19. Mantequillas y margarinas:
+    Mantequilla con sal
+    Mantequilla sin sal
+    Margarina vegetal
+    Margarina con fibra
+
+20. Arroces y cereales:
+    Arroz redondo
+    Arroz largo
+    Arroz integral
+    Arroz vaporizado
+    Copos de avena
+    Cereales de desayuno
+
+21. Pastas secas y rellenas:
+    Macarrones
+    Espaguetis
+    Tallarines
+    Placas de lasaña
+    Tortellini de carne
+    Ravioli de queso
+
+22. Legumbres secas:
+    Lentejas pardinas
+    Garbanzos pedrosillanos
+    Alubias blancas
+    Alubias pintas
+
+23. Conservas de pescado y marisco (túnidos, sardinas, etc.):
+    Atún en aceite de oliva
+    Atún al natural
+    Sardinillas en aceite
+    Berberechos
+    Mejillones en escabeche
+    Anchoas del Cantábrico
+
+24. Conservas vegetales y legumbres cocidas:
+    Espárragos blancos
+    Pimientos del piquillo
+    Champiñones laminados
+    Maíz dulce
+    Garbanzos cocidos
+    Lentejas cocidas
+    Judías blancas cocidas
+
+25. Conservas de carne y platos preparados en conserva:
+    Albóndigas en salsa
+    Magro de cerdo en conserva
+    Cocido madrileño en bote
+    Fabada asturiana en bote
+
+26. Aceites y vinagres:
+    Aceite de oliva virgen extra
+    Aceite de oliva suave
+    Aceite de girasol
+    Aceite de maíz
+    Aceite de coco
+    Aceite de sésamo
+    Vinagre de vino
+    Vinagre balsámico
+    Vinagre de manzana
+    Vinagre de arroz
+    Vinagre de Jerez
+    Vinagre de Módena
+
+27. Harinas y preparados:
+    Harina de trigo
+    Harina integral
+    Harina de espelta
+    Harina de maíz
+    Harina de arroz
+    Harina sin gluten
+    Harina de garbanzo
+    Preparados para bizcocho
+    Preparados para pan
+    Preparados para pizza
+    Levadura
+    Polvo de hornear
+    Azúcar blanca
+    Azúcar moreno
+    Edulcorantes
+    Stevia
+
+28. Caldos y sopas:
+    Caldo de pollo
+    Caldo de carne
+    Caldo de verduras
+    Caldo de pescado
+    Sopas deshidratadas (sopa de sobre)
+    Cremas de verduras
+    Purés preparados
+    Sopas instantáneas
+
+29. Especias y condimentos:
+    Sal fina
+    Sal gruesa
+    Sal marina
+    Sal rosa del Himalaya
+    Pimienta negra
+    Pimienta blanca
+    Pimentón dulce
+    Pimentón picante
+    Curry
+    Orégano
+    Tomillo
+    Romero
+    Albahaca
+    Laurel
+    Comino
+    Nuez moscada
+    Clavo
+    Canela
+    Jengibre
+    Ajo en polvo
+    Cebolla en polvo
+    Mezcla de especias para paella
+    Mezcla de especias para barbacoa
+
+30. Aguas:
+    Agua mineral natural
+    Agua con gas
+    Agua saborizada
+    Agua mineral infantil
+    Agua mineral en botellas grandes
+    Agua mineral en botellas pequeñas
+
+31. Refrescos:
+    Refrescos con gas (cola, naranja, limón, tónica, ginger ale)
+    Refrescos sin gas (té frío, bebidas isotónicas)
+    Bebidas energéticas
+    Bebidas deportivas
+    Bebidas zero azúcar
+
+32. Zumos y néctares:
+    Zumo de naranja
+    Zumo de piña
+    Zumo de manzana
+    Zumo multifrutas
+    Zumo de melocotón
+    Zumo de uva
+    Néctar de frutas
+    Batidos de frutas
+    Smoothies
+
+33. Cafés e infusiones:
+    Café molido
+    Café en grano
+    Café soluble
+    Café descafeinado
+    Café en cápsulas
+    Infusiones de manzanilla
+    Infusiones de menta
+    Infusiones de tila
+    Infusiones de frutos rojos
+    Té negro
+    Té verde
+    Té rojo
+    Rooibos
+    Cacao soluble
+    Chocolate a la taza
+
+34. Cervezas y sidras:
+    Cerveza rubia
+    Cerveza negra
+    Cerveza tostada
+    Cerveza sin alcohol
+    Cerveza artesanal
+    Cerveza importada
+    Sidra natural
+    Sidra espumosa
+
+35. Vinos y licores:
+    Vino tinto joven
+    Vino tinto crianza
+    Vino tinto reserva
+    Vino blanco seco
+    Vino blanco afrutado
+    Vino rosado
+    Vino espumoso (cava, champagne)
+    Vino dulce
+    Vermut
+    Licores (orujo, pacharán, anís, licor de hierbas)
+    Ginebra
+    Ron
+    Whisky
+    Vodka
+    Tequila
+    Brandy
+
+36. Galletas y bizcochos:
+    Galletas María
+    Galletas de chocolate
+    Galletas integrales
+    Galletas sin gluten
+    Galletas rellenas
+    Sobaos
+    Barritas de cereales
+    Barritas energéticas
+
+37. Chocolates y caramelos:
+    Chocolate negro
+    Chocolate con leche
+    Chocolate blanco
+    Bombones
+    Chocolatinas
+    Caramelos blandos
+    Caramelos duros
+    Chicles
+    Regaliz
+    Turrones
+    Mazapanes
+
+38. Snacks salados:
+    Patatas fritas
+    Palitos salados
+    Frutos secos (almendras, nueces, avellanas, cacahuetes, pistachos)
+    Frutos secos tostados
+    Frutos secos fritos
+    Palomitas de maíz
+    Aperitivos de maíz
+    Galletitas saladas
+    Snacks de queso
+
+39. Repostería y productos para hornear:
+    Preparados para tartas
+    Coberturas de chocolate
+    Rellenos de frutas
+    Decoraciones de azúcar
+    Fondant
+    Glaseado
+    Virutas de chocolate
+    Levadura de repostería
+    Moldes y cápsulas
+
+40. Verduras y hortalizas congeladas:
+    Espinacas
+    Guisantes congelados
+    Judías verdes
+    Brócoli
+    Coliflor
+    Menestra
+    Zanahorias
+    Patatas fritas congeladas
+
+41. Pescados y mariscos congelados:
+    Filetes de merluza
+    Filetes de bacalao
+    Gambas peladas
+    Calamares troceados
+    Anillas de calamar
+    Langostinos
+    Pulpo cocido
+
+42. Carnes y aves congeladas:
+    Pechugas de pollo
+    Hamburguesas
+    Albóndigas
+    Nuggets de pollo
+    Costillas
+
+43. Platos preparados congelados:
+    Lasagna
+    Pizza
+    Croquetas
+    Empanadillas
+    Paella
+    Arroces preparados
+    Verduras salteadas
+    Tortilla de patatas
+    Pasta rellena
+
+44. Helados y postres congelados:
+    Tarrinas de helado
+    Helados de palo
+    Helados de cucurucho
+    Bombones helados
+    Tartas heladas
+    Sorbetes
+
+45. Limpieza general:
+    Limpiador multiusos
+    Limpiador desinfectante
+    Limpiador de baños
+    Limpiador de cocina
+    Limpiacristales
+    Limpiador de suelos
+    Ambientadores
+    Desinfectantes
+    Limpiador de muebles
+
+46. Lavavajillas y lavadoras:
+    Detergente para lavadora
+    Detergente líquido
+    Detergente en polvo
+    Cápsulas de detergente
+    Suavizante
+    Quitamanchas
+    Detergente para ropa delicada
+    Detergente para lavavajillas
+    Pastillas para lavavajillas
+    Sal para lavavajillas
+    Abrillantador
+
+47. Papel y celulosas:
+    Papel higiénico
+    Papel de cocina
+    Servilletas
+    Pañuelos de papel
+    Toallitas húmedas
+    Rollos industriales
+    Bolsas de basura
+    Bolsas de congelación
+    Film transparente
+    Papel de aluminio
+    Envases para alimentos
+
+48. Higiene personal:
+    Gel de bańo
+    Jabón de manos
+    Champú
+    Acondicionador
+    Gel íntimo
+    Desodorante
+    Esponjas
+    Cuchillas de afeitar
+    Espuma de afeitar
+    Maquinillas eléctricas
+
+49. Cuidado bucal:
+    Pasta de dientes
+    Cepillos de dientes
+    Hilo dental
+    Colutorio
+    Blanqueador dental
+    Cepillo eléctrico
+
+50. Cosmética y cuidado facial:
+    Crema hidratante
+    Crema antiarrugas
+    Crema solar
+    After sun
+    Loción corporal
+    Leche limpiadora
+    Tónico facial
+    Mascarilla facial
+    Bálsamo labial
+
+51. Salud y parafarmacia:
+    Vitaminas
+    Suplementos nutricionales
+    Termómetros
+    Mascarillas higiénicas
+    Gel hidroalcohólico
+    Tiritas
+    Vendas
+    Guantes desechables
+    Test de embarazo
+
+52. Alimentación para perros:
+    Pienso seco
+    Pienso húmedo
+    Snacks de perros
+    Huesos
+    Comida natural
+    Comida especial cachorros
+    Comida especial senior
+
+53. Alimentación para gatos:
+    Pienso seco
+    Pienso húmedo
+    Snacks de gatos
+    Comida natural
+    Comida especial gatitos
+    Comida especial gatos mayores
+
+54. Accesorios:
+    Juguetes
+    Camas
+    Rascadores
+    Transportines
+    Collares y correas
+    Comederos y bebederos
+    Fuentes de agua
+
+55. Higiene y cuidado:
+    Arena para gatos
+    Champú para mascotas
+    Toallitas
+    Cepillos
+    Cortaúńas
+    Repelentes de insectos
