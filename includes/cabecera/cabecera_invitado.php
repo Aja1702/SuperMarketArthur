@@ -7,7 +7,7 @@
     <h1 class="titulo-web-invitado">SuperMarketArthur</h1>
     <nav class="nav-invitado" role="navigation" aria-label="Navegación principal para invitados">
         <ul class="menu-invitado">
-            <li><a href="./?vistaMenu=carrito" aria-label="Ver carrito de compras">🛒 Carrito</a></li>
+            <li><a href="#" id="openCart" aria-label="Ver carrito de compras">🛒 Carrito</a></li>
             <li><a href="./?userSession=login" class="btn btn-login">Iniciar sesión</a></li>
             <li><a href="./?userSession=registro" class="btn btn-registrarse destacado">Registrarse</a></li>
         </ul>

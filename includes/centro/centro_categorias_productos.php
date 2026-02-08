@@ -14,7 +14,8 @@ if ($id_categoria > 0) {
     if ($resCat) {
         $categoria = $resCat;
         $nombre_categoria = htmlspecialchars($categoria['nombre_categoria']);
-    } else {
+    }
+    else {
         $nombre_categoria = "Categoría no encontrada";
     }
 
@@ -29,16 +30,16 @@ if ($id_categoria > 0) {
         <h2>
             Productos de la categoría:
             <?php
-            echo $nombre_categoria;
-            ?>
+    echo $nombre_categoria;
+?>
         </h2>
         <?php
-        if (count($result) > 0) {
-        ?>
+    if (count($result) > 0) {
+?>
             <div class="lista-productos">
                 <?php
-                foreach ($result as $producto):
-                ?>
+        foreach ($result as $producto):
+?>
                     <article class="producto">
                         <img src="<?php echo htmlspecialchars($producto['url_imagen']); ?>" alt="imagen de <?php echo htmlspecialchars($producto['nombre_producto']); ?>">
                         <h3>
@@ -51,25 +52,29 @@ if ($id_categoria > 0) {
                             <?php echo number_format($producto['precio'], 2); ?>
                             €
                         </p>
-                        <!-- Aquí puedes añadir más detalles o botones -->
+                        <button onclick="addToCart(<?php echo $producto['id_producto']; ?>)" class="btn btn-add-cart">
+                            🛒 Añadir
+                        </button>
                     </article>
                 <?php
-                endforeach;
-                ?>
+        endforeach;
+?>
             </div>
         <?php
-        } else {
-        ?>
+    }
+    else {
+?>
             <p>No hay productos en esta categoría.</p>
         <?php
-        }
-        ?>
+    }
+?>
         <p>
             <a href="./?vistaMenu=categorias_productos">← Volver a categorías</a>
         </p>
     </div>
 <?php
-} else {
+}
+else {
     // Mostrar listado de categorías (como en tu código original)
     $sql = "SELECT * FROM categorias";
     $rs = $pdo->query($sql);
@@ -90,7 +95,8 @@ if ($id_categoria > 0) {
                         </p>
                     </a>
                 </article>
-            <?php endwhile; ?>
+            <?php
+    endwhile; ?>
         </div>
     </div>
 <?php

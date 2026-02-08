@@ -51,6 +51,9 @@ $productosDestacados = $stmt->fetchAll();
                     <a href="./?vistaMenu=categorias_productos&categoria=<?php echo urlencode($producto['categoria']); ?>" class="btn btn-ver-mas">
                         Ver más
                     </a>
+                    <button onclick="addToCart(<?php echo $producto['id_producto']; ?>)" class="btn btn-add-cart">
+                        🛒 Añadir
+                    </button>
                 </article>
             <?php
 endforeach; ?>
