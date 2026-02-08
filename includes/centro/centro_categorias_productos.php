@@ -16,8 +16,8 @@ if ($id_categoria > 0) {
         $nombre_categoria = "Categoría no encontrada";
     }
 
-    // Consultar productos de esa categoría
-    $stmt = $pdo->prepare("SELECT * FROM productos WHERE id_categoria = ?");
+    // Consultar productos de esa categoría con valoraciones
+    $stmt = $pdo->prepare("SELECT p.*, AVG(v.puntuacion) as promedio_valoracion, COUNT(v.id_valoracion) as total_valoraciones FROM productos p LEFT JOIN valoraciones v ON p.id_producto = v.id_producto WHERE p.id_categoria = ? GROUP BY p.id_producto");
     $stmt->bindParam(1, $id_categoria, PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

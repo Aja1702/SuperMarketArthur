@@ -1,6 +1,13 @@
+<?php
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+$token = $_SESSION['csrf_token'];
+?>
 <div class="form-container-registro">
     <h2>Registro de usuario</h2>
     <form id="registroForm" method="post" action="./controllers/procesar_registro.php">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($token); ?>">
         <!-- Grupo de campos para nombre y apellidos -->
         <div class="form-group-registro">
             <div class="input-group-registro">
