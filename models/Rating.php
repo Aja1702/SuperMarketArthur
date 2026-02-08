@@ -1,68 +1,63 @@
 <?php
 class Rating {
-    private $conn;
+    private $pdo;
 
-    public function __construct($conn) {
-        $this->conn = $conn;
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
-    public function addRating($productId, $userId, $rating, $comment = null) {
-        // Verificar si el usuario ya ha valorado este producto
-        $sqlCheck = "SELECT id_valoracion FROM valoraciones WHERE id_producto = ? AND id_usuario = ?";
-        $stmtCheck = $this->conn->prepare($sqlCheck);
-        $stmtCheck->bind_param("ii", $productId, $userId);
-        $stmtCheck->execute();
-        $resultCheck = $stmtCheck->get_result();
+    // Agregar una valoración
+    public function addRating($id_usuario, $id_producto, $valoracion, $comentario = null) {
+        // Verificar si ya existe una valoración
+        $stmt = $this->pdo->prepare("SELECT id_valoracion FROM valoraciones WHERE id_usuario = ? AND id_producto = ?");
+        $stmt->execute([$id_usuario, $id_producto]);
+        $existing = $stmt->fetch();
 
-        if ($resultCheck->num_rows > 0) {
+        if ($existing) {
             // Actualizar valoración existente
-            $sql = "UPDATE valoraciones SET puntuacion = ?, comentario = ?, fecha = NOW() WHERE id_producto = ? AND id_usuario = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("isii", $rating, $comment, $productId, $userId);
+            $stmt = $this->pdo->prepare("UPDATE valoraciones SET valoracion = ?, comentario = ?, fecha_valoracion = NOW() WHERE id_valoracion = ?");
+            return $stmt->execute([$valoracion, $comentario, $existing['id_valoracion']]);
         } else {
             // Insertar nueva valoración
-            $sql = "INSERT INTO valoraciones (id_producto, id_usuario, puntuacion, comentario) VALUES (?, ?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("iiis", $productId, $userId, $rating, $comment);
+            $stmt = $this->pdo->prepare("INSERT INTO valoraciones (id_usuario, id_producto, valoracion, comentario, fecha_valoracion) VALUES (?, ?, ?, ?, NOW())");
+            return $stmt->execute([$id_usuario, $id_producto, $valoracion, $comentario]);
         }
-        return $stmt->execute();
     }
 
-    public function getRatingsByProduct($productId, $limit = 10, $offset = 0) {
-        $sql = "SELECT v.*, u.nombre, u.apellido1 FROM valoraciones v JOIN usuarios u ON v.id_usuario = u.id_usuario WHERE v.id_producto = ? ORDER BY v.fecha DESC LIMIT ? OFFSET ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iii", $productId, $limit, $offset);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+    // Obtener valoraciones de un producto
+    public function getProductRatings($id_producto) {
+        $stmt = $this->pdo->prepare("
+            SELECT v.*, u.nombre, u.apellido1
+            FROM valoraciones v
+            JOIN usuarios u ON v.id_usuario = u.id_usuario
+            WHERE v.id_producto = ?
+            ORDER BY v.fecha_valoracion DESC
+        ");
+        $stmt->execute([$id_producto]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getAverageRating($productId) {
-        $sql = "SELECT AVG(puntuacion) as promedio, COUNT(*) as total FROM valoraciones WHERE id_producto = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $productId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
+    // Calcular promedio de valoraciones
+    public function getAverageRating($id_producto) {
+        $stmt = $this->pdo->prepare("SELECT AVG(valoracion) as promedio, COUNT(*) as total FROM valoraciones WHERE id_producto = ?");
+        $stmt->execute([$id_producto]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return [
-            'promedio' => round($row['promedio'], 1),
-            'total' => $row['total']
+            'promedio' => round($result['promedio'] ?? 0, 1),
+            'total' => $result['total'] ?? 0
         ];
     }
 
-    public function getUserRating($productId, $userId) {
-        $sql = "SELECT puntuacion, comentario FROM valoraciones WHERE id_producto = ? AND id_usuario = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $productId, $userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
+    // Obtener valoración de un usuario para un producto
+    public function getUserRating($id_usuario, $id_producto) {
+        $stmt = $this->pdo->prepare("SELECT * FROM valoraciones WHERE id_usuario = ? AND id_producto = ?");
+        $stmt->execute([$id_usuario, $id_producto]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function deleteRating($productId, $userId) {
-        $sql = "DELETE FROM valoraciones WHERE id_producto = ? AND id_usuario = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $productId, $userId);
-        return $stmt->execute();
+    // Eliminar valoración
+    public function deleteRating($id_usuario, $id_producto) {
+        $stmt = $this->pdo->prepare("DELETE FROM valoraciones WHERE id_usuario = ? AND id_producto = ?");
+        return $stmt->execute([$id_usuario, $id_producto]);
     }
 }

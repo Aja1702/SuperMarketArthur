@@ -1,215 +1,58 @@
 <?php
 session_start();
-include '../config/iniciar_session.php'; // tu archivo de conexión
+require_once '../config/iniciar_session.php';
+require_once '../models/User.php';
+require_once '../models/Cart.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $errores = '';
 
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die('Error CSRF: Token inválido');
     }
 
-    // ✔ Validar que el email no esté vacío y que sea un email válido
-    if ($email === '' || $password === '') {
+    if (empty($email) || empty($password)) {
         $errores = 'Campos obligatorios';
-    }
-    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errores = 'Debe insertar un correo válido';
-    }
-    else {
-        $stmt = $pdo->prepare("SELECT id_usuario, pass, tipo_usu, nombre FROM usuarios WHERE email = ?");
-        $stmt->execute([$email]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+        $userModel = new User($pdo);
+        $user = $userModel->login($email, $password);
 
-        if ($result) {
-            $usuario = $result;
-            $passBD = $usuario['pass'];
-            $esHash = (strpos($passBD, '$') === 0); // Si empieza por '$', probablemente ya es un hash
+        if ($user) {
+            // Regenerar ID de sesión para prevenir fijación de sesión
+            session_regenerate_id(true);
 
-            if (
-            // 1. Si la contraseña en la BD es texto plano y coincide "Root_Arturo_2002"
-            !$esHash && $password === $passBD
-            ) {
+            // Guardar datos de usuario en la sesión
+            $_SESSION['id_usuario'] = $user['id_usuario'];
+            $_SESSION['tipo_usu'] = $user['tipo_usu'];
+            $_SESSION['usuario_nombre'] = $user['nombre'];
 
-                // Migramos al hash seguro
-                $nuevoHash = password_hash($password, PASSWORD_DEFAULT);
-                $updStmt = $pdo->prepare("UPDATE usuarios SET pass=? WHERE id_usuario=?");
-                $updStmt->execute([$nuevoHash, $usuario['id_usuario']]);
-                $updStmt = null;
+            // Transferir carrito de sesión a la base de datos
+            $cart = new Cart($pdo, $user['id_usuario']);
+            $cart->mergeSessionCartToDb();
 
-                // Login exitoso
-                $id_usuario = $usuario['id_usuario'];
-                $_SESSION['id_usuario'] = $id_usuario;
-                $_SESSION['tipo_usu'] = $usuario['tipo_usu'];
-                $_SESSION['usuario_nombre'] = $usuario['nombre'];
-
-                // --- TRANSFERIR CARRITO DE SESIÓN A LA BASE DE DATOS ---
-                if (!empty($_SESSION['carrito'])) {
-                    try {
-                        $pdo->beginTransaction();
-                        // Comprobar si ya existe un carrito para este usuario
-                        $stmtCheck = $pdo->prepare("SELECT id_carrito FROM carrito_temp WHERE id_usuario = ?");
-                        $stmtCheck->execute([$id_usuario]);
-                        $carrito = $stmtCheck->fetch();
-
-                        if (!$carrito) {
-                            $stmtCart = $pdo->prepare("INSERT INTO carrito_temp (id_usuario) VALUES (?)");
-                            $stmtCart->execute([$id_usuario]);
-                            $id_carrito = $pdo->lastInsertId();
-                        }
-                        else {
-                            $id_carrito = $carrito['id_carrito'];
-                        }
-
-                        // Insertar items
-                        $stmtItem = $pdo->prepare("INSERT INTO carrito_items (id_carrito, id_producto, cantidad) VALUES (?, ?, ?)");
-                        foreach ($_SESSION['carrito'] as $id_prod => $cant) {
-                            $stmtItem->execute([$id_carrito, $id_prod, $cant]);
-                        }
-
-                        $pdo->commit();
-                        unset($_SESSION['carrito']);
-                    }
-                    catch (Exception $e) {
-                        if ($pdo->inTransaction())
-                            $pdo->rollBack();
-                    }
-                }
-
+            // Redirección inteligente
+            if (isset($_SESSION['return_to']) && $_SESSION['return_to'] === 'checkout.php') {
+                unset($_SESSION['return_to']); // Limpiar la variable de sesión
+                header("Location: ../checkout.php");
+            } else {
                 header("Location: /SuperMarketArthur/");
-                exit();
-
-            // 2. Si la contraseña ya es un hash y verifica correctamente
             }
-            elseif ($esHash && password_verify($password, $passBD)) {
-                $id_usuario = $usuario['id_usuario'];
-                $_SESSION['id_usuario'] = $id_usuario;
-                $_SESSION['tipo_usu'] = $usuario['tipo_usu'];
-                $_SESSION['usuario_nombre'] = $usuario['nombre'];
+            exit();
 
-                // --- TRANSFERIR CARRITO DE SESIÓN A LA BASE DE DATOS ---
-                if (!empty($_SESSION['carrito'])) {
-                    try {
-                        $pdo->beginTransaction();
-                        $stmtCheck = $pdo->prepare("SELECT id_carrito FROM carrito_temp WHERE id_usuario = ?");
-                        $stmtCheck->execute([$id_usuario]);
-                        $carrito = $stmtCheck->fetch();
-
-                        if (!$carrito) {
-                            $stmtCart = $pdo->prepare("INSERT INTO carrito_temp (id_usuario) VALUES (?)");
-                            $stmtCart->execute([$id_usuario]);
-                            $id_carrito = $pdo->lastInsertId();
-                        }
-                        else {
-                            $id_carrito = $carrito['id_carrito'];
-                        }
-
-                        $stmtItem = $pdo->prepare("INSERT INTO carrito_items (id_carrito, id_producto, cantidad) VALUES (?, ?, ?)");
-                        foreach ($_SESSION['carrito'] as $id_prod => $cant) {
-                            $stmtItem->execute([$id_carrito, $id_prod, $cant]);
-                        }
-
-                        $pdo->commit();
-                        unset($_SESSION['carrito']);
-                    }
-                    catch (Exception $e) {
-                        if ($pdo->inTransaction())
-                            $pdo->rollBack();
-                    }
-                }
-
-                header("Location: /SuperMarketArthur/");
-                exit();
-            }
-            else {
-                $errores = 'Contraseña incorrecta';
-            }
+        } else {
+            $errores = 'Credenciales incorrectas. Verifique su email y contraseña.';
         }
-        else {
-            $errores = 'Correo electrónico no encontrado en el sistema';
-        }
-        $stmt = null;
     }
-    $pdo = null;
-}
-if ($errores !== '') {
-?>
-    <div id="customAlert" class="custom-alert">
-        <div class="custom-alert-content">
-            <span class="close-btn" onclick="closeAlert()">&times;</span>
-            <p>
-                <?php
-    echo nl2br(htmlspecialchars($errores));
-?>
-            </p>
-            <button onclick="closeAlert()">Cerrar</button>
-        </div>
-    </div>
 
-    <style>
-        .custom-alert {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .custom-alert-content {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 8px;
-            max-width: 400px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-
-        .custom-alert-content p {
-            margin: 20px 0;
-            font-size: 16px;
-            color: #333;
-            white-space: pre-line;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #555;
-        }
-
-        .custom-alert-content button {
-            background: #007BFF;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .custom-alert-content button:hover {
-            background: #0056b3;
-        }
-    </style>
-
-    <script>
-        function closeAlert() {
-            document.getElementById('customAlert').style.display = 'none';
-            window.history.back(); // Para volver atrás si quieres
-        }
-    </script>
-<?php
-    exit();
+    if (!empty($errores)) {
+        // Manejo de errores con redirección y mensaje en sesión
+        $_SESSION['error_message'] = $errores;
+        header('Location: ../login.php'); // Redirige de nuevo al login
+        exit();
+    }
 }
 ?>

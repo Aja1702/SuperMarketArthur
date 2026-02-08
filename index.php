@@ -56,39 +56,35 @@ $rutas = [
 include($rutas[$tipo_usuario]['cabecera']);
 include($rutas[$tipo_usuario]['menu']);
 
-// Mostrar contenido basado en parámetros GET con validación segura
-$vistaValidaUser = ['login', 'registro', 'perfil', 'recuperar'];
+// Lógica de vistas
 $vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto', 'privacidad', 'terminos', 'cookies'];
 $vistaValidaMenuAdmin = ['administrador', 'admin_productos', 'admin_pedidos', 'admin_usuarios', 'admin_stock', 'admin_config'];
 $vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'detalle_pedido', 'favoritos', 'config_usuario'];
 
-// Validar y mostrar vistas de administrador
-if ($tipo_usuario === 'administrador' && isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuAdmin)) {
-    $vista = $_GET['vistaMenu'];
-    include("./includes/centro/centro_{$vista}.php");
+$vista = '';
+if (isset($_GET['vistaMenu'])) {
+    $vistaSolicitada = $_GET['vistaMenu'];
+    if (
+        ($tipo_usuario === 'administrador' && in_array($vistaSolicitada, $vistaValidaMenuAdmin)) ||
+        ($tipo_usuario === 'usuario' && in_array($vistaSolicitada, $vistaValidaMenuUsuario)) ||
+        (in_array($vistaSolicitada, $vistaValidaMenuInvitado))
+    ) {
+        $vista = $vistaSolicitada;
+    }
 }
-else
 
-
-    // Incluir formularios o vistas específicas basadas en parámetros GET con validación de usuarios
-    if (isset($_GET['userSession']) && in_array($_GET['userSession'], $vistaValidaUser)) {
-        $vista = $_GET['userSession'];
-        include("./includes/centro/form_{$vista}.php");
-    }
-    elseif ($tipo_usuario === 'usuario' && isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuUsuario)) {
-        $vista = $_GET['vistaMenu'];
-        include("./includes/centro/centro_{$vista}.php");
-    }
-    elseif (isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuInvitado)) {
-        $vista = $_GET['vistaMenu'];
-        include("./includes/centro/centro_{$vista}.php");
-    }
-    else {
-        // Incluye la vista por defecto segun el rol
-        include($rutas[$tipo_usuario]['centro']);
-    }
+if (!empty($vista)) {
+    include("./includes/centro/centro_{$vista}.php");
+} else {
+    include($rutas[$tipo_usuario]['centro']);
+}
 
 include($rutas[$tipo_usuario]['pie']);
+
+// Incluir el modal de login solo si el usuario es un invitado
+if ($tipo_usuario === 'invitado') {
+    include('./includes/modals/login_modal.php');
+}
 ?>
     <!-- Estructura del Carrito Lateral -->
     <div class="cart-overlay" id="cartOverlay"></div>
@@ -98,7 +94,6 @@ include($rutas[$tipo_usuario]['pie']);
             <button class="close-cart" id="closeCart" aria-label="Cerrar carrito">&times;</button>
         </div>
         <div class="cart-content" id="cartContent">
-            <!-- Los productos se cargarán aquí dinámicamente -->
             <div class="empty-cart-message" style="text-align: center; padding: 2rem; opacity: 0.6;">
                 <p>Tu carrito está vacío</p>
             </div>
@@ -108,11 +103,16 @@ include($rutas[$tipo_usuario]['pie']);
                 <span>Total:</span>
                 <span id="cartTotalAmount">0,00€</span>
             </div>
-            <a href="./?vistaMenu=carrito" class="btn-checkout">Finalizar Compra</a>
+            <?php if ($tipo_usuario === 'invitado'): ?>
+                <button id="checkoutBtn" class="btn-checkout">Finalizar Compra</button>
+            <?php else: ?>
+                <a href="checkout.php" class="btn-checkout">Finalizar Compra</a>
+            <?php endif; ?>
         </div>
     </div>
 
     <script type="module" src="./assets/js/funciones.js"></script>
+    <script src="./assets/js/checkout_modal.js"></script>
 </body>
 
 </html>

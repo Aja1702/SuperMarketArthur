@@ -380,7 +380,7 @@ document.addEventListener('DOMContentLoaded',
 
             // Solo vale en la caja "numeros"
             function soloNumeros(valor) {
-                // Permite solo numeros 
+                // Permite solo numeros
                 return /^[0-9]+$/.test(valor);
             }
 
@@ -422,7 +422,7 @@ document.addEventListener('DOMContentLoaded',
                 }
             );
 
-            // para el primer apellido, 
+            // para el primer apellido,
             // desbloquea el apellido2,·,·,· si es valido el primer apellido
             apellido1.addEventListener('input',
                 function () {
@@ -564,7 +564,7 @@ document.addEventListener('DOMContentLoaded',
                 }
             );
 
-            //para el numero de la calle, desbloquear el portal_piso 
+            //para el numero de la calle, desbloquear el portal_piso
             numero.addEventListener('input',
                 function () {
                     const numeroValue = this.value;

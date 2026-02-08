@@ -1,13 +1,13 @@
 <?php
 class Order {
-    private $conn;
+    private $pdo;
 
-    public function __construct($conn) {
-        $this->conn = $conn;
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     public function createOrder($userId, $cartItems, $addressId, $paymentMethod = 'tarjeta') {
-        $this->conn->begin_transaction();
+        $this->pdo->beginTransaction();
 
         try {
             // Calcular total
@@ -18,35 +18,31 @@ class Order {
 
             // Crear pedido
             $sql = "INSERT INTO pedidos (id_usuario, total, id_direccion) VALUES (?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("idi", $userId, $total, $addressId);
-            $stmt->execute();
-            $orderId = $this->conn->insert_id;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$userId, $total, $addressId]);
+            $orderId = $this->pdo->lastInsertId();
 
             // Agregar items del pedido
             foreach ($cartItems as $item) {
                 $sql = "INSERT INTO pedido_items (id_pedido, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bind_param("iiid", $orderId, $item['id_producto'], $item['cantidad'], $item['precio']);
-                $stmt->execute();
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$orderId, $item['id_producto'], $item['cantidad'], $item['precio']]);
 
                 // Reducir stock
                 $sql = "UPDATE productos SET stock = stock - ? WHERE id_producto = ?";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bind_param("ii", $item['cantidad'], $item['id_producto']);
-                $stmt->execute();
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$item['cantidad'], $item['id_producto']]);
             }
 
             // Crear registro de pago
             $sql = "INSERT INTO pagos (id_pedido, metodo_pago) VALUES (?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("is", $orderId, $paymentMethod);
-            $stmt->execute();
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$orderId, $paymentMethod]);
 
-            $this->conn->commit();
+            $this->pdo->commit();
             return $orderId;
         } catch (Exception $e) {
-            $this->conn->rollback();
+            $this->pdo->rollBack();
             return false;
         }
     }
@@ -58,19 +54,15 @@ class Order {
                 LEFT JOIN direcciones d ON p.id_direccion = d.id_direccion
                 WHERE p.id_pedido = ?";
         $params = [$orderId];
-        $types = "i";
 
         if ($userId) {
             $sql .= " AND p.id_usuario = ?";
             $params[] = $userId;
-            $types .= "i";
         }
 
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param($types, ...$params);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $order = $result->fetch_assoc();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        $order = $stmt->fetch();
 
         if ($order) {
             $order['items'] = $this->getOrderItems($orderId);
@@ -83,11 +75,9 @@ class Order {
                 FROM pedido_items pi
                 JOIN productos p ON pi.id_producto = p.id_producto
                 WHERE pi.id_pedido = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $orderId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$orderId]);
+        return $stmt->fetchAll();
     }
 
     public function getUserOrders($userId, $limit = 10, $offset = 0) {
@@ -98,11 +88,9 @@ class Order {
                 GROUP BY p.id_pedido
                 ORDER BY p.fecha DESC
                 LIMIT ? OFFSET ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iii", $userId, $limit, $offset);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId, $limit, $offset]);
+        return $stmt->fetchAll();
     }
 
     public function getAllOrders($limit = 50, $offset = 0) {
@@ -113,11 +101,9 @@ class Order {
                 GROUP BY p.id_pedido
                 ORDER BY p.fecha DESC
                 LIMIT ? OFFSET ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $limit, $offset);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$limit, $offset]);
+        return $stmt->fetchAll();
     }
 
     public function updateOrderStatus($orderId, $status) {
@@ -127,9 +113,8 @@ class Order {
         }
 
         $sql = "UPDATE pedidos SET estado = ? WHERE id_pedido = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("si", $status, $orderId);
-        return $stmt->execute();
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$status, $orderId]);
     }
 
     public function getOrdersByStatus($status, $limit = 20, $offset = 0) {
@@ -139,11 +124,9 @@ class Order {
                 WHERE p.estado = ?
                 ORDER BY p.fecha DESC
                 LIMIT ? OFFSET ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("sii", $status, $limit, $offset);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$status, $limit, $offset]);
+        return $stmt->fetchAll();
     }
 
     public function getOrderStats() {
@@ -156,24 +139,22 @@ class Order {
                     SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) as cancelled,
                     SUM(total) as total_revenue
                 FROM pedidos";
-        $result = $this->conn->query($sql);
-        return $result->fetch_assoc();
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetch();
     }
 
     public function cancelOrder($orderId, $userId) {
-        $this->conn->begin_transaction();
+        $this->pdo->beginTransaction();
 
         try {
             // Verificar que el pedido pertenece al usuario y está en estado pendiente
             $sql = "SELECT estado FROM pedidos WHERE id_pedido = ? AND id_usuario = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("ii", $orderId, $userId);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $order = $result->fetch_assoc();
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$orderId, $userId]);
+            $order = $stmt->fetch();
 
             if (!$order || $order['estado'] !== 'pendiente') {
-                $this->conn->rollback();
+                $this->pdo->rollBack();
                 return false;
             }
 
@@ -181,19 +162,19 @@ class Order {
             $items = $this->getOrderItems($orderId);
             foreach ($items as $item) {
                 $sql = "UPDATE productos SET stock = stock + ? WHERE id_producto = ?";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bind_param("ii", $item['cantidad'], $item['id_producto']);
-                $stmt->execute();
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$item['cantidad'], $item['id_producto']]);
             }
 
             // Cancelar pedido
             $this->updateOrderStatus($orderId, 'cancelado');
 
-            $this->conn->commit();
+            $this->pdo->commit();
             return true;
         } catch (Exception $e) {
-            $this->conn->rollback();
+            $this->pdo->rollBack();
             return false;
         }
     }
 }
+?>

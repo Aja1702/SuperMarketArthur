@@ -1,17 +1,16 @@
 <?php
 class Cart {
-    private $conn;
+    private $pdo;
     private $userId;
     private $sessionId;
 
-    public function __construct($conn, $userId = null) {
-        $this->conn = $conn;
+    public function __construct($pdo, $userId = null) {
+        $this->pdo = $pdo;
         $this->userId = $userId;
         $this->sessionId = session_id();
     }
 
     public function addItem($productId, $quantity = 1) {
-        // Verificar stock
         if (!$this->checkStock($productId, $quantity)) {
             return false;
         }
@@ -24,16 +23,12 @@ class Cart {
     }
 
     private function addToDbCart($productId, $quantity) {
-        // Obtener o crear carrito
         $cartId = $this->getOrCreateCartId();
 
-        // Verificar si el producto ya está en el carrito
         $sql = "SELECT id_item, cantidad FROM carrito_items WHERE id_carrito = ? AND id_producto = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $cartId, $productId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $existingItem = $result->fetch_assoc();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$cartId, $productId]);
+        $existingItem = $stmt->fetch();
 
         if ($existingItem) {
             $newQuantity = $existingItem['cantidad'] + $quantity;
@@ -41,14 +36,13 @@ class Cart {
                 return false;
             }
             $sql = "UPDATE carrito_items SET cantidad = ? WHERE id_item = ?";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("ii", $newQuantity, $existingItem['id_item']);
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$newQuantity, $existingItem['id_item']]);
         } else {
             $sql = "INSERT INTO carrito_items (id_carrito, id_producto, cantidad) VALUES (?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("iii", $cartId, $productId, $quantity);
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$cartId, $productId, $quantity]);
         }
-        return $stmt->execute();
     }
 
     private function addToSessionCart($productId, $quantity) {
@@ -56,15 +50,14 @@ class Cart {
             $_SESSION['cart'] = [];
         }
 
-        if (isset($_SESSION['cart'][$productId])) {
-            $newQuantity = $_SESSION['cart'][$productId] + $quantity;
-            if (!$this->checkStock($productId, $newQuantity)) {
-                return false;
-            }
-            $_SESSION['cart'][$productId] = $newQuantity;
-        } else {
-            $_SESSION['cart'][$productId] = $quantity;
+        $currentQuantity = $_SESSION['cart'][$productId] ?? 0;
+        $newQuantity = $currentQuantity + $quantity;
+
+        if (!$this->checkStock($productId, $newQuantity)) {
+            return false;
         }
+
+        $_SESSION['cart'][$productId] = $newQuantity;
         return true;
     }
 
@@ -80,13 +73,19 @@ class Cart {
         if ($this->userId) {
             $cartId = $this->getCartId();
             if ($cartId) {
-                $sql = "UPDATE carrito_items SET cantidad = ? WHERE id_carrito = ? AND id_producto = ?";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bind_param("iii", $quantity, $cartId, $productId);
-                return $stmt->execute();
+                $sql = "SELECT id_item FROM carrito_items WHERE id_carrito = ? AND id_producto = ?";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$cartId, $productId]);
+                if($stmt->fetch()){
+                    $sql = "UPDATE carrito_items SET cantidad = ? WHERE id_carrito = ? AND id_producto = ?";
+                    $stmt = $this->pdo->prepare($sql);
+                    return $stmt->execute([$quantity, $cartId, $productId]);
+                } else {
+                    return $this->addItem($productId, $quantity);
+                }
             }
         } else {
-            if (isset($_SESSION['cart'][$productId])) {
+            if (isset($_SESSION['cart'][$productId]) || $this->checkStock($productId, $quantity)) {
                 $_SESSION['cart'][$productId] = $quantity;
                 return true;
             }
@@ -94,14 +93,26 @@ class Cart {
         return false;
     }
 
+    public function adjustQuantity($productId, $delta) {
+        $items = $this->getItems();
+        $currentQuantity = 0;
+        foreach($items as $item) {
+            if ($item['id_producto'] == $productId) {
+                $currentQuantity = $item['cantidad'];
+                break;
+            }
+        }
+        $newQuantity = $currentQuantity + $delta;
+        return $this->updateQuantity($productId, $newQuantity);
+    }
+
     public function removeItem($productId) {
         if ($this->userId) {
             $cartId = $this->getCartId();
             if ($cartId) {
                 $sql = "DELETE FROM carrito_items WHERE id_carrito = ? AND id_producto = ?";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bind_param("ii", $cartId, $productId);
-                return $stmt->execute();
+                $stmt = $this->pdo->prepare($sql);
+                return $stmt->execute([$cartId, $productId]);
             }
         } else {
             if (isset($_SESSION['cart'][$productId])) {
@@ -128,20 +139,33 @@ class Cart {
                 FROM carrito_items ci
                 JOIN productos p ON ci.id_producto = p.id_producto
                 WHERE ci.id_carrito = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $cartId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$cartId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     private function getSessionCartItems() {
         if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) return [];
 
         $items = [];
+        $productIds = array_keys($_SESSION['cart']);
+        if(empty($productIds)) return [];
+
+        $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+
+        $sql = "SELECT id_producto, nombre_producto, precio, url_imagen, stock FROM productos WHERE id_producto IN ($placeholders)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($productIds);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $productsById = [];
+        foreach($products as $product){
+            $productsById[$product['id_producto']] = $product;
+        }
+
         foreach ($_SESSION['cart'] as $productId => $quantity) {
-            $product = $this->getProductDetails($productId);
-            if ($product) {
+            if (isset($productsById[$productId])) {
+                $product = $productsById[$productId];
                 $product['cantidad'] = $quantity;
                 $items[] = $product;
             }
@@ -172,9 +196,8 @@ class Cart {
             $cartId = $this->getCartId();
             if ($cartId) {
                 $sql = "DELETE FROM carrito_items WHERE id_carrito = ?";
-                $stmt = $this->conn->prepare($sql);
-                $stmt->bind_param("i", $cartId);
-                $stmt->execute();
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute([$cartId]);
             }
         } else {
             unset($_SESSION['cart']);
@@ -183,23 +206,21 @@ class Cart {
 
     private function getOrCreateCartId() {
         $cartId = $this->getCartId();
-        if (!$cartId) {
+        if (!$cartId && $this->userId) {
             $sql = "INSERT INTO carrito_temp (id_usuario) VALUES (?)";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bind_param("i", $this->userId);
-            $stmt->execute();
-            $cartId = $this->conn->insert_id;
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$this->userId]);
+            $cartId = $this->pdo->lastInsertId();
         }
         return $cartId;
     }
 
     private function getCartId() {
+        if (!$this->userId) return null;
         $sql = "SELECT id_carrito FROM carrito_temp WHERE id_usuario = ? AND creado_en > DATE_SUB(NOW(), INTERVAL 7 DAY) ORDER BY creado_en DESC LIMIT 1";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $this->userId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $cart = $result->fetch_assoc();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$this->userId]);
+        $cart = $stmt->fetch();
         return $cart ? $cart['id_carrito'] : null;
     }
 
@@ -210,11 +231,9 @@ class Cart {
 
     private function getProductDetails($productId) {
         $sql = "SELECT id_producto, nombre_producto, precio, url_imagen, stock FROM productos WHERE id_producto = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $productId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$productId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function mergeSessionCartToDb() {
@@ -226,3 +245,4 @@ class Cart {
         unset($_SESSION['cart']);
     }
 }
+?>

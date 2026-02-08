@@ -1,102 +1,147 @@
 <?php
 class Product {
-    private $conn;
+    private $pdo;
 
-    public function __construct($conn) {
-        $this->conn = $conn;
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
     }
 
     public function getAllProducts($limit = null, $offset = 0) {
-        $sql = "SELECT id_producto, nombre_producto, descripcion, precio, stock, id_categoria, url_imagen FROM productos ORDER BY nombre_producto ASC";
-        if ($limit !== null) {
+        $sql = "SELECT * FROM productos ORDER BY id_producto";
+        if ($limit) {
             $sql .= " LIMIT ? OFFSET ?";
         }
-        $stmt = $this->conn->prepare($sql);
-        if ($limit !== null) {
-            $stmt->bind_param("ii", $limit, $offset);
+        $stmt = $this->pdo->prepare($sql);
+        if ($limit) {
+            $stmt->execute([$limit, $offset]);
+        } else {
+            $stmt->execute();
         }
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getProductById($id) {
-        $sql = "SELECT * FROM productos WHERE id_producto = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
-    }
+        $stmt = $this->pdo->prepare("SELECT * FROM productos WHERE id_producto = ?");
+        $stmt->execute([$id]);
+        $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    public function searchProducts($query, $category = null, $minPrice = null, $maxPrice = null, $limit = 20, $offset = 0) {
-        $sql = "SELECT id_producto, nombre_producto, descripcion, precio, stock, id_categoria, url_imagen FROM productos WHERE nombre_producto LIKE ? OR descripcion LIKE ?";
-        $params = ["%{$query}%", "%{$query}%"];
-        $types = "ss";
-
-        if ($category !== null) {
-            $sql .= " AND id_categoria = ?";
-            $params[] = $category;
-            $types .= "i";
-        }
-        if ($minPrice !== null) {
-            $sql .= " AND precio >= ?";
-            $params[] = $minPrice;
-            $types .= "d";
-        }
-        if ($maxPrice !== null) {
-            $sql .= " AND precio <= ?";
-            $params[] = $maxPrice;
-            $types .= "d";
+        if ($product) {
+            // Agregar información de valoraciones
+            include_once 'Rating.php';
+            $ratingModel = new Rating($this->pdo);
+            $ratingInfo = $ratingModel->getAverageRating($id);
+            $product['rating_promedio'] = $ratingInfo['promedio'];
+            $product['total_valoraciones'] = $ratingInfo['total'];
         }
 
-        $sql .= " ORDER BY nombre_producto ASC LIMIT ? OFFSET ?";
-        $params[] = $limit;
-        $params[] = $offset;
-        $types .= "ii";
-
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param($types, ...$params);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $product;
     }
 
     public function getProductsByCategory($categoryId, $limit = null, $offset = 0) {
-        $sql = "SELECT id_producto, nombre_producto, descripcion, precio, stock, id_categoria, url_imagen FROM productos WHERE id_categoria = ? ORDER BY nombre_producto ASC";
-        if ($limit !== null) {
+        $sql = "SELECT * FROM productos WHERE id_categoria = ? ORDER BY nombre_producto";
+        if ($limit) {
             $sql .= " LIMIT ? OFFSET ?";
         }
-        $stmt = $this->conn->prepare($sql);
-        if ($limit !== null) {
-            $stmt->bind_param("iii", $categoryId, $limit, $offset);
+        $stmt = $this->pdo->prepare($sql);
+        if ($limit) {
+            $stmt->execute([$categoryId, $limit, $offset]);
         } else {
-            $stmt->bind_param("i", $categoryId);
+            $stmt->execute([$categoryId]);
         }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function searchProducts($query, $limit = null, $offset = 0) {
+        $sql = "SELECT * FROM productos WHERE nombre_producto LIKE ? OR descripcion LIKE ? ORDER BY nombre_producto";
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $searchTerm = "%$query%";
+        if ($limit) {
+            $stmt->execute([$searchTerm, $searchTerm, $limit, $offset]);
+        } else {
+            $stmt->execute([$searchTerm, $searchTerm]);
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProductsByPriceRange($minPrice, $maxPrice, $limit = null, $offset = 0) {
+        $sql = "SELECT * FROM productos WHERE precio BETWEEN ? AND ? ORDER BY precio";
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+        }
+        $stmt = $this->pdo->prepare($sql);
+        if ($limit) {
+            $stmt->execute([$minPrice, $maxPrice, $limit, $offset]);
+        } else {
+            $stmt->execute([$minPrice, $maxPrice]);
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getFeaturedProducts($limit = 10) {
+        $stmt = $this->pdo->prepare("SELECT * FROM productos WHERE destacado = 1 ORDER BY id_producto DESC LIMIT ?");
+        $stmt->execute([$limit]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProductsOnSale($limit = null, $offset = 0) {
+        $sql = "SELECT * FROM productos WHERE precio_oferta IS NOT NULL AND precio_oferta < precio ORDER BY (precio - precio_oferta) DESC";
+        if ($limit) {
+            $sql .= " LIMIT ? OFFSET ?";
+        }
+        $stmt = $this->pdo->prepare($sql);
+        if ($limit) {
+            $stmt->execute([$limit, $offset]);
+        } else {
+            $stmt->execute();
+        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateProduct($id, $data) {
+        $fields = [];
+        $values = [];
+        foreach ($data as $key => $value) {
+            $fields[] = "$key = ?";
+            $values[] = $value;
+        }
+        $values[] = $id;
+        $sql = "UPDATE productos SET " . implode(', ', $fields) . " WHERE id_producto = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($values);
+    }
+
+    public function deleteProduct($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM productos WHERE id_producto = ?");
+        return $stmt->execute([$id]);
+    }
+
+    public function addProduct($data) {
+        $fields = implode(', ', array_keys($data));
+        $placeholders = str_repeat('?, ', count($data) - 1) . '?';
+        $sql = "INSERT INTO productos ($fields) VALUES ($placeholders)";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute(array_values($data));
+    }
+
+    public function getTotalProducts() {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) as total FROM productos");
         $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
     }
 
     public function getCategories() {
-        $sql = "SELECT id_categoria, nombre_categoria, descripcion FROM categorias ORDER BY nombre_categoria ASC";
-        $result = $this->conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    }
-
-    public function updateStock($productId, $newStock) {
-        $sql = "UPDATE productos SET stock = ? WHERE id_producto = ?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ii", $newStock, $productId);
-        return $stmt->execute();
-    }
-
-    public function getLowStockProducts($threshold = 10) {
-        $sql = "SELECT id_producto, nombre_producto, stock FROM productos WHERE stock <= ? ORDER BY stock ASC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $threshold);
+        $stmt = $this->pdo->prepare("SELECT * FROM categorias ORDER BY nombre_categoria");
         $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getCategoryById($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM categorias WHERE id_categoria = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
