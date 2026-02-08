@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errores = 'Debe insertar un correo válido';
     }
     else {
-        $stmt = $pdo->prepare("SELECT id_usuario, pass, tipo_usu FROM usuarios WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT id_usuario, pass, tipo_usu, nombre FROM usuarios WHERE email = ?");
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $id_usuario = $usuario['id_usuario'];
                 $_SESSION['id_usuario'] = $id_usuario;
                 $_SESSION['tipo_usu'] = $usuario['tipo_usu'];
+                $_SESSION['usuario_nombre'] = $usuario['nombre'];
 
                 // --- TRANSFERIR CARRITO DE SESIÓN A LA BASE DE DATOS ---
                 if (!empty($_SESSION['carrito'])) {
@@ -86,6 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $id_usuario = $usuario['id_usuario'];
                 $_SESSION['id_usuario'] = $id_usuario;
                 $_SESSION['tipo_usu'] = $usuario['tipo_usu'];
+                $_SESSION['usuario_nombre'] = $usuario['nombre'];
 
                 // --- TRANSFERIR CARRITO DE SESIÓN A LA BASE DE DATOS ---
                 if (!empty($_SESSION['carrito'])) {

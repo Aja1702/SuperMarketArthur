@@ -5,6 +5,15 @@
         </a>
     </div>
     <h1 class="titulo-web-invitado">SuperMarketArthur</h1>
+
+    <div class="search-container">
+        <div class="search-bar-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Busca productos, frutas, categorías..." autocomplete="off">
+        </div>
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
     <nav class="nav-invitado" role="navigation" aria-label="Navegación principal para invitados">
         <ul class="menu-invitado">
             <li><a href="#" id="openCart" aria-label="Ver carrito de compras">🛒 Carrito</a></li>

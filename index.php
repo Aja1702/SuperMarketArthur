@@ -72,6 +72,10 @@ else
         $vista = $_GET['userSession'];
         include("./includes/centro/form_{$vista}.php");
     }
+    elseif ($tipo_usuario === 'usuario' && isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuUsuario)) {
+        $vista = $_GET['vistaMenu'];
+        include("./includes/centro/centro_{$vista}.php");
+    }
     elseif (isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuInvitado)) {
         $vista = $_GET['vistaMenu'];
         include("./includes/centro/centro_{$vista}.php");
