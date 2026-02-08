@@ -14,45 +14,118 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // ✔ Validar que el email no esté vacío y que sea un email válido
     if ($email === '' || $password === '') {
         $errores = 'Campos obligatorios';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    }
+    elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errores = 'Debe insertar un correo válido';
-    } else {
+    }
+    else {
         $stmt = $pdo->prepare("SELECT id_usuario, pass, tipo_usu FROM usuarios WHERE email = ?");
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result) { 
-            $usuario = $result; 
+        if ($result) {
+            $usuario = $result;
             $passBD = $usuario['pass'];
             $esHash = (strpos($passBD, '$') === 0); // Si empieza por '$', probablemente ya es un hash
 
             if (
-                // 1. Si la contraseña en la BD es texto plano y coincide "Root_Arturo_2002"
-                !$esHash && $password === $passBD
+            // 1. Si la contraseña en la BD es texto plano y coincide "Root_Arturo_2002"
+            !$esHash && $password === $passBD
             ) {
 
                 // Migramos al hash seguro
                 $nuevoHash = password_hash($password, PASSWORD_DEFAULT);
                 $updStmt = $pdo->prepare("UPDATE usuarios SET pass=? WHERE id_usuario=?");
-                $updStmt->execute( [$nuevoHash, $usuario['id_usuario']] ); 
+                $updStmt->execute([$nuevoHash, $usuario['id_usuario']]);
                 $updStmt = null;
 
                 // Login exitoso
-                $_SESSION['id_usuario'] = $usuario['id_usuario'];
+                $id_usuario = $usuario['id_usuario'];
+                $_SESSION['id_usuario'] = $id_usuario;
                 $_SESSION['tipo_usu'] = $usuario['tipo_usu'];
+
+                // --- TRANSFERIR CARRITO DE SESIÓN A LA BASE DE DATOS ---
+                if (!empty($_SESSION['carrito'])) {
+                    try {
+                        $pdo->beginTransaction();
+                        // Comprobar si ya existe un carrito para este usuario
+                        $stmtCheck = $pdo->prepare("SELECT id_carrito FROM carrito_temp WHERE id_usuario = ?");
+                        $stmtCheck->execute([$id_usuario]);
+                        $carrito = $stmtCheck->fetch();
+
+                        if (!$carrito) {
+                            $stmtCart = $pdo->prepare("INSERT INTO carrito_temp (id_usuario) VALUES (?)");
+                            $stmtCart->execute([$id_usuario]);
+                            $id_carrito = $pdo->lastInsertId();
+                        }
+                        else {
+                            $id_carrito = $carrito['id_carrito'];
+                        }
+
+                        // Insertar items
+                        $stmtItem = $pdo->prepare("INSERT INTO carrito_items (id_carrito, id_producto, cantidad) VALUES (?, ?, ?)");
+                        foreach ($_SESSION['carrito'] as $id_prod => $cant) {
+                            $stmtItem->execute([$id_carrito, $id_prod, $cant]);
+                        }
+
+                        $pdo->commit();
+                        unset($_SESSION['carrito']);
+                    }
+                    catch (Exception $e) {
+                        if ($pdo->inTransaction())
+                            $pdo->rollBack();
+                    }
+                }
+
                 header("Location: /SuperMarketArthur/");
                 exit();
 
-                // 2. Si la contraseña ya es un hash y verifica correctamente
-            } elseif ($esHash && password_verify($password, $passBD)) {
-                $_SESSION['id_usuario'] = $usuario['id_usuario'];
+            // 2. Si la contraseña ya es un hash y verifica correctamente
+            }
+            elseif ($esHash && password_verify($password, $passBD)) {
+                $id_usuario = $usuario['id_usuario'];
+                $_SESSION['id_usuario'] = $id_usuario;
                 $_SESSION['tipo_usu'] = $usuario['tipo_usu'];
+
+                // --- TRANSFERIR CARRITO DE SESIÓN A LA BASE DE DATOS ---
+                if (!empty($_SESSION['carrito'])) {
+                    try {
+                        $pdo->beginTransaction();
+                        $stmtCheck = $pdo->prepare("SELECT id_carrito FROM carrito_temp WHERE id_usuario = ?");
+                        $stmtCheck->execute([$id_usuario]);
+                        $carrito = $stmtCheck->fetch();
+
+                        if (!$carrito) {
+                            $stmtCart = $pdo->prepare("INSERT INTO carrito_temp (id_usuario) VALUES (?)");
+                            $stmtCart->execute([$id_usuario]);
+                            $id_carrito = $pdo->lastInsertId();
+                        }
+                        else {
+                            $id_carrito = $carrito['id_carrito'];
+                        }
+
+                        $stmtItem = $pdo->prepare("INSERT INTO carrito_items (id_carrito, id_producto, cantidad) VALUES (?, ?, ?)");
+                        foreach ($_SESSION['carrito'] as $id_prod => $cant) {
+                            $stmtItem->execute([$id_carrito, $id_prod, $cant]);
+                        }
+
+                        $pdo->commit();
+                        unset($_SESSION['carrito']);
+                    }
+                    catch (Exception $e) {
+                        if ($pdo->inTransaction())
+                            $pdo->rollBack();
+                    }
+                }
+
                 header("Location: /SuperMarketArthur/");
                 exit();
-            } else {
+            }
+            else {
                 $errores = 'Contraseña incorrecta';
             }
-        } else {
+        }
+        else {
             $errores = 'Correo electrónico no encontrado en el sistema';
         }
         $stmt = null;
@@ -66,8 +139,8 @@ if ($errores !== '') {
             <span class="close-btn" onclick="closeAlert()">&times;</span>
             <p>
                 <?php
-                    echo nl2br(htmlspecialchars($errores));
-                ?>
+    echo nl2br(htmlspecialchars($errores));
+?>
             </p>
             <button onclick="closeAlert()">Cerrar</button>
         </div>
