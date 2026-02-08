@@ -60,7 +60,7 @@ include($rutas[$tipo_usuario]['menu']);
 $vistaValidaUser = ['login', 'registro', 'perfil', 'recuperar'];
 $vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto', 'privacidad', 'terminos', 'cookies'];
 $vistaValidaMenuAdmin = ['administrador', 'admin_productos', 'admin_pedidos', 'admin_usuarios', 'admin_stock', 'admin_config'];
-$vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'detalle_pedido', 'favoritos', 'config_usuario'];
+$vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'detalle_pedido', 'favoritos', 'config_usuario', 'checkout', 'confirmacion_pedido', 'detalle_producto'];
 
 // Validar y mostrar vistas de administrador
 if ($tipo_usuario === 'administrador' && isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuAdmin)) {
