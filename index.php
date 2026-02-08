@@ -1,3 +1,19 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+session_start();
+include('./config/iniciar_session.php');
+
+// Validar el tipo de usuario con control de errores
+$tipo_usu = $_SESSION['tipo_usu'] ?? 'invitado';
+
+$tipos_validos = ['a', 'u', 'i'];
+if (!in_array($tipo_usu, $tipos_validos)) {
+    $tipo_usu = 'invitado'; // Valor por defecto si hay dato inválido
+}
+
+$tipo_usuario = $tipo_usu === 'a' ? 'administrador' : ($tipo_usu === 'u' ? 'usuario' : 'invitado');
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -14,19 +30,6 @@
 
 <body>
     <?php
-session_start();
-include('./config/iniciar_session.php');
-
-// Validar el tipo de usuario con control de errores
-$tipo_usu = $_SESSION['tipo_usu'] ?? 'invitado';
-
-$tipos_validos = ['a', 'u', 'i'];
-if (!in_array($tipo_usu, $tipos_validos)) {
-    $tipo_usu = 'invitado'; // Valor por defecto si hay dato inválido
-}
-
-$tipo_usuario = $tipo_usu === 'a' ? 'administrador' : ($tipo_usu === 'u' ? 'usuario' : 'invitado');
-
 //Rutas a incluir según el tipo de usuario
 $rutas = [
     'administrador' => [
@@ -55,9 +58,9 @@ include($rutas[$tipo_usuario]['menu']);
 
 // Mostrar contenido basado en parámetros GET con validación segura
 $vistaValidaUser = ['login', 'registro', 'perfil', 'recuperar'];
-$vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto'];
+$vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto', 'privacidad', 'terminos', 'cookies'];
 $vistaValidaMenuAdmin = ['administrador', 'admin_productos', 'admin_pedidos', 'admin_usuarios', 'admin_stock', 'admin_config'];
-$vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'favoritos', 'config_usuario'];
+$vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'detalle_pedido', 'favoritos', 'config_usuario'];
 
 // Validar y mostrar vistas de administrador
 if ($tipo_usuario === 'administrador' && isset($_GET['vistaMenu']) && in_array($_GET['vistaMenu'], $vistaValidaMenuAdmin)) {

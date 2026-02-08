@@ -33,7 +33,7 @@ if (empty($_SESSION['csrf_token'])) {
 ?>
             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <button type="submit" title="Cerrar sesión" class="btn-logout">
-                <img src="./assets/img/cerrar_session/apagar.png" alt="Cerrar sesión" onerror="this.src='./assets/img/logo/favicon.ico'">
+                <img src="./assets/img/cerrar_session/apagar.png" alt="Cerrar sesión" onerror="this.onerror=null;this.src='./assets/img/logo/favicon.ico'">
             </button>
         </form>
     </div>

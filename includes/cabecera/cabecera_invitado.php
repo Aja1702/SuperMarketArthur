@@ -1,10 +1,12 @@
 <header class="header-invitado" role="banner" aria-label="Cabecera de SuperMarketArthur para usuarios invitados">
-    <div class="logo">
-        <a href="./" aria-label="Ir a la página principal">
-            <img src="./assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
-        </a>
+    <div class="header-left">
+        <div class="logo">
+            <a href="./" aria-label="Ir a la página principal">
+                <img src="./assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
+            </a>
+        </div>
+        <h1 class="titulo-web-invitado">SuperMarketArthur</h1>
     </div>
-    <h1 class="titulo-web-invitado">SuperMarketArthur</h1>
 
     <div class="search-container">
         <div class="search-bar-wrapper">

@@ -1,6 +1,4 @@
 <?php
-include('./config/iniciar_session.php');
-
 $id_categoria = isset($_GET['cat']) ? (int)$_GET['cat'] : 0;
 
 if ($id_categoria > 0) {
@@ -12,8 +10,7 @@ if ($id_categoria > 0) {
     $resCat = $stmtCat->fetch(PDO::FETCH_ASSOC);
 
     if ($resCat) {
-        $categoria = $resCat;
-        $nombre_categoria = htmlspecialchars($categoria['nombre_categoria']);
+        $nombre_categoria = htmlspecialchars($resCat['nombre_categoria']);
     }
     else {
         $nombre_categoria = "Categoría no encontrada";
@@ -26,79 +23,76 @@ if ($id_categoria > 0) {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-    <div class="productos-de-categoria">
-        <h2>
-            Productos de la categoría:
-            <?php
-    echo $nombre_categoria;
-?>
+    <div class="seccion-catalogo">
+        <a href="./?vistaMenu=categorias_productos" class="btn-volver-catalogo">
+            <span class="icon">🔙</span> Volver al catálogo
+        </a>
+        
+        <h2 class="titulo-seccion-premium">
+            <?php echo $nombre_categoria; ?>
         </h2>
-        <?php
-    if (count($result) > 0) {
-?>
-            <div class="lista-productos">
-                <?php
-        foreach ($result as $producto):
-?>
-                    <article class="producto">
-                        <img src="<?php echo htmlspecialchars($producto['url_imagen']); ?>" alt="imagen de <?php echo htmlspecialchars($producto['nombre_producto']); ?>">
-                        <h3>
-                            <?php echo htmlspecialchars($producto['nombre_producto']); ?>
-                        </h3>
-                        <p>
-                            <?php echo htmlspecialchars($producto['descripcion']); ?>
-                        </p>
-                        <p>Precio:
-                            <?php echo number_format($producto['precio'], 2); ?>
-                            €
-                        </p>
-                        <button onclick="addToCart(<?php echo $producto['id_producto']; ?>)" class="btn btn-add-cart">
-                            🛒 Añadir
-                        </button>
+
+        <?php if (count($result) > 0): ?>
+            <div class="grid-productos">
+                <?php foreach ($result as $producto): ?>
+                    <article class="card-producto">
+                        <div class="producto-imagen-wrapper">
+                            <img src="<?php echo htmlspecialchars($producto['url_imagen'] ?: './assets/img/productos/default.jpg'); ?>" 
+                                 alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>"
+                                 onerror="this.onerror=null;this.src='./assets/img/logo/logo_supermarket.png'">
+                        </div>
+                        <div class="producto-info">
+                            <h3><?php echo htmlspecialchars($producto['nombre_producto']); ?></h3>
+                            <p class="producto-desc"><?php echo htmlspecialchars($producto['descripcion']); ?></p>
+                        </div>
+                        <div class="producto-footer">
+                            <div class="producto-precio">
+                                <?php echo number_format($producto['precio'], 2, ',', '.'); ?><span>€</span>
+                            </div>
+                            <button onclick="addToCart(<?php echo $producto['id_producto']; ?>)" 
+                                    class="btn-add-cart-premium" 
+                                    title="Añadir al carrito">
+                                🛒
+                            </button>
+                        </div>
                     </article>
                 <?php
-        endforeach;
-?>
+        endforeach; ?>
             </div>
         <?php
-    }
-    else {
-?>
-            <p>No hay productos en esta categoría.</p>
+    else: ?>
+            <div class="empty-state">
+                <p>No hay productos disponibles en esta categoría actualmente.</p>
+            </div>
         <?php
-    }
-?>
-        <p>
-            <a href="./?vistaMenu=categorias_productos">← Volver a categorías</a>
-        </p>
+    endif; ?>
     </div>
+
 <?php
+
 }
 else {
-    // Mostrar listado de categorías (como en tu código original)
+    // Mostrar listado de categorías
     $sql = "SELECT * FROM categorias";
     $rs = $pdo->query($sql);
 ?>
-    <div class="categorias-productos">
-        <h2>
-            Catálogo de categorías de productos:
+    <div class="seccion-catalogo">
+        <h2 class="titulo-seccion-premium">
+            Explora nuestro catálogo
         </h2>
-        <div class="lista-categorias">
+        
+        <div class="grid-categorias">
             <?php while ($row = $rs->fetch(PDO::FETCH_ASSOC)): ?>
-                <article class="categoria">
-                    <a href="./?vistaMenu=categorias_productos&cat=<?php echo $row['id_categoria']; ?>" style="text-decoration: none; color: inherit;">
-                        <h3>
-                            <?php echo htmlspecialchars($row['nombre_categoria']); ?>
-                        </h3>
-                        <p>
-                            <?php echo htmlspecialchars($row['descripcion']); ?>
-                        </p>
-                    </a>
-                </article>
+                <a href="./?vistaMenu=categorias_productos&cat=<?php echo $row['id_categoria']; ?>" class="card-categoria">
+                    <h3><?php echo htmlspecialchars($row['nombre_categoria']); ?></h3>
+                    <p><?php echo htmlspecialchars($row['descripcion']); ?></p>
+                </a>
             <?php
     endwhile; ?>
         </div>
     </div>
 <?php
+
 }
+
 ?>
