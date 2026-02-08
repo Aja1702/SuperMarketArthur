@@ -84,5 +84,18 @@ class User {
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id]);
     }
+
+    /**
+     * Obtiene todas las direcciones de un usuario.
+     * @param int $userId El ID del usuario.
+     * @return array Un array con las direcciones del usuario.
+     */
+    public function getUserAddresses($userId) {
+        // CORREGIDO: Se ha eliminado el 'ORDER BY es_principal DESC' que causaba el error fatal.
+        $sql = "SELECT * FROM direcciones WHERE id_usuario = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

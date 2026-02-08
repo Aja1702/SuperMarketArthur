@@ -1,0 +1,227 @@
+/*
+ * ==========================================
+ *  ESTILOS DE CABECERAS (HEADERS)
+ * ==========================================
+ */
+
+/* --- 1. CABECERA INVITADO (Azules Premium) --- */
+.header-invitado {
+    background: linear-gradient(135deg, var(--azul-primario) 0%, var(--azul-secundario) 100%);
+    color: var(--blanco-puro);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 5%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    gap: 1rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.header-invitado .logo img {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.header-invitado .logo img:hover {
+    transform: scale(1.05);
+}
+
+.titulo-web-invitado {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(to right, #ffffff, #bee9e8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 1rem;
+}
+
+/* --- 2. CABECERA ADMINISTRADOR (Grises) --- */
+.cabecera-admin {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #4a5568 100%);
+    color: #ecf0f1;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-bottom: 3px solid #7f8c8d;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-admin {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-admin img {
+    height: 40px;
+    width: 40px;
+}
+
+.info-admin {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.rol-admin {
+    background: #95a5a6;
+    color: #2c3e50;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.nombre-admin {
+    font-weight: 700;
+    color: #ecf0f1;
+    font-size: 1.1rem;
+}
+
+.hora-admin {
+    color: #bdc3c7;
+    font-family: 'Courier New', 'Consolas', monospace;
+    min-width: 140px;
+    text-align: center;
+}
+
+.btn-cerrar-sesion-admin img {
+    height: 44px;
+    width: 44px;
+}
+
+/* --- 3. CABECERA USUARIO LOGUEADO (Naranjas) --- */
+.cabecera-usuario-logueado {
+    background: linear-gradient(135deg, var(--naranja-primario, #d95f02) 0%, var(--naranja-secundario, #f7931e) 100%);
+    padding: 1rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    box-shadow: 0 4px 20px rgba(217, 95, 2, 0.25);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.cabecera-usuario-logueado .user-profile-link {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.3s;
+}
+
+.cabecera-usuario-logueado .user-profile-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.cabecera-usuario-logueado .btn-logout img {
+    width: 24px;
+    height: 24px;
+    filter: invert(1);
+}
+
+
+/* --- 4. ELEMENTOS COMUNES EN CABECERAS (Buscador) --- */
+.search-container {
+    position: relative;
+    max-width: 450px;
+    flex: 1;
+    margin: 0 2rem;
+}
+
+.search-bar-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.search-bar-wrapper:focus-within {
+    background: white;
+    border-color: var(--azul-vibrante);
+    box-shadow: 0 0 15px rgba(33, 158, 188, 0.2);
+}
+
+.search-bar-wrapper input {
+    background: none;
+    border: none;
+    color: inherit;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.search-bar-wrapper:focus-within input {
+    color: var(--azul-primario);
+}
+
+.search-icon {
+    opacity: 0.6;
+    margin-right: 0.5rem;
+}
+
+.search-results {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--sombra-premium);
+    z-index: 3000;
+    display: none;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    gap: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid #f8f9fa;
+    text-decoration: none;
+    color: inherit;
+}
+
+.search-result-item:hover {
+    background: #f1f5f9;
+}
+
+.search-result-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+}

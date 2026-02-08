@@ -26,6 +26,11 @@ $tipo_usuario = $tipo_usu === 'a' ? 'administrador' : ($tipo_usu === 'u' ? 'usua
     <title>Supermarket Arthur</title>
     <link rel="icon" href="./assets/img/logo/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/header.css" />
+    <link rel="stylesheet" href="./assets/css/nav.css" /> <!-- Estilos de Nav AÑADIDOS -->
+    <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/footer.css" />
+    <link rel="stylesheet" href="./assets/css/modal.css" />
 </head>
 
 <body>
@@ -52,33 +57,47 @@ $rutas = [
     ]
 ];
 
-// Incluir cabecera, menú, pie protegidos y centrados en arrays
+// Incluir cabecera y menú
 include($rutas[$tipo_usuario]['cabecera']);
 include($rutas[$tipo_usuario]['menu']);
 
-// Lógica de vistas
+// --- LÓGICA DE VISTAS RESTAURADA ---
+$vistaValidaUser = ['login', 'registro', 'perfil', 'recuperar'];
 $vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto', 'privacidad', 'terminos', 'cookies'];
 $vistaValidaMenuAdmin = ['administrador', 'admin_productos', 'admin_pedidos', 'admin_usuarios', 'admin_stock', 'admin_config'];
 $vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'detalle_pedido', 'favoritos', 'config_usuario'];
 
-$vista = '';
-if (isset($_GET['vistaMenu'])) {
+// Prioridad 1: Formularios de sesión de usuario (ej: ?userSession=login)
+if (isset($_GET['userSession']) && in_array($_GET['userSession'], $vistaValidaUser)) {
+    $vista = $_GET['userSession'];
+    include("./includes/centro/form_{$vista}.php");
+}
+// Prioridad 2: Vistas del menú principal (ej: ?vistaMenu=ofertas)
+else if (isset($_GET['vistaMenu'])) {
     $vistaSolicitada = $_GET['vistaMenu'];
-    if (
-        ($tipo_usuario === 'administrador' && in_array($vistaSolicitada, $vistaValidaMenuAdmin)) ||
-        ($tipo_usuario === 'usuario' && in_array($vistaSolicitada, $vistaValidaMenuUsuario)) ||
-        (in_array($vistaSolicitada, $vistaValidaMenuInvitado))
-    ) {
-        $vista = $vistaSolicitada;
+    $vistaValida = false;
+
+    if ($tipo_usuario === 'administrador' && in_array($vistaSolicitada, $vistaValidaMenuAdmin)) {
+        $vistaValida = true;
+    } elseif ($tipo_usuario === 'usuario' && in_array($vistaSolicitada, $vistaValidaMenuUsuario)) {
+        $vistaValida = true;
+    } elseif (in_array($vistaSolicitada, $vistaValidaMenuInvitado)) {
+        $vistaValida = true;
+    }
+
+    if ($vistaValida) {
+        include("./includes/centro/centro_{$vistaSolicitada}.php");
+    } else {
+        // Si la vista solicitada no es válida para el rol, se carga la vista por defecto
+        include($rutas[$tipo_usuario]['centro']);
     }
 }
-
-if (!empty($vista)) {
-    include("./includes/centro/centro_{$vista}.php");
-} else {
+// Prioridad 3: Si no se solicita ninguna vista, cargar la por defecto
+else {
     include($rutas[$tipo_usuario]['centro']);
 }
 
+// Incluir pie de página
 include($rutas[$tipo_usuario]['pie']);
 
 // Incluir el modal de login solo si el usuario es un invitado

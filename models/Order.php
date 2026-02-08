@@ -1,18 +1,24 @@
 <?php
 class Order {
     private $pdo;
+    public $lastError; // Para almacenar el último error
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
     public function createOrder($userId, $cartItems, $addressId, $paymentMethod = 'tarjeta') {
+        $this->lastError = null; // Limpiar errores previos
         $this->pdo->beginTransaction();
 
         try {
             // Calcular total
             $total = 0;
             foreach ($cartItems as $item) {
+                // Asegurarse de que el precio es numérico
+                if (!is_numeric($item['precio']) || !is_numeric($item['cantidad'])) {
+                    throw new Exception("Precio o cantidad inválidos para el producto ID: " . $item['id_producto']);
+                }
                 $total += $item['precio'] * $item['cantidad'];
             }
 
@@ -22,16 +28,17 @@ class Order {
             $stmt->execute([$userId, $total, $addressId]);
             $orderId = $this->pdo->lastInsertId();
 
-            // Agregar items del pedido
-            foreach ($cartItems as $item) {
-                $sql = "INSERT INTO pedido_items (id_pedido, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$orderId, $item['id_producto'], $item['cantidad'], $item['precio']]);
+            if (!$orderId) {
+                throw new Exception("No se pudo obtener el ID del nuevo pedido.");
+            }
 
-                // Reducir stock
-                $sql = "UPDATE productos SET stock = stock - ? WHERE id_producto = ?";
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute([$item['cantidad'], $item['id_producto']]);
+            // Agregar items del pedido y actualizar stock
+            $itemStmt = $this->pdo->prepare("INSERT INTO pedido_items (id_pedido, id_producto, cantidad, precio_unitario) VALUES (?, ?, ?, ?)");
+            $stockStmt = $this->pdo->prepare("UPDATE productos SET stock = stock - ? WHERE id_producto = ?");
+
+            foreach ($cartItems as $item) {
+                $itemStmt->execute([$orderId, $item['id_producto'], $item['cantidad'], $item['precio']]);
+                $stockStmt->execute([$item['cantidad'], $item['id_producto']]);
             }
 
             // Crear registro de pago
@@ -41,12 +48,17 @@ class Order {
 
             $this->pdo->commit();
             return $orderId;
+
         } catch (Exception $e) {
-            $this->pdo->rollBack();
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            $this->lastError = $e->getMessage(); // Guardar el mensaje de error real
             return false;
         }
     }
 
+    // ... resto de los métodos sin cambios ...
     public function getOrderById($orderId, $userId = null) {
         $sql = "SELECT p.*, u.nombre, u.apellido1, u.email, d.calle, d.ciudad, d.provincia, d.cp, d.pais
                 FROM pedidos p
@@ -176,5 +188,6 @@ class Order {
             return false;
         }
     }
+
 }
 ?>

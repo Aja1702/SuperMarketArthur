@@ -1,0 +1,53 @@
+/* Estilos para asegurar que el modal de login se muestre correctamente */
+
+.modal-overlay {
+    position: fixed; /* Se posiciona relativo a la ventana del navegador */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 35, 66, 0.7); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px);
+    display: none; /* Oculto por defecto, se activa con JS */
+    align-items: center;
+    justify-content: center;
+    z-index: 5000; /* Prioridad de apilamiento MUY ALTA para estar por encima de todo */
+}
+
+.modal-content {
+    position: relative; /* Para posicionar el botón de cerrar */
+    background: var(--blanco-puro);
+    padding: 2rem;
+    border-radius: var(--curva, 12px);
+    box-shadow: var(--sombra-premium, 0 10px 25px rgba(10, 35, 66, 0.1));
+    max-width: 450px; /* Ancho máximo del modal */
+    width: 90%;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #333;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

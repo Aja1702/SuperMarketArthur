@@ -26,7 +26,7 @@
 - [x] Agregar filtros y búsqueda avanzada en catálogo (precio, categoría, stock) (parcialmente en Product.php).
 - [ ] Implementar sistema de recomendaciones basado en compras previas.
 - [ ] Agregar valoraciones y reseñas de productos (tabla en BD, falta implementación).
-- [ ] Integrar pagos con Stripe (simulado inicialmente).
+- [x] Integrar pagos con Stripe (simulado inicialmente).
 - [ ] Agregar notificaciones push para estado de pedidos.
 
 ## 5. Optimización y Rendimiento
