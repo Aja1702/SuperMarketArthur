@@ -7,17 +7,17 @@
         </div>
     </section>
     <?php
-    // Conexión (desde tu iniciar_session.php o similar)
-    include './config/iniciar_session.php';
+// Conexión (desde tu iniciar_session.php o similar)
+include './config/iniciar_session.php';
 
-    // Categorías deseadas
-    $categorias = ['Frutas frescas', 'Verduras frescas', 'Pan del día', 'Snacks salados', 'Helados y postres congelados', 'Alimentación para gatos', 'Higiene y cuidado'];
+// Categorías deseadas (coincidiendo con los nombres reales en BD)
+$categorias = ['Frutas frescas', 'Verduras y hortalizas', 'Panadería artesanal', 'Snacks salados', 'Helados y postres congelados', 'Alimentación para gatos', 'Higiene y cuidado'];
 
-    // Preparar placeholders para IN
-    $placeholders = rtrim(str_repeat('?,', count($categorias)), ',');
+// Preparar placeholders para IN
+$placeholders = rtrim(str_repeat('?,', count($categorias)), ',');
 
-    // Consulta SQL para obtener un producto por categoría
-    $sql = "
+// Consulta SQL para obtener un producto por categoría
+$sql = "
         SELECT p.id_producto, p.nombre_producto, p.precio, p.url_imagen, c.nombre_categoria 
         AS categoria
         FROM productos p
@@ -32,10 +32,10 @@
         ORDER BY p.nombre_producto ASC;
         ";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($categorias);
-    $productosDestacados = $stmt->fetchAll();
-    ?>
+$stmt = $pdo->prepare($sql);
+$stmt->execute($categorias);
+$productosDestacados = $stmt->fetchAll();
+?>
     <section class="destacados">
         <h3>Productos Destacados</h3>
         <div class="productos-lista">
@@ -52,7 +52,8 @@
                         Ver más
                     </a>
                 </article>
-            <?php endforeach; ?>
+            <?php
+endforeach; ?>
         </div>
     </section>
     <section class="porque-elegirnos">

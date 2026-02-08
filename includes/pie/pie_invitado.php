@@ -1,17 +1,23 @@
 <footer class="footer-contenido" role="contentinfo" aria-label="Pie de página SuperMarketArthur">
-    <nav class="footer-enlaces">
-        <a href="./politica-privacidad.php">Política de Privacidad</a>
-        <span aria-hidden="true">|</span>
-        <a href="./terminos-condiciones.php">Términos y Condiciones</a>
-        <span aria-hidden="true">|</span>
-        <a href="./politica-cookies.php">Política de Cookies</a>
-    </nav>
-    <div class="registro-llamada">
-        <p>Regístrate o inicia sesión para aprovechar todas las funcionalidades.</p>
-        <a href="./?userSession=registro" class="btn btn-registro-footer">Regístrate</a>
-        <a href="./?userSession=login" class="btn btn-login-footer">Iniciar sesión</a>
+    <div class="footer-grid">
+        <div class="footer-info">
+            <h4>SuperMarketArthur</h4>
+            <p>Tu supermercado de confianza con la frescura que mereces.</p>
+        </div>
+        <div class="footer-enlaces-moderno">
+            <a href="./politica-privacidad.php">Privacidad</a>
+            <a href="./terminos-condiciones.php">Términos</a>
+            <a href="./politica-cookies.php">Cookies</a>
+        </div>
+        <div class="registro-llamada-premium">
+            <p>¿Aún no tienes cuenta?</p>
+            <div class="btn-group-footer">
+                <a href="./?userSession=registro" class="btn-footer-primary">Únete ahora</a>
+                <a href="./?userSession=login" class="btn-footer-secondary">Entrar</a>
+            </div>
+        </div>
     </div>
-    <div class="copyright">
-        <p>&copy; <?php echo date("Y"); ?> SuperMarketArthur&trade;. Todos los derechos reservados.</p>
+    <div class="copyright-v2">
+        <p>&copy; <?php echo date("Y"); ?> SuperMarketArthur&trade; — Calidad garantizada.</p>
     </div>
 </footer>
