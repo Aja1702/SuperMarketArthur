@@ -14,19 +14,18 @@ $categorias = ['Frutas frescas', 'Verduras y hortalizas', 'Panadería artesanal'
 // Preparar placeholders para IN
 $placeholders = rtrim(str_repeat('?,', count($categorias)), ',');
 
-// Consulta SQL para obtener un producto por categoría
+// Consulta SQL para obtener un producto aleatorio por categoría
 $sql = "
-            SELECT p.id_producto, p.nombre_producto, p.precio, p.url_imagen, c.nombre_categoria 
+            SELECT p.id_producto, p.nombre_producto, p.precio, p.url_imagen, c.nombre_categoria
             AS categoria
             FROM productos p
             JOIN categorias c ON p.id_categoria = c.id_categoria
-            JOIN (
-                SELECT id_categoria, MIN(id_producto) AS min_producto_id
-                FROM productos
-                GROUP BY id_categoria
-                ) mp 
-            ON p.id_categoria = mp.id_categoria AND p.id_producto = mp.min_producto_id
             WHERE c.nombre_categoria IN ($placeholders)
+            AND p.id_producto = (
+                SELECT id_producto FROM productos
+                WHERE id_categoria = p.id_categoria
+                ORDER BY RAND() LIMIT 1
+            )
             ORDER BY p.nombre_producto ASC;
             ";
 
