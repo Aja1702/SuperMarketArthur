@@ -26,12 +26,14 @@ class Product {
         $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($product) {
-            // Agregar información de valoraciones
-            include_once 'Rating.php';
+            // Incluimos el modelo de Rating y calculamos la información
+            require_once 'Rating.php';
             $ratingModel = new Rating($this->pdo);
             $ratingInfo = $ratingModel->getAverageRating($id);
-            $product['rating_promedio'] = $ratingInfo['promedio'];
-            $product['total_valoraciones'] = $ratingInfo['total'];
+
+            // Añadimos la información al array del producto
+            $product['rating_average'] = round($ratingInfo['average'], 1);
+            $product['rating_total'] = $ratingInfo['total'];
         }
 
         return $product;

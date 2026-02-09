@@ -6,8 +6,8 @@ include '../config/iniciar_session.php'; // tu conexión $conn
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validar CSRF token
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    // Validar CSRF token de forma segura
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die('Error CSRF: Token inválido');
     }
 
@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre'] ?? '');
     $apellido1 = trim($_POST['apellido1'] ?? '');
     $apellido2 = trim($_POST['apellido2'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $password2 = $_POST['confirm_password'] ?? '';
+    $password = trim($_POST['password'] ?? '');
+    $password2 = trim($_POST['confirm_password'] ?? '');
     $provincia = trim($_POST['provincia'] ?? '');
     $localidad = trim($_POST['localidad'] ?? '');
     $cp = trim($_POST['cp'] ?? '');

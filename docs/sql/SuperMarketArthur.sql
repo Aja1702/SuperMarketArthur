@@ -173,3 +173,10 @@ CREATE TABLE supermarketarthur.password_resets (
     utilizado BOOLEAN DEFAULT FALSE,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
+
+-- Tabla para registrar intentos de login fallidos (Rate Limiting)
+CREATE TABLE supermarketarthur.login_attempts (
+    id_attempt INT AUTO_INCREMENT PRIMARY KEY,
+    ip_address VARCHAR(45) NOT NULL,
+    attempt_time DATETIME NOT NULL
+);

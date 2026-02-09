@@ -27,10 +27,14 @@ $tipo_usuario = $tipo_usu === 'a' ? 'administrador' : ($tipo_usu === 'u' ? 'usua
     <link rel="icon" href="./assets/img/logo/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./assets/css/styles.css" />
     <link rel="stylesheet" href="./assets/css/header.css" />
-    <link rel="stylesheet" href="./assets/css/nav.css" /> <!-- Estilos de Nav AÑADIDOS -->
+    <link rel="stylesheet" href="./assets/css/nav.css" />
     <link rel="stylesheet" href="./assets/css/main.css" />
     <link rel="stylesheet" href="./assets/css/footer.css" />
     <link rel="stylesheet" href="./assets/css/modal.css" />
+    <link rel="stylesheet" href="./assets/css/product-detail.css" />
+    <link rel="stylesheet" href="./assets/css/forms.css" />
+    <link rel="stylesheet" href="./assets/css/admin.css" />
+    <link rel="stylesheet" href="./assets/css/catalog.css" />
 </head>
 
 <body>
@@ -61,18 +65,22 @@ $rutas = [
 include($rutas[$tipo_usuario]['cabecera']);
 include($rutas[$tipo_usuario]['menu']);
 
-// --- LÓGICA DE VISTAS RESTAURADA ---
+// --- LÓGICA DE VISTAS MEJORADA ---
 $vistaValidaUser = ['login', 'registro', 'perfil', 'recuperar'];
 $vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros', 'soporte', 'contacto', 'privacidad', 'terminos', 'cookies'];
 $vistaValidaMenuAdmin = ['administrador', 'admin_productos', 'admin_pedidos', 'admin_usuarios', 'admin_stock', 'admin_config'];
 $vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'detalle_pedido', 'favoritos', 'config_usuario'];
 
-// Prioridad 1: Formularios de sesión de usuario (ej: ?userSession=login)
-if (isset($_GET['userSession']) && in_array($_GET['userSession'], $vistaValidaUser)) {
+// Prioridad 1: Detalle de producto (si se pasa un id_producto)
+if (isset($_GET['id_producto'])) {
+    include("./includes/centro/centro_detalle_producto.php");
+}
+// Prioridad 2: Formularios de sesión de usuario (ej: ?userSession=login)
+else if (isset($_GET['userSession']) && in_array($_GET['userSession'], $vistaValidaUser)) {
     $vista = $_GET['userSession'];
     include("./includes/centro/form_{$vista}.php");
 }
-// Prioridad 2: Vistas del menú principal (ej: ?vistaMenu=ofertas)
+// Prioridad 3: Vistas del menú principal (ej: ?vistaMenu=ofertas)
 else if (isset($_GET['vistaMenu'])) {
     $vistaSolicitada = $_GET['vistaMenu'];
     $vistaValida = false;
@@ -92,7 +100,7 @@ else if (isset($_GET['vistaMenu'])) {
         include($rutas[$tipo_usuario]['centro']);
     }
 }
-// Prioridad 3: Si no se solicita ninguna vista, cargar la por defecto
+// Prioridad 4: Si no se solicita ninguna vista, cargar la por defecto
 else {
     include($rutas[$tipo_usuario]['centro']);
 }
@@ -130,8 +138,11 @@ if ($tipo_usuario === 'invitado') {
         </div>
     </div>
 
-    <script type="module" src="./assets/js/funciones.js"></script>
+    <script src="./assets/js/cart.js"></script>
+    <script src="./assets/js/search.js"></script>
+    <script type="module" src="./assets/js/auth.js"></script>
     <script src="./assets/js/checkout_modal.js"></script>
+    <script src="./assets/js/rating.js"></script>
 </body>
 
 </html>

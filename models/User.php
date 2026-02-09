@@ -2,6 +2,10 @@
 class User {
     private $pdo;
 
+    // Constantes para la configuración del Rate Limiting
+    const MAX_LOGIN_ATTEMPTS = 5; // Intentos máximos
+    const LOGIN_ATTEMPT_TIME_WINDOW = 15; // Ventana de tiempo en minutos
+
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
@@ -85,17 +89,33 @@ class User {
         return $stmt->execute([$id]);
     }
 
-    /**
-     * Obtiene todas las direcciones de un usuario.
-     * @param int $userId El ID del usuario.
-     * @return array Un array con las direcciones del usuario.
-     */
     public function getUserAddresses($userId) {
-        // CORREGIDO: Se ha eliminado el 'ORDER BY es_principal DESC' que causaba el error fatal.
         $sql = "SELECT * FROM direcciones WHERE id_usuario = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$userId]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // --- Métodos para Rate Limiting ---
+
+    public function addLoginAttempt($ipAddress) {
+        $sql = "INSERT INTO login_attempts (ip_address, attempt_time) VALUES (?, NOW())";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$ipAddress]);
+    }
+
+    public function checkLoginAttempts($ipAddress) {
+        $sql = "SELECT COUNT(*) FROM login_attempts WHERE ip_address = ? AND attempt_time > (NOW() - INTERVAL ? MINUTE)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$ipAddress, self::LOGIN_ATTEMPT_TIME_WINDOW]);
+        $attempts = $stmt->fetchColumn();
+        return $attempts >= self::MAX_LOGIN_ATTEMPTS;
+    }
+
+    public function clearLoginAttempts($ipAddress) {
+        $sql = "DELETE FROM login_attempts WHERE ip_address = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$ipAddress]);
     }
 }
 ?>

@@ -6,14 +6,14 @@
 - [x] Implementar clase Order.php para gestión de pedidos, con estados y cálculos de totales.
 - [x] Crear clase Cart.php para lógica del carrito, integrando con sesiones o base de datos.
 - [x] Agregar tabla de valoraciones en base de datos (ya implementada).
-- [ ] Crear modelo Rating.php para gestión de valoraciones de productos.
-- [ ] Implementar lógica de cálculo de promedio de valoraciones en Product.php.
+- [x] Crear modelo Rating.php para gestión de valoraciones de productos.
+- [x] Implementar lógica de cálculo de promedio de valoraciones en Product.php.
 
 ## 2. Mejoras en Seguridad
-- [ ] Implementar hashing de contraseñas en registro y login usando password_verify().
-- [ ] Agregar protección CSRF en formularios.
-- [ ] Sanitizar inputs y usar prepared statements en consultas SQL.
-- [ ] Implementar rate limiting en login para prevenir ataques de fuerza bruta.
+- [x] Implementar hashing de contraseñas en registro y login usando password_verify().
+- [x] Agregar protección CSRF en formularios.
+- [x] Sanitizar inputs y usar prepared statements en consultas SQL.
+- [x] Implementar rate limiting en login para prevenir ataques de fuerza bruta.
 
 ## 3. Mejoras en UI/UX
 - [x] Actualizar CSS para mejor responsive (mejor soporte móvil/tablet).
@@ -25,7 +25,7 @@
 ## 4. Nuevas Funcionalidades
 - [x] Agregar filtros y búsqueda avanzada en catálogo (precio, categoría, stock) (parcialmente en Product.php).
 - [ ] Implementar sistema de recomendaciones basado en compras previas.
-- [ ] Agregar valoraciones y reseñas de productos (tabla en BD, falta implementación).
+- [x] Agregar valoraciones y reseñas de productos (tabla en BD, falta implementación).
 - [x] Integrar pagos con Stripe (simulado inicialmente).
 - [ ] Agregar notificaciones push para estado de pedidos.
 
