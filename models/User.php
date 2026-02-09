@@ -23,7 +23,8 @@ class User {
     }
 
     public function login($email, $password) {
-        $sql = "SELECT id_usuario, nombre, pass, tipo_usu FROM usuarios WHERE email = ?";
+        // CORREGIDO: Añadido el campo 'email' a la consulta SELECT
+        $sql = "SELECT id_usuario, nombre, email, pass, tipo_usu FROM usuarios WHERE email = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$email]);
         $user = $stmt->fetch();

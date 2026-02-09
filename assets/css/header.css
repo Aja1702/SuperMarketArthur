@@ -48,6 +48,51 @@
     margin-left: 1rem;
 }
 
+.menu-invitado {
+    list-style: none; /* Elimina los puntos de la lista */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Estilos base para los botones del menú de invitado */
+.menu-invitado a {
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--blanco-puro);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-login {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-login:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--blanco-puro);
+}
+
+.btn-registrarse {
+    background: var(--azul-vibrante);
+    color: var(--blanco-puro);
+    box-shadow: 0 4px 15px rgba(33, 158, 188, 0.3);
+}
+
+.btn-registrarse:hover {
+    background: #188fa7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 158, 188, 0.5);
+}
+
+
 /* --- 2. CABECERA ADMINISTRADOR (Grises) --- */
 .cabecera-admin {
     background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #4a5568 100%);
@@ -210,18 +255,35 @@
     gap: 1rem;
     cursor: pointer;
     transition: background 0.2s;
-    border-bottom: 1px solid #f8f9fa;
+    border-bottom: 1px solid #f1f5f9;
     text-decoration: none;
-    color: inherit;
+    color: var(--azul-primario);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
 }
 
 .search-result-item:hover {
-    background: #f1f5f9;
+    background: var(--gris-fondo);
 }
 
 .search-result-item img {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px;
+}
+
+.search-result-info h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.search-result-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--azul-vibrante);
+    font-weight: 700;
 }

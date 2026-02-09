@@ -10,7 +10,7 @@
 
     <div class="search-container">
         <div class="search-bar-wrapper">
-            <span class="search-icon">🔍</span>
+            <i class="fas fa-search search-icon"></i>
             <input type="text" id="searchInput" placeholder="Busca productos, frutas, categorías..." autocomplete="off">
         </div>
         <div id="searchResults" class="search-results"></div>
@@ -18,9 +18,9 @@
 
     <nav class="nav-invitado" role="navigation" aria-label="Navegación principal para invitados">
         <ul class="menu-invitado">
-            <li><a href="#" id="openCart" aria-label="Ver carrito de compras">🛒 Carrito</a></li>
-            <li><a href="./?userSession=login" class="btn btn-login">Iniciar sesión</a></li>
-            <li><a href="./?userSession=registro" class="btn btn-registrarse destacado">Registrarse</a></li>
+            <li><a href="checkout.php" id="openCart" class="btn-login" aria-label="Ver carrito de compras"><i class="fas fa-shopping-cart"></i>Carrito</a></li>
+            <li><a href="./?userSession=login" class="btn-login">Iniciar sesión</a></li>
+            <li><a href="./?userSession=registro" class="btn-registrarse destacado">Registrarse</a></li>
         </ul>
     </nav>
 </header>
