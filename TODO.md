@@ -25,19 +25,19 @@
 ## 4. Nuevas Funcionalidades
 - [x] Agregar filtros y búsqueda avanzada en catálogo (precio, categoría, stock) (parcialmente en Product.php).
 - [ ] Implementar sistema de recomendaciones basado en compras previas.
-- [x] Agregar valoraciones y reseñas de productos (tabla en BD, falta implementación).
+- [x] Agregar valoraciones y reseñas de productos.
 - [x] Integrar pagos con Stripe (simulado inicialmente).
 - [ ] Agregar notificaciones push para estado de pedidos.
 
 ## 5. Optimización y Rendimiento
 - [ ] Implementar caching básico (para productos populares).
-- [ ] Optimizar consultas SQL con índices.
+- [x] Optimizar consultas SQL con índices.
 - [ ] Comprimir assets (CSS/JS minificados).
 - [ ] Agregar PWA features (service worker para offline).
 
 ## 6. Testing y QA
-- [ ] Crear tests unitarios básicos con PHPUnit para clases modelo.
-- [ ] Agregar tests de integración para login/registro.
+- [x] Crear tests unitarios básicos con PHPUnit para clases modelo.
+- [x] Agregar tests de integración para login/registro.
 - [ ] Probar cross-browser y dispositivos.
 - [ ] Implementar logging de errores.
 

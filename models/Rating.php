@@ -8,24 +8,16 @@ class Rating {
 
     /**
      * Agrega una nueva valoración a un producto.
-     *
-     * @param int $id_producto El ID del producto a valorar.
-     * @param int $id_usuario El ID del usuario que valora.
-     * @param int $puntuacion La puntuación de 1 a 5.
-     * @param string $comentario El comentario de la valoración.
-     * @return bool Devuelve true si se insertó correctamente, false en caso contrario.
      */
     public function create($id_producto, $id_usuario, $puntuacion, $comentario) {
-        $sql = "INSERT INTO valoraciones (id_producto, id_usuario, puntuacion, comentario, fecha) VALUES (?, ?, ?, ?, NOW())";
+        // CORREGIDO: Se usa CURRENT_TIMESTAMP en lugar de NOW() para ser compatible con SQLite y MySQL.
+        $sql = "INSERT INTO valoraciones (id_producto, id_usuario, puntuacion, comentario, fecha) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$id_producto, $id_usuario, $puntuacion, $comentario]);
     }
 
     /**
      * Obtiene todas las valoraciones para un producto específico.
-     *
-     * @param int $id_producto El ID del producto.
-     * @return array Un array con las valoraciones.
      */
     public function getByProduct($id_producto) {
         $sql = "SELECT v.*, u.nombre AS nombre_usuario
@@ -40,9 +32,6 @@ class Rating {
 
     /**
      * Calcula la puntuación media y el total de valoraciones para un producto.
-     *
-     * @param int $id_producto El ID del producto.
-     * @return array Un array con 'average' (puntuación media) y 'total' (número de valoraciones).
      */
     public function getAverageRating($id_producto) {
         $sql = "SELECT AVG(puntuacion) as average, COUNT(id_valoracion) as total FROM valoraciones WHERE id_producto = ?";

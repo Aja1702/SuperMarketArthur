@@ -22,6 +22,10 @@ CREATE TABLE supermarketarthur.usuarios (
     tipo_usu VARCHAR(1) NOT NULL     -- 'a' para administrador, 'u' para usuario normal
 );
 
+-- Índices para la tabla de usuarios
+CREATE INDEX idx_email ON usuarios(email);
+
+
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `pass`, `apellido1`, `apellido2`, `provincia`, `localidad`, `cp`, `calle`, `numero`, `telefono`, `email`, `tipo_doc`, `num_doc`, `fecha_nacimiento`, `fecha_registro`, `tipo_usu`) 
 	VALUES (NULL, 'root', 'root', 'root1', 'root2', 'toledo', 'villacañas', '45860', 'Arturo', '01', '600000001', 'root@mysql.es', 'DNI', '83727913R', '2002-01-04', '2025-07-28 17:07:26', 'a');
 
@@ -37,6 +41,9 @@ CREATE TABLE supermarketarthur.direcciones (
   pais VARCHAR(50),
   FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
+
+-- Índices para la tabla de direcciones
+CREATE INDEX idx_direcciones_usuario ON direcciones(id_usuario);
 
 -- Tabla de categorias
 CREATE TABLE supermarketarthur.categorias (
@@ -57,6 +64,10 @@ CREATE TABLE supermarketarthur.productos (
   FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria)
 );
 
+-- Índices para la tabla de productos
+CREATE INDEX idx_productos_categoria ON productos(id_categoria);
+
+
 -- Tabla de carrito temporal
 CREATE TABLE supermarketarthur.carrito_temp (
   id_carrito INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,6 +75,7 @@ CREATE TABLE supermarketarthur.carrito_temp (
   creado_en DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
+
 -- Tabla de items del carrito
 CREATE TABLE supermarketarthur.carrito_items (
   id_item INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,6 +85,12 @@ CREATE TABLE supermarketarthur.carrito_items (
   FOREIGN KEY (id_carrito) REFERENCES carrito_temp(id_carrito),
   FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );
+
+-- Índices para la tabla de carrito_items
+CREATE INDEX idx_carrito_items_carrito ON carrito_items(id_carrito);
+CREATE INDEX idx_carrito_items_producto ON carrito_items(id_producto);
+
+
 -- Tabla de pedidos
 CREATE TABLE supermarketarthur.pedidos (
   id_pedido INT AUTO_INCREMENT PRIMARY KEY,
@@ -85,6 +103,10 @@ CREATE TABLE supermarketarthur.pedidos (
   FOREIGN KEY (id_direccion) REFERENCES direcciones(id_direccion)
 );
 
+-- Índices para la tabla de pedidos
+CREATE INDEX idx_pedidos_usuario ON pedidos(id_usuario);
+
+
 -- Tabla de items del pedido
 CREATE TABLE supermarketarthur.pedido_items (
   id_pedido_item INT AUTO_INCREMENT PRIMARY KEY,
@@ -96,6 +118,11 @@ CREATE TABLE supermarketarthur.pedido_items (
   FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );
 
+-- Índices para la tabla de pedido_items
+CREATE INDEX idx_pedido_items_pedido ON pedido_items(id_pedido);
+CREATE INDEX idx_pedido_items_producto ON pedido_items(id_producto);
+
+
 -- Tabla de pagos
 CREATE TABLE supermarketarthur.pagos (
     id_pago INT AUTO_INCREMENT PRIMARY KEY,
@@ -105,6 +132,10 @@ CREATE TABLE supermarketarthur.pagos (
     fecha_pago DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_pedido) REFERENCES pedidos(id_pedido)
 );
+
+-- Índices para la tabla de pagos
+CREATE INDEX idx_pagos_pedido ON pagos(id_pedido);
+
 
 -- Tabla de cupones
 CREATE TABLE supermarketarthur.cupones (
@@ -139,6 +170,7 @@ CREATE TABLE supermarketarthur.historial_stock (
     fecha_movimiento DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
 );
+
 -- Tabla de valoraciones de productos
 CREATE TABLE supermarketarthur.valoraciones (
     id_valoracion INT AUTO_INCREMENT PRIMARY KEY,
@@ -150,6 +182,11 @@ CREATE TABLE supermarketarthur.valoraciones (
     FOREIGN KEY (id_producto) REFERENCES productos(id_producto),
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
+
+-- Índices para la tabla de valoraciones
+CREATE INDEX idx_valoraciones_producto ON valoraciones(id_producto);
+CREATE INDEX idx_valoraciones_usuario ON valoraciones(id_usuario);
+
 
 -- Tabla de favoritos
 CREATE TABLE supermarketarthur.favoritos (
@@ -163,7 +200,6 @@ CREATE TABLE supermarketarthur.favoritos (
 );
 
 -- tabla de password resets
--- Esta tabla se utiliza para gestionar los restablecimientos de contraseña
 CREATE TABLE supermarketarthur.password_resets (
     id_reset INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -180,3 +216,6 @@ CREATE TABLE supermarketarthur.login_attempts (
     ip_address VARCHAR(45) NOT NULL,
     attempt_time DATETIME NOT NULL
 );
+
+-- Índices para la tabla de login_attempts
+CREATE INDEX idx_login_attempts_ip ON login_attempts(ip_address);
