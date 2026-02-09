@@ -32,7 +32,7 @@
 ## 5. Optimización y Rendimiento
 - [ ] Implementar caching básico (para productos populares).
 - [x] Optimizar consultas SQL con índices.
-- [ ] Comprimir assets (CSS/JS minificados).
+- [x] Comprimir assets (CSS/JS minificados).
 - [ ] Agregar PWA features (service worker para offline).
 
 ## 6. Testing y QA

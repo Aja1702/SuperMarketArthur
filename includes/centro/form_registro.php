@@ -3,6 +3,22 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 $token = $_SESSION['csrf_token'];
+
+// --- MOSTRAR ERRORES DE REGISTRO ---
+if (isset($_SESSION['registro_errores']) && !empty($_SESSION['registro_errores'])) {
+    echo '<div class="alert alert-danger" style="color: red; margin-bottom: 15px;">';
+    echo '<strong>Errores en el formulario:</strong><br>';
+    echo '<ul>';
+    foreach ($_SESSION['registro_errores'] as $error) {
+        echo '<li>' . htmlspecialchars($error) . '</li>';
+    }
+    echo '</ul>';
+    echo '</div>';
+    // Limpiar errores de la sesión para que no se muestren de nuevo
+    unset($_SESSION['registro_errores']);
+}
+// --- FIN MOSTRAR ERRORES ---
+
 ?>
 <div class="form-container-registro">
     <h2>Registro de usuario</h2>

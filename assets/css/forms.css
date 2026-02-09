@@ -72,8 +72,11 @@
     font-style: italic;
 }
 
+#mensaje-error.mensaje-error {
+    color: #f56565 !important;
+}
+
 .mensaje-error {
-    color: #f56565;
     text-align: center;
     align-items: center;
 }

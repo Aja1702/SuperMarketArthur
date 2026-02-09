@@ -10,8 +10,7 @@
 }
 
 .banner-principal {
-    background: linear-gradient(rgba(10, 35, 66, 0.7), rgba(10, 35, 66, 0.7)),
-        url('../img/banner_hero.jpg');
+    background: linear-gradient(rgba(10, 35, 66, 0.7), rgba(10, 35, 66, 0.7));
     background-size: cover;
     background-position: center;
     background-color: var(--azul-primario);

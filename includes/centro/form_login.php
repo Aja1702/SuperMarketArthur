@@ -5,6 +5,12 @@ if (empty($_SESSION['csrf_token'])) {
 $token = $_SESSION['csrf_token'];
 ?>
 
+<style>
+    #mensaje-error.mensaje-error {
+        color: #f56565 !important;
+    }
+</style>
+
 <div class="form-container-login">
     <h2>Iniciar sesión</h2>
     <form id="loginForm" method="post" action="./controllers/procesar_login.php">
@@ -19,7 +25,14 @@ $token = $_SESSION['csrf_token'];
             <span class="error-icon" id="error-password" aria-live="polite"></span>
         </div>
         <p>* Campos obligatorios</p>
-        <span id="mensaje-error" class="mensaje-error" aria-live="assertive"></span>
+        <span id="mensaje-error" class="mensaje-error" aria-live="assertive">
+            <?php
+            if (isset($_SESSION['error_message'])) {
+                echo htmlspecialchars($_SESSION['error_message']);
+                unset($_SESSION['error_message']);
+            }
+            ?>
+        </span>
         <button type="submit" class="btn-form-acceso">Acceder</button>
     </form>
 </div>

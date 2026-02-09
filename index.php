@@ -1,17 +1,24 @@
 <?php
+// --- CONFIGURACIÓN DE RUTA BASE (A PRUEBA DE FALLOS) ---
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
+$host = $_SERVER['HTTP_HOST'];
+// CORREGIDO: Se elimina la barra invertida que causaba el error de sintaxis.
+$path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
+define('BASE_URL', $protocol . $host . $path . '/');
+
+// Cache-busting: se añade un timestamp a los archivos para forzar al navegador a recargarlos.
+$cache_version = time();
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 include('./config/iniciar_session.php');
 
-// Validar el tipo de usuario con control de errores
 $tipo_usu = $_SESSION['tipo_usu'] ?? 'invitado';
-
 $tipos_validos = ['a', 'u', 'i'];
 if (!in_array($tipo_usu, $tipos_validos)) {
-    $tipo_usu = 'invitado'; // Valor por defecto si hay dato inválido
+    $tipo_usu = 'invitado';
 }
-
 $tipo_usuario = $tipo_usu === 'a' ? 'administrador' : ($tipo_usu === 'u' ? 'usuario' : 'invitado');
 ?>
 <!DOCTYPE html>
@@ -21,20 +28,10 @@ $tipo_usuario = $tipo_usu === 'a' ? 'administrador' : ($tipo_usu === 'u' ? 'usua
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Supermarket Arthur - Encuentra los mejores productos al mejor precio." />
-    <meta name="keywords" content="supermercado, compras, productos, ofertas" />
     <title>Supermarket Arthur</title>
-    <link rel="icon" href="./assets/img/logo/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <link rel="stylesheet" href="./assets/css/header.css" />
-    <link rel="stylesheet" href="./assets/css/nav.css" />
-    <link rel="stylesheet" href="./assets/css/main.css" />
-    <link rel="stylesheet" href="./assets/css/footer.css" />
-    <link rel="stylesheet" href="./assets/css/modal.css" />
-    <link rel="stylesheet" href="./assets/css/product-detail.css" />
-    <link rel="stylesheet" href="./assets/css/forms.css" />
-    <link rel="stylesheet" href="./assets/css/admin.css" />
-    <link rel="stylesheet" href="./assets/css/catalog.css" />
+    <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/logo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>dist/css/bundle.min.css?v=<?php echo $cache_version; ?>" />
 </head>
 
 <body>
@@ -71,17 +68,12 @@ $vistaValidaMenuInvitado = ['categorias_productos', 'ofertas', 'sobre_nosotros',
 $vistaValidaMenuAdmin = ['administrador', 'admin_productos', 'admin_pedidos', 'admin_usuarios', 'admin_stock', 'admin_config'];
 $vistaValidaMenuUsuario = ['usuario', 'mis_pedidos', 'detalle_pedido', 'favoritos', 'config_usuario'];
 
-// Prioridad 1: Detalle de producto (si se pasa un id_producto)
 if (isset($_GET['id_producto'])) {
     include("./includes/centro/centro_detalle_producto.php");
-}
-// Prioridad 2: Formularios de sesión de usuario (ej: ?userSession=login)
-else if (isset($_GET['userSession']) && in_array($_GET['userSession'], $vistaValidaUser)) {
+} else if (isset($_GET['userSession']) && in_array($_GET['userSession'], $vistaValidaUser)) {
     $vista = $_GET['userSession'];
     include("./includes/centro/form_{$vista}.php");
-}
-// Prioridad 3: Vistas del menú principal (ej: ?vistaMenu=ofertas)
-else if (isset($_GET['vistaMenu'])) {
+} else if (isset($_GET['vistaMenu'])) {
     $vistaSolicitada = $_GET['vistaMenu'];
     $vistaValida = false;
 
@@ -96,19 +88,14 @@ else if (isset($_GET['vistaMenu'])) {
     if ($vistaValida) {
         include("./includes/centro/centro_{$vistaSolicitada}.php");
     } else {
-        // Si la vista solicitada no es válida para el rol, se carga la vista por defecto
         include($rutas[$tipo_usuario]['centro']);
     }
-}
-// Prioridad 4: Si no se solicita ninguna vista, cargar la por defecto
-else {
+} else {
     include($rutas[$tipo_usuario]['centro']);
 }
 
-// Incluir pie de página
 include($rutas[$tipo_usuario]['pie']);
 
-// Incluir el modal de login solo si el usuario es un invitado
 if ($tipo_usuario === 'invitado') {
     include('./includes/modals/login_modal.php');
 }
@@ -138,11 +125,7 @@ if ($tipo_usuario === 'invitado') {
         </div>
     </div>
 
-    <script src="./assets/js/cart.js"></script>
-    <script src="./assets/js/search.js"></script>
-    <script type="module" src="./assets/js/auth.js"></script>
-    <script src="./assets/js/checkout_modal.js"></script>
-    <script src="./assets/js/rating.js"></script>
+    <script src="<?php echo BASE_URL; ?>dist/js/app.min.js?v=<?php echo $cache_version; ?>" type="module"></script>
 </body>
 
 </html>
