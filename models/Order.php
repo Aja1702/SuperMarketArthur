@@ -15,7 +15,6 @@ class Order {
             // Calcular total
             $total = 0;
             foreach ($cartItems as $item) {
-                // Asegurarse de que el precio es numérico
                 if (!is_numeric($item['precio']) || !is_numeric($item['cantidad'])) {
                     throw new Exception("Precio o cantidad inválidos para el producto ID: " . $item['id_producto']);
                 }
@@ -58,18 +57,18 @@ class Order {
         }
     }
 
-    // ... resto de los métodos sin cambios ...
     public function getOrderById($orderId, $userId = null) {
         $sql = "SELECT p.*, u.nombre, u.apellido1, u.email, d.calle, d.ciudad, d.provincia, d.cp, d.pais
                 FROM pedidos p
                 JOIN usuarios u ON p.id_usuario = u.id_usuario
                 LEFT JOIN direcciones d ON p.id_direccion = d.id_direccion
-                WHERE p.id_pedido = ?";
-        $params = [$orderId];
+                WHERE p.id_pedido = :orderId";
+
+        $params = [':orderId' => $orderId];
 
         if ($userId) {
-            $sql .= " AND p.id_usuario = ?";
-            $params[] = $userId;
+            $sql .= " AND p.id_usuario = :userId";
+            $params[':userId'] = $userId;
         }
 
         $stmt = $this->pdo->prepare($sql);
@@ -96,12 +95,15 @@ class Order {
         $sql = "SELECT p.*, COUNT(pi.id_pedido_item) as num_items
                 FROM pedidos p
                 LEFT JOIN pedido_items pi ON p.id_pedido = pi.id_pedido
-                WHERE p.id_usuario = ?
+                WHERE p.id_usuario = :userId
                 GROUP BY p.id_pedido
                 ORDER BY p.fecha DESC
-                LIMIT ? OFFSET ?";
+                LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$userId, $limit, $offset]);
+        $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll();
     }
 
@@ -112,9 +114,11 @@ class Order {
                 LEFT JOIN pedido_items pi ON p.id_pedido = pi.id_pedido
                 GROUP BY p.id_pedido
                 ORDER BY p.fecha DESC
-                LIMIT ? OFFSET ?";
+                LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$limit, $offset]);
+        $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll();
     }
 
@@ -133,11 +137,14 @@ class Order {
         $sql = "SELECT p.*, u.nombre, u.apellido1, u.email
                 FROM pedidos p
                 JOIN usuarios u ON p.id_usuario = u.id_usuario
-                WHERE p.estado = ?
+                WHERE p.estado = :status
                 ORDER BY p.fecha DESC
-                LIMIT ? OFFSET ?";
+                LIMIT :limit OFFSET :offset";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute([$status, $limit, $offset]);
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll();
     }
 
@@ -190,4 +197,3 @@ class Order {
     }
 
 }
-?>

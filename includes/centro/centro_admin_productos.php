@@ -1,28 +1,18 @@
 <div class="admin-productos">
     <!-- TABS: Lista / Añadir -->
     <div class="tabs-productos">
-        <button class="tab-btn active" onclick="mostrarTab('lista')">📋 Lista Productos</button>
-        <button class="tab-btn" onclick="mostrarTab('nuevo')">➕ Nuevo Producto</button>
+        <button id="tab-btn-lista" class="tab-btn active" onclick="mostrarTab(event, 'lista')">📋 Lista Productos</button>
+        <button id="tab-btn-nuevo" class="tab-btn" onclick="mostrarTab(event, 'nuevo')">➕ Nuevo Producto</button>
     </div>
 
     <!-- TAB 1: LISTA PRODUCTOS -->
     <div id="lista-productos" class="tab-content active">
-        <?php
-        $stmt = $pdo->query("
-            SELECT p.*, c.nombre_categoria 
-            FROM productos p 
-            LEFT JOIN categorias c ON p.id_categoria = c.id_categoria 
-            ORDER BY p.nombre_producto
-        ");
-        $productos = $stmt->fetchAll();
-        ?>
-        
         <?php if (empty($productos)): ?>
             <div class="empty-state">
                 <i class="fas fa-box-open"></i>
                 <h3>No hay productos</h3>
                 <p>Añade el primer producto del supermercado</p>
-                <button class="btn-primary" onclick="mostrarTab('nuevo')">Añadir primero</button>
+                <button class="btn-primary" onclick="mostrarTab(event, 'nuevo')">Añadir primero</button>
             </div>
         <?php else: ?>
             <div class="tabla-responsive">
@@ -47,7 +37,7 @@
                             <td>
                                 <img src="assets/img/productos/<?php echo htmlspecialchars($producto['url_imagen']); ?>" 
                                      alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>" 
-                                     onerror="this.src='assets/img/productos/sin-imagen.jpg'">
+                                     onerror="this.onerror=null; this.src='assets/img/productos/sin-imagen.jpg';">
                             </td>
                             <td>
                                 <strong><?php echo htmlspecialchars($producto['nombre_producto']); ?></strong>
@@ -59,7 +49,7 @@
                             <td>€<?php echo number_format($producto['precio'], 2); ?></td>
                             <td>
                                 <span class="stock-badge <?php echo $sin_stock ? 'rojo' : ($stock_bajo ? 'amarillo' : 'verde'); ?>">
-                                    <?php echo $producto['stock']; ?> und
+                                    <?php echo $producto['stock']; ?>
                                 </span>
                             </td>
                             <td>
@@ -73,10 +63,10 @@
                                        class="btn-sm editar" title="Editar">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" onclick="eliminarProducto(<?php echo $producto['id_producto']; ?>)" 
+                                    <button type="button" onclick="eliminarProducto(event, <?php echo $producto['id_producto']; ?>)"
                                        class="btn-sm eliminar" title="Eliminar">
                                         <i class="fas fa-trash"></i>
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -84,13 +74,31 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- PAGINACIÓN -->
+            <div class="paginacion">
+                <?php if ($total_paginas > 1): ?>
+                    <a href="?vistaMenu=admin_productos&page=<?php echo max(1, $pagina_actual - 1); ?>"
+                       class="btn-paginacion <?php echo ($pagina_actual <= 1) ? 'disabled' : ''; ?>">
+                        &laquo; Anterior
+                    </a>
+
+                    <span class="info-paginacion">Página <?php echo $pagina_actual; ?> de <?php echo $total_paginas; ?></span>
+
+                    <a href="?vistaMenu=admin_productos&page=<?php echo min($total_paginas, $pagina_actual + 1); ?>"
+                       class="btn-paginacion <?php echo ($pagina_actual >= $total_paginas) ? 'disabled' : ''; ?>">
+                        Siguiente &raquo;
+                    </a>
+                <?php endif; ?>
+            </div>
+
         <?php endif; ?>
     </div>
 
     <!-- TAB 2: NUEVO PRODUCTO -->
     <div id="nuevo-producto" class="tab-content">
         <form method="POST" action="controllers/admin_productos.php" enctype="multipart/form-data" class="form-producto">
-            <input type="text" name="accion" value="nuevo">
+            <input type="hidden" name="accion" value="nuevo">
             
             <div class="form-grid">
                 <div class="form-group">
@@ -102,9 +110,7 @@
                     <label>Categoría *</label>
                     <select name="id_categoria" required>
                         <option value="">Selecciona categoría</option>
-                        <?php
-                        $cats = $pdo->query("SELECT * FROM categorias ORDER BY nombre_categoria")->fetchAll();
-                        foreach($cats as $cat): ?>
+                        <?php foreach($categorias as $cat): ?>
                             <option value="<?php echo $cat['id_categoria']; ?>">
                                 <?php echo htmlspecialchars($cat['nombre_categoria']); ?>
                             </option>
@@ -136,27 +142,57 @@
             
             <div class="form-actions">
                 <button type="submit" class="btn-primary">➕ Añadir Producto</button>
-                <a href="#" onclick="mostrarTab('lista')" class="btn-secundario">Cancelar</a>
+                <button type="button" onclick="mostrarTab(event, 'lista')" class="btn-secundario">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
-function mostrarTab(tab) { // Ocultar todas las pestañas y desactivar botones
+function mostrarTab(event, tabName) {
+    event.preventDefault(); // ¡LA CLAVE! Evita que los enlaces recarguen la página.
+
+    // Ocultar todas las pestañas de contenido
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+    // Desactivar todos los botones de pestaña
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(tab + '-productos').classList.add('active');
-    event.target.classList.add('active');
+
+    // Mostrar la pestaña de contenido correcta
+    const contentId = (tabName === 'nuevo') ? 'nuevo-producto' : 'lista-productos';
+    document.getElementById(contentId).classList.add('active');
+
+    // Activar el botón de pestaña correcto
+    const buttonId = 'tab-btn-' + tabName;
+    if (document.getElementById(buttonId)) {
+        document.getElementById(buttonId).classList.add('active');
+    }
 }
 
-function eliminarProducto(id) { // Confirmar eliminación y enviar petición AJAX
-    if(confirm('¿Eliminar este producto?')) {
+function eliminarProducto(event, id) {
+    event.preventDefault(); // Evita que el enlace recargue la página.
+
+    if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+        const data = new URLSearchParams();
+        data.append('accion', 'eliminar');
+        data.append('id', id);
+
         fetch('controllers/admin_productos.php', {
             method: 'POST',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: 'accion=eliminar&id=' + id
-        }).then(() => location.reload());
+            body: data
+        })
+        .then(response => response.json()) // Asume que el controlador devuelve JSON
+        .then(data => {
+            if (data.success) {
+                location.reload(); // Recarga solo si se ha eliminado con éxito
+            } else {
+                alert('Error al eliminar el producto: ' + (data.message || 'Error desconocido'));
+            }
+        })
+        .catch(error => {
+            console.error('Error en la petición:', error);
+            alert('Ocurrió un error de conexión.');
+        });
     }
 }
 </script>

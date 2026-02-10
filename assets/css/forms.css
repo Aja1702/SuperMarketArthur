@@ -72,13 +72,15 @@
     font-style: italic;
 }
 
-#mensaje-error.mensaje-error {
-    color: #f56565 !important;
-}
-
-.mensaje-error {
+/* Estilos para los mensajes de error en los formularios */
+.mensaje-error,
+.error-icon {
+    color: #f56565; /* Color rojo para errores */
+    font-size: 0.85rem;
+    display: block;
     text-align: center;
-    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .btn-form-acceso {

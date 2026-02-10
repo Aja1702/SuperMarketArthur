@@ -3,16 +3,19 @@
 $nombre_usuario = $_SESSION['usuario_nombre'] ?? 'Usuario';
 ?>
 <header class="cabecera-usuario-logueado">
-    <div class="logo">
-        <a href="./">
-            <img src="./assets/img/logo/logo_supermarket.png" alt="Logo SuperMarketArthur">
-        </a>
+    <div class="header-left">
+        <div class="logo">
+            <a href="./" aria-label="Ir a la página principal">
+                <img src="./assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
+            </a>
+        </div>
+        <h1 class="titulo-web-invitado">SuperMarketArthur</h1>
     </div>
 
     <div class="search-container">
         <div class="search-bar-wrapper">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" placeholder="Busca en el supermercado..." autocomplete="off">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Busca productos, frutas, categorías..." autocomplete="off">
         </div>
         <div id="searchResults" class="search-results"></div>
     </div>

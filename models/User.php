@@ -118,5 +118,16 @@ class User {
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([$ipAddress]);
     }
+
+    public function getAdminDashboardStats() {
+        $sql = "SELECT
+                    (SELECT COUNT(*) FROM productos) as total_products,
+                    (SELECT COUNT(*) FROM pedidos WHERE estado = 'pendiente') as pending_orders,
+                    (SELECT COUNT(*) FROM usuarios WHERE tipo_usu = 'u') as total_users,
+                    (SELECT COUNT(*) FROM productos WHERE stock <= 5) as low_stock_products
+                ";
+        $stmt = $this->pdo->query($sql);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
 ?>

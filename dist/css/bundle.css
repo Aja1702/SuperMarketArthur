@@ -38,6 +38,48 @@ body {
     color: var(--azul-primario);
 }
 
+/* --- ESTILOS DE PAGINACIÓN --- */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-paginacion {
+    text-decoration: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--azul-primario);
+    background: var(--blanco-puro);
+    border: 1px solid #e2e8f0;
+    box-shadow: var(--sombra-suave);
+    transition: all 0.3s ease;
+}
+
+.btn-paginacion:hover {
+    transform: translateY(-2px);
+    background: var(--azul-vibrante);
+    color: var(--blanco-puro);
+    border-color: var(--azul-vibrante);
+    box-shadow: 0 8px 20px rgba(33, 158, 188, 0.2);
+}
+
+.btn-paginacion.disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    pointer-events: none;
+    box-shadow: none;
+}
+
+.info-paginacion {
+    font-weight: 600;
+    color: #475569;
+}
+
+
 /* --- CARRITO LATERAL (SIDE CART) --- */
 .cart-overlay {
     position: fixed;
@@ -724,7 +766,9 @@ body {
 
 /* --- 3. CABECERA USUARIO LOGUEADO (Naranjas) --- */
 .cabecera-usuario-logueado {
-    background: linear-gradient(135deg, var(--naranja-primario, #d95f02) 0%, var(--naranja-secundario, #f7931e) 100%);
+    --naranja-primario: #d95f02;
+    --naranja-secundario: #f7931e;
+    background: linear-gradient(135deg, var(--naranja-primario) 0%, var(--naranja-secundario) 100%);
     padding: 1rem 5%;
     display: flex;
     align-items: center;
@@ -734,6 +778,19 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+}
+
+.cabecera-usuario-logueado .logo img {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.cabecera-usuario-logueado .user-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .cabecera-usuario-logueado .user-profile-link {
@@ -754,9 +811,8 @@ body {
 }
 
 .cabecera-usuario-logueado .btn-logout img {
-    width: 24px;
-    height: 24px;
-    filter: invert(1);
+    height: 44px;
+    width: 44px;
 }
 
 
@@ -1292,13 +1348,15 @@ body {
     font-style: italic;
 }
 
-#mensaje-error.mensaje-error {
-    color: #f56565 !important;
-}
-
-.mensaje-error {
+/* Estilos para los mensajes de error en los formularios */
+.mensaje-error,
+.error-icon {
+    color: #f56565; /* Color rojo para errores */
+    font-size: 0.85rem;
+    display: block;
     text-align: center;
-    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .btn-form-acceso {

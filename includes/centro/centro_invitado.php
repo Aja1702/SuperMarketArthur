@@ -1,3 +1,16 @@
+<?php
+// Incluir la conexión a la base de datos (que define $pdo)
+require_once __DIR__ . '/../../config/iniciar_session.php';
+// Incluir el modelo de producto una sola vez
+require_once __DIR__ . '/../../models/Product.php';
+
+// Crear una instancia del modelo de producto
+$productModel = new Product($pdo);
+
+// Obtener los productos destacados usando el método optimizado con caché
+$productosDestacados = $productModel->getFeaturedProducts(10);
+?>
+
 <main class="centro-invitado" role="main" aria-label="Contenido principal para usuarios invitados">
     <section class="banner-principal">
         <div class="banner-texto">
@@ -6,33 +19,6 @@
             <a href="./?userSession=registro" class="btn btn-registro-destacado">Regístrate ahora</a>
         </div>
     </section>
-
-    <?php
-// Categorías deseadas (coincidiendo con los nombres reales en BD)
-$categorias = ['Frutas frescas', 'Verduras y hortalizas', 'Panadería artesanal', 'Snacks salados', 'Helados y postres congelados', 'Alimentación para gatos', 'Higiene y cuidado'];
-
-// Preparar placeholders para IN
-$placeholders = rtrim(str_repeat('?,', count($categorias)), ',');
-
-// Consulta SQL para obtener un producto aleatorio por categoría
-$sql = "
-            SELECT p.id_producto, p.nombre_producto, p.precio, p.url_imagen, c.nombre_categoria
-            AS categoria
-            FROM productos p
-            JOIN categorias c ON p.id_categoria = c.id_categoria
-            WHERE c.nombre_categoria IN ($placeholders)
-            AND p.id_producto = (
-                SELECT id_producto FROM productos
-                WHERE id_categoria = p.id_categoria
-                ORDER BY RAND() LIMIT 1
-            )
-            ORDER BY p.nombre_producto ASC;
-            ";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute($categorias);
-$productosDestacados = $stmt->fetchAll();
-?>
 
     <section class="seccion-catalogo" style="padding-top: 4rem;">
         <h2 class="titulo-seccion-premium">Productos Destacados</h2>
@@ -59,13 +45,11 @@ $productosDestacados = $stmt->fetchAll();
                         </button>
                     </div>
                 </article>
-            <?php
-endforeach; ?>
+            <?php endforeach; ?>
         </div>
     </section>
 
     <section class="porque-elegirnos-premium" style="padding-bottom: 4rem;">
-        <h2 class="titulo-seccion-premium">¿Por qué elegir SuperMarketArthur?</h2>
         <div class="grid-ventajas" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 5% 0 5%;">
             <div class="ventaja-card" style="background: white; padding: 2.5rem; border-radius: 20px; box-shadow: var(--sombra-suave); text-align: center;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🌟</div>

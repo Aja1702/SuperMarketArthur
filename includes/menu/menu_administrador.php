@@ -13,7 +13,7 @@
             <a href="?vistaMenu=admin_productos" class="menu-link-admin" >
                 <i class="fas fa-box"></i>
                 <span>Productos</span>
-                <span class="badge"><?php echo $pdo->query("SELECT COUNT(*) FROM productos")->fetchColumn(); ?></span>
+                <span class="badge"><?php echo $admin_stats['total_products'] ?? 0; ?></span>
             </a>
         </li>
 
@@ -22,11 +22,7 @@
             <a href="?vistaMenu=admin_pedidos" class="menu-link-admin" >
                 <i class="fas fa-truck"></i>
                 <span>Pedidos</span>
-                <span class="badge badge-rojo">
-                    <?php 
-                    echo $pdo->query("SELECT COUNT(*) FROM pedidos WHERE estado='pendiente'")->fetchColumn(); 
-                    ?>
-                </span>
+                <span class="badge badge-rojo"><?php echo $admin_stats['pending_orders'] ?? 0; ?></span>
             </a>
         </li>
 
@@ -35,7 +31,7 @@
             <a href="?vistaMenu=admin_usuarios" class="menu-link-admin" >
                 <i class="fas fa-users"></i>
                 <span>Usuarios</span>
-                <span class="badge"><?php echo $pdo->query("SELECT COUNT(*) FROM usuarios WHERE tipo_usu='u'")->fetchColumn(); ?></span>
+                <span class="badge"><?php echo $admin_stats['total_users'] ?? 0; ?></span>
             </a>
         </li>
 
@@ -44,11 +40,7 @@
             <a href="?vistaMenu=admin_stock" class="menu-link-admin" >
                 <i class="fas fa-warehouse"></i>
                 <span>Stock</span>
-                <span class="badge badge-amarillo">
-                    <?php 
-                    echo $pdo->query("SELECT COUNT(*) FROM productos WHERE stock <= 5")->fetchColumn(); 
-                    ?>
-                </span>
+                <span class="badge badge-amarillo"><?php echo $admin_stats['low_stock_products'] ?? 0; ?></span>
             </a>
         </li>
 

@@ -38,6 +38,48 @@ body {
     color: var(--azul-primario);
 }
 
+/* --- ESTILOS DE PAGINACIÓN --- */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-paginacion {
+    text-decoration: none;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    color: var(--azul-primario);
+    background: var(--blanco-puro);
+    border: 1px solid #e2e8f0;
+    box-shadow: var(--sombra-suave);
+    transition: all 0.3s ease;
+}
+
+.btn-paginacion:hover {
+    transform: translateY(-2px);
+    background: var(--azul-vibrante);
+    color: var(--blanco-puro);
+    border-color: var(--azul-vibrante);
+    box-shadow: 0 8px 20px rgba(33, 158, 188, 0.2);
+}
+
+.btn-paginacion.disabled {
+    background: #e2e8f0;
+    color: #94a3b8;
+    pointer-events: none;
+    box-shadow: none;
+}
+
+.info-paginacion {
+    font-weight: 600;
+    color: #475569;
+}
+
+
 /* --- CARRITO LATERAL (SIDE CART) --- */
 .cart-overlay {
     position: fixed;

@@ -154,7 +154,9 @@
 
 /* --- 3. CABECERA USUARIO LOGUEADO (Naranjas) --- */
 .cabecera-usuario-logueado {
-    background: linear-gradient(135deg, var(--naranja-primario, #d95f02) 0%, var(--naranja-secundario, #f7931e) 100%);
+    --naranja-primario: #d95f02;
+    --naranja-secundario: #f7931e;
+    background: linear-gradient(135deg, var(--naranja-primario) 0%, var(--naranja-secundario) 100%);
     padding: 1rem 5%;
     display: flex;
     align-items: center;
@@ -164,6 +166,19 @@
     position: sticky;
     top: 0;
     z-index: 1000;
+}
+
+.cabecera-usuario-logueado .logo img {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.cabecera-usuario-logueado .user-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .cabecera-usuario-logueado .user-profile-link {
@@ -184,9 +199,8 @@
 }
 
 .cabecera-usuario-logueado .btn-logout img {
-    width: 24px;
-    height: 24px;
-    filter: invert(1);
+    height: 44px;
+    width: 44px;
 }
 
 

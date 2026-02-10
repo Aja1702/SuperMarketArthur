@@ -1,22 +1,32 @@
 <?php
 class Product {
     private $pdo;
+    private $cacheDir;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
+        // Define el directorio de caché y lo crea si no existe
+        $this->cacheDir = __DIR__ . '/../cache';
+        if (!is_dir($this->cacheDir)) {
+            mkdir($this->cacheDir, 0777, true);
+        }
     }
 
     public function getAllProducts($limit = null, $offset = 0) {
-        $sql = "SELECT * FROM productos ORDER BY id_producto";
+        $sql = "SELECT p.*, c.nombre_categoria
+                FROM productos p
+                LEFT JOIN categorias c ON p.id_categoria = c.id_categoria
+                ORDER BY p.nombre_producto";
+
         if ($limit) {
-            $sql .= " LIMIT ? OFFSET ?";
-        }
-        $stmt = $this->pdo->prepare($sql);
-        if ($limit) {
-            $stmt->execute([$limit, $offset]);
+            $sql .= " LIMIT :limit OFFSET :offset";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
         } else {
-            $stmt->execute();
+            $stmt = $this->pdo->prepare($sql);
         }
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -40,65 +50,85 @@ class Product {
     }
 
     public function getProductsByCategory($categoryId, $limit = null, $offset = 0) {
-        $sql = "SELECT * FROM productos WHERE id_categoria = ? ORDER BY nombre_producto";
+        $sql = "SELECT * FROM productos WHERE id_categoria = :categoryId ORDER BY nombre_producto";
         if ($limit) {
-            $sql .= " LIMIT ? OFFSET ?";
+            $sql .= " LIMIT :limit OFFSET :offset";
         }
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
         if ($limit) {
-            $stmt->execute([$categoryId, $limit, $offset]);
-        } else {
-            $stmt->execute([$categoryId]);
+            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
         }
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function searchProducts($query, $limit = null, $offset = 0) {
-        $sql = "SELECT * FROM productos WHERE nombre_producto LIKE ? OR descripcion LIKE ? ORDER BY nombre_producto";
+        $sql = "SELECT * FROM productos WHERE nombre_producto LIKE :query OR descripcion LIKE :query ORDER BY nombre_producto";
         if ($limit) {
-            $sql .= " LIMIT ? OFFSET ?";
+            $sql .= " LIMIT :limit OFFSET :offset";
         }
         $stmt = $this->pdo->prepare($sql);
-        $searchTerm = "%$query%";
+        $stmt->bindValue(':query', "%$query%", PDO::PARAM_STR);
         if ($limit) {
-            $stmt->execute([$searchTerm, $searchTerm, $limit, $offset]);
-        } else {
-            $stmt->execute([$searchTerm, $searchTerm]);
+            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
         }
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getProductsByPriceRange($minPrice, $maxPrice, $limit = null, $offset = 0) {
-        $sql = "SELECT * FROM productos WHERE precio BETWEEN ? AND ? ORDER BY precio";
+        $sql = "SELECT * FROM productos WHERE precio BETWEEN :minPrice AND :maxPrice ORDER BY precio";
         if ($limit) {
-            $sql .= " LIMIT ? OFFSET ?";
+            $sql .= " LIMIT :limit OFFSET :offset";
         }
         $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':minPrice', $minPrice);
+        $stmt->bindValue(':maxPrice', $maxPrice);
         if ($limit) {
-            $stmt->execute([$minPrice, $maxPrice, $limit, $offset]);
-        } else {
-            $stmt->execute([$minPrice, $maxPrice]);
+            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
         }
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getFeaturedProducts($limit = 10) {
-        $stmt = $this->pdo->prepare("SELECT * FROM productos WHERE destacado = 1 ORDER BY id_producto DESC LIMIT ?");
-        $stmt->execute([$limit]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $cacheKey = 'featured_products_' . $limit;
+        $cacheFile = $this->cacheDir . '/' . $cacheKey . '.json';
+        $cacheTime = 3600; // 1 hora de duración de la caché
+
+        // Intenta leer desde la caché primero
+        if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheTime) {
+            $cachedProducts = file_get_contents($cacheFile);
+            return json_decode($cachedProducts, true);
+        }
+
+        // Si la caché no es válida o no existe, consulta la base de datos
+        $stmt = $this->pdo->prepare("SELECT * FROM productos ORDER BY id_producto DESC LIMIT :limit");
+        $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Guarda el nuevo resultado en la caché para la próxima vez
+        file_put_contents($cacheFile, json_encode($products));
+
+        return $products;
     }
 
     public function getProductsOnSale($limit = null, $offset = 0) {
         $sql = "SELECT * FROM productos WHERE precio_oferta IS NOT NULL AND precio_oferta < precio ORDER BY (precio - precio_oferta) DESC";
         if ($limit) {
-            $sql .= " LIMIT ? OFFSET ?";
+            $sql .= " LIMIT :limit OFFSET :offset";
         }
         $stmt = $this->pdo->prepare($sql);
         if ($limit) {
-            $stmt->execute([$limit, $offset]);
-        } else {
-            $stmt->execute();
+            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
         }
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -145,5 +175,15 @@ class Product {
         $stmt = $this->pdo->prepare("SELECT * FROM categorias WHERE id_categoria = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getLowStockProducts($limit, $offset, $threshold = 5) {
+        $sql = "SELECT * FROM productos WHERE stock <= :threshold ORDER BY stock ASC LIMIT :limit OFFSET :offset";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':threshold', $threshold, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
