@@ -4,35 +4,39 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cartOverlay = document.getElementById('cartOverlay');
     const cartPanel = document.getElementById('cartPanel');
-    const openCartBtn = document.getElementById('openCart');
+    const openCartButtons = document.querySelectorAll('.js-open-cart'); // Seleccionamos TODOS los botones que abren el carrito
     const closeCartBtn = document.getElementById('closeCart');
     const cartContent = document.getElementById('cartContent');
     const cartTotalAmount = document.getElementById('cartTotalAmount');
 
-    // Función Abrir Carrito
     function openCart() {
         if (!cartOverlay || !cartPanel) return;
         cartOverlay.style.display = 'block';
         setTimeout(() => cartPanel.classList.add('active'), 10);
-        updateCartUI(); // Carga los datos actuales
+        updateCartUI();
     }
 
-    // Función Cerrar Carrito
     function closeCart() {
         if (!cartPanel || !cartOverlay) return;
         cartPanel.classList.remove('active');
         setTimeout(() => cartOverlay.style.display = 'none', 400);
     }
 
-    if (openCartBtn) openCartBtn.addEventListener('click', (e) => { e.preventDefault(); openCart(); });
+    // Asignamos el evento a todos los botones de abrir carrito
+    openCartButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openCart();
+        });
+    });
+
     if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
     if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
-    // Función para actualizar la UI del carrito (AJAX)
     async function updateCartUI() {
         if (!cartContent) return;
         try {
-            const response = await fetch('./controllers/carrito_ajax.php?action=get_items');
+            const response = await fetch(BASE_URL + 'api/cart/items');
             const data = await response.json();
 
             if (data.success) {
@@ -48,11 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function renderCartItems(items) {
         if (!items || items.length === 0) {
-            cartContent.innerHTML = `
-                <div class="empty-cart-message" style="text-align: center; padding: 2rem; opacity: 0.6;">
-                    <p>Tu carrito está vacío</p>
-                </div>
-            `;
+            cartContent.innerHTML = `<div class="empty-cart-message" style="text-align: center; padding: 2rem; opacity: 0.6;"><p>Tu carrito está vacío</p></div>`;
             return;
         }
 
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         cartContent.innerHTML = html;
 
-        // Re-asignar eventos a los nuevos botones de cantidad
         document.querySelectorAll('.btn-qty.increase').forEach(btn => {
             btn.onclick = () => updateQuantity(btn.dataset.id, 1);
         });
@@ -84,21 +83,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Función para añadir al carrito (se llamará desde los botones de la tienda)
     window.addToCart = async function (id_producto) {
         const formData = new FormData();
         formData.append('id_producto', id_producto);
-        formData.append('action', 'add');
 
         try {
-            const response = await fetch('./controllers/carrito_ajax.php', {
+            const response = await fetch(BASE_URL + 'api/cart/add', {
                 method: 'POST',
                 body: formData
             });
             const data = await response.json();
 
             if (data.success) {
-                openCart(); // Mostramos el carrito al añadir
+                openCart();
             } else {
                 alert('Error: ' + data.message);
             }
@@ -111,10 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData();
         formData.append('id_producto', id_producto);
         formData.append('delta', delta);
-        formData.append('action', 'update_qty');
 
         try {
-            const response = await fetch('./controllers/carrito_ajax.php', {
+            const response = await fetch(BASE_URL + 'api/cart/update', {
                 method: 'POST',
                 body: formData
             });

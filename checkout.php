@@ -57,14 +57,14 @@ if (empty($items) && !isset($_SESSION['error_message'])) {
                                 <tr>
                                     <td><?php echo htmlspecialchars($item['nombre_producto']); ?></td>
                                     <td><?php echo htmlspecialchars($item['cantidad']); ?></td>
-                                    <td><?php echo number_format($item['precio'] * $item['cantidad'], 2, ',', '.'); ?>€</td>
+                                    <td><?php echo number_format($item['precio'] * $item['cantidad'], 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="2" style="text-align:right;"><strong>Total:</strong></td>
-                                <td><strong><?php echo number_format($total, 2, ',', '.'); ?>€</strong></td>
+                                <td><strong><?php echo number_format($total, 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?></strong></td>
                             </tr>
                         </tfoot>
                     </table>

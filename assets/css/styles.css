@@ -1,15 +1,20 @@
 :root {
-    /* Paleta Premium - Azules Profundos y Vibrantes */
+    /* Paleta de Texto Fuerte */
+    --texto-primario: #1a202c;
+    --texto-secundario: #4a5568;
+
+    /* Paleta de Marca - Azules */
     --azul-primario: #0a2342;
-    /* Azul Medianoche */
     --azul-secundario: #1b4965;
-    /* Azul Acero Profundo */
     --azul-vibrante: #219ebc;
-    /* Azul Celeste */
     --azul-claro: #bee9e8;
-    /* Azul Glaciar */
+
+    /* Paleta de Fondos */
     --blanco-puro: #ffffff;
-    --gris-fondo: #f8fbff;
+    --gris-fondo: #f1f5f9;
+    --gris-borde: #e2e8f0;
+
+    /* Sombras y Curvas */
     --sombra-suave: 0 4px 6px rgba(0, 0, 0, 0.05);
     --sombra-premium: 0 10px 25px rgba(10, 35, 66, 0.1);
     --curva: 12px;
@@ -35,7 +40,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--gris-fondo);
-    color: var(--azul-primario);
+    color: var(--texto-primario);
 }
 
 /* --- ESTILOS DE PAGINACIÓN --- */
@@ -52,9 +57,9 @@ body {
     padding: 0.7rem 1.2rem;
     border-radius: 8px;
     font-weight: 600;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
     background: var(--blanco-puro);
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--gris-borde);
     box-shadow: var(--sombra-suave);
     transition: all 0.3s ease;
 }
@@ -76,7 +81,7 @@ body {
 
 .info-paginacion {
     font-weight: 600;
-    color: #475569;
+    color: var(--texto-secundario);
 }
 
 
@@ -91,14 +96,12 @@ body {
     backdrop-filter: blur(4px);
     z-index: 2000;
     display: none;
-    /* Se activa con JS */
 }
 
 .cart-panel {
     position: fixed;
     top: 0;
     right: -450px;
-    /* Escondido */
     width: 400px;
     height: 100%;
     background: var(--blanco-puro);
@@ -147,13 +150,12 @@ body {
     padding: 1.5rem;
 }
 
-/* Item del Carrito */
 .cart-item {
     display: flex;
     gap: 1rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid var(--gris-fondo);
 }
 
 .cart-item img {
@@ -170,7 +172,7 @@ body {
 .item-info h4 {
     margin: 0 0 0.3rem 0;
     font-size: 1rem;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
 }
 
 .item-price {
@@ -190,14 +192,14 @@ body {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    border: 1px solid var(--azul-claro);
+    border: 1px solid var(--gris-borde);
     background: white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: var(--azul-secundario);
+    color: var(--texto-secundario);
     transition: all 0.3s;
 }
 
@@ -207,8 +209,8 @@ body {
 
 .cart-footer {
     padding: 2rem;
-    background: #f8fbff;
-    border-top: 1px solid var(--azul-claro);
+    background: var(--gris-fondo);
+    border-top: 1px solid var(--gris-borde);
 }
 
 .cart-total {
@@ -217,7 +219,7 @@ body {
     font-size: 1.25rem;
     font-weight: 800;
     margin-bottom: 1.5rem;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
 }
 
 .btn-checkout {
@@ -240,51 +242,27 @@ body {
     box-shadow: 0 5px 20px rgba(33, 158, 188, 0.4);
 }
 
-/* Modo Oscuro */
-.dark-mode {
-    --azul-primario: #e2e8f0;
-    --azul-secundario: #cbd5e1;
-    --azul-vibrante: #60a5fa;
-    --azul-claro: #334155;
-    --blanco-puro: #1e293b;
-    --gris-fondo: #0f172a;
+/* --- ESTILOS RESPONSIVE GENERALES --- */
+
+@media (max-width: 768px) {
+    /* En tablets, el carrito ocupa toda la pantalla para mejorar la usabilidad */
+    .cart-panel {
+        width: 100%;
+        right: -100%; /* Asegura que se oculte completamente */
+    }
+
+    .cart-panel.active {
+        right: 0;
+    }
 }
 
-.dark-mode body {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-}
+@media (max-width: 480px) {
+    /* Para móviles, simplificamos la paginación para ahorrar espacio */
+    .paginacion .btn-paginacion:not(:first-child):not(:last-child) {
+        display: none;
+    }
 
-.dark-mode .producto,
-.dark-mode .card-categoria,
-.dark-mode .card-producto {
-    background: var(--card-dark);
-    color: var(--text-dark);
-    border-color: var(--border-dark);
-}
-
-.dark-mode .header-invitado {
-    background: linear-gradient(135deg, var(--card-dark) 0%, var(--azul-secundario) 100%);
-}
-
-/* Toggle Modo Oscuro */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--azul-primario);
-    color: white;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1000;
-    font-size: 1.2rem;
-    transition: all 0.3s;
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    .paginacion {
+        gap: 0.5rem;
+    }
 }

@@ -32,8 +32,7 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p>Explora nuestras categorías y encuentra los mejores productos.</p>
             <a href="./?vistaMenu=categorias_productos" class="btn btn-primary">Ir a la tienda</a>
         </div>
-    <?php
-else: ?>
+    <?php else: ?>
         <div class="pedidos-lista-v2">
             <?php foreach ($pedidos as $pedido): ?>
                 <div class="pedido-card">
@@ -55,7 +54,7 @@ else: ?>
                             </div>
                             <div class="stat">
                                 <span class="label">Total</span>
-                                <span class="value-total"><?php echo number_format($pedido['total'], 2, ',', '.'); ?>€</span>
+                                <span class="value-total"><?php echo number_format($pedido['total'], 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?></span>
                             </div>
                         </div>
                         <div class="pedido-acciones">
@@ -63,11 +62,9 @@ else: ?>
                         </div>
                     </div>
                 </div>
-            <?php
-    endforeach; ?>
+            <?php endforeach; ?>
         </div>
-    <?php
-endif; ?>
+    <?php endif; ?>
 </div>
 
 <style>

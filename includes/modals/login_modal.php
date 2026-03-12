@@ -9,11 +9,12 @@ $token = $_SESSION['csrf_token'];
     <div class="modal-content">
         <button class="close-modal" id="closeLoginModal" aria-label="Cerrar modal">&times;</button>
         <div class="form-container-login">
-            <h2 id="loginModalTitle">Iniciar sesión para continuar</h2>
-            <p>Debes iniciar sesión para finalizar tu compra.</p>
-            <form id="loginModalForm" method="post" action="./controllers/procesar_login.php">
+            <h2 id="loginModalTitle">Desbloquea la experiencia completa</h2>
+            <p>Inicia sesión para guardar tus favoritos, ver tus pedidos y disfrutar de una compra más rápida.</p>
+
+            <form id="loginModalForm" method="post" action="/SuperMarketArthur/login">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($token); ?>">
-                <input type="hidden" name="return_to" value="checkout.php"> <!-- Para la redirección -->
+                <input type="hidden" name="return_to" value="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
 
                 <div class="form-group-login">
                     <label for="modal_email">Correo electrónico *</label>
@@ -27,7 +28,10 @@ $token = $_SESSION['csrf_token'];
                 <span id="modal_mensaje-error" class="mensaje-error"></span>
                 <button type="submit" class="btn-form-acceso">Acceder</button>
             </form>
-            <p style="margin-top: 1rem;">¿No tienes cuenta? <a href="./?userSession=registro">Regístrate aquí</a></p>
+
+            <div class="auth-switch-link">
+                ¿No tienes cuenta? <a href="/SuperMarketArthur/registro">Regístrate aquí</a>
+            </div>
         </div>
     </div>
 </div>

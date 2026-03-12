@@ -1,3 +1,45 @@
+/* Estilos para los botones de navegación */
+.btn-volver {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--texto-secundario);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    margin-bottom: 2rem;
+}
+
+.btn-volver:hover {
+    background: var(--blanco-puro);
+    color: var(--texto-primario);
+    border-color: var(--gris-borde);
+    box-shadow: var(--sombra-suave);
+}
+
+/* --- Estilos para el botón de Favoritos --- */
+.btn-favorite {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    color: var(--texto-secundario);
+    transition: all 0.2s ease-in-out;
+    line-height: 1;
+}
+
+.btn-favorite:hover {
+    transform: scale(1.2);
+}
+
+.btn-favorite .fas.fa-heart {
+    color: #e53e3e; /* Rojo Pasión */
+}
+
+
 /* Estilos para los centros */
 
 
@@ -9,11 +51,9 @@
     width: 100%;
 }
 
-.banner-principal {
-    background: linear-gradient(rgba(10, 35, 66, 0.7), rgba(10, 35, 66, 0.7));
+.banner-invitado {
     background-size: cover;
     background-position: center;
-    background-color: var(--azul-primario);
     min-height: 350px;
     color: white;
     display: flex;
@@ -23,6 +63,10 @@
     box-shadow: var(--sombra-premium);
     margin-bottom: 3rem;
     width: 100%;
+}
+
+.centro-invitado .banner-invitado {
+    background-color: var(--azul-primario);
 }
 
 .banner-texto h2 {
@@ -292,7 +336,7 @@
     outline: none;
     border-color: var(--azul-vibrante);
     background: white;
-    box-shadow: 0 0 15px rgba(33, 158, 188, 0.1);
+    box-shadow: 0 0 15px rgba(33, 158, 188, 0.2);
 }
 
 .btn-enviar-premium {
@@ -318,5 +362,113 @@
     .contacto-grid {
         grid-template-columns: 1fr;
         gap: 3rem;
+    }
+}
+
+/* --- MAIN CONTENIDO USUARIO LOGUEADO (Unificado) --- */
+
+.centro-usuario {
+    padding: 2rem 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.banner-usuario {
+    background-size: cover;
+    background-position: center;
+    min-height: 350px;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: var(--sombra-premium);
+    margin-bottom: 3rem;
+    width: 100%;
+    background-color: var(--azul-primario);
+}
+
+.centro-usuario .titulo-seccion-premium {
+    color: var(--azul-primario);
+}
+
+.centro-usuario .pedido-card {
+    border-left: 4px solid var(--azul-vibrante);
+}
+
+@media (max-width: 992px) {
+    .productos-lista {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .banner-texto h2 {
+        font-size: 2.8rem;
+    }
+
+    .banner-texto p {
+        font-size: 1.2rem;
+    }
+
+    .centro-invitado,
+    .centro-usuario {
+        padding: 2rem 3%;
+    }
+}
+
+@media (max-width: 768px) {
+    .productos-lista {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+     .banner-invitado,
+     .banner-usuario {
+        padding: 2rem;
+        min-height: auto;
+    }
+
+    .banner-texto h2 {
+        font-size: 2.2rem;
+    }
+
+    .banner-texto p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contacto-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .productos-lista {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .producto {
+        padding: 1rem;
+    }
+
+    .destacados h3 {
+        font-size: 1.5rem;
+    }
+
+    .banner-texto {
+        text-align: center;
+    }
+
+    .banner-botones {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .btn-explorar {
+        margin-left: 0;
     }
 }

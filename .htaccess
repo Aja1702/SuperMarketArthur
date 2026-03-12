@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Le decimos a Apache que la base del proyecto es /SuperMarketArthur/
+    RewriteBase /SuperMarketArthur/
+
+    # Redirige todas las peticiones que NO SEAN un archivo o directorio existente
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # a index.php, manteniendo la URL original (usando ^ para capturar todo)
+    RewriteRule ^ index.php [L]
+</IfModule>

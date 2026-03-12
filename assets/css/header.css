@@ -1,10 +1,10 @@
 /*
  * ==========================================
- *  ESTILOS DE CABECERAS (HEADERS)
+ *  ESTILOS DE CABECERAS (TIENDA)
  * ==========================================
  */
 
-/* --- 1. CABECERA INVITADO (Azules Premium) --- */
+/* --- 1. CABECERA INVITADO --- */
 .header-invitado {
     background: linear-gradient(135deg, var(--azul-primario) 0%, var(--azul-secundario) 100%);
     color: var(--blanco-puro);
@@ -49,7 +49,7 @@
 }
 
 .menu-invitado {
-    list-style: none; /* Elimina los puntos de la lista */
+    list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
@@ -57,7 +57,6 @@
     align-items: center;
 }
 
-/* Estilos base para los botones del menú de invitado */
 .menu-invitado a {
     text-decoration: none;
     padding: 0.6rem 1.2rem;
@@ -92,77 +91,15 @@
     box-shadow: 0 6px 20px rgba(33, 158, 188, 0.5);
 }
 
-
-/* --- 2. CABECERA ADMINISTRADOR (Grises) --- */
-.cabecera-admin {
-    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #4a5568 100%);
-    color: #ecf0f1;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    border-bottom: 3px solid #7f8c8d;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo-admin {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.logo-admin img {
-    height: 40px;
-    width: 40px;
-}
-
-.info-admin {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.rol-admin {
-    background: #95a5a6;
-    color: #2c3e50;
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 0.85rem;
-}
-
-.nombre-admin {
-    font-weight: 700;
-    color: #ecf0f1;
-    font-size: 1.1rem;
-}
-
-.hora-admin {
-    color: #bdc3c7;
-    font-family: 'Courier New', 'Consolas', monospace;
-    min-width: 140px;
-    text-align: center;
-}
-
-.btn-cerrar-sesion-admin img {
-    height: 44px;
-    width: 44px;
-}
-
-/* --- 3. CABECERA USUARIO LOGUEADO (Naranjas) --- */
+/* --- 2. CABECERA USUARIO LOGUEADO --- */
 .cabecera-usuario-logueado {
-    --naranja-primario: #d95f02;
-    --naranja-secundario: #f7931e;
-    background: linear-gradient(135deg, var(--naranja-primario) 0%, var(--naranja-secundario) 100%);
-    padding: 1rem 5%;
+    background: linear-gradient(135deg, var(--azul-primario) 0%, var(--azul-secundario) 100%);
+    padding: 0.8rem 5%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: white;
-    box-shadow: 0 4px 20px rgba(217, 95, 2, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -198,13 +135,39 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
-.cabecera-usuario-logueado .btn-logout img {
-    height: 44px;
+.btn-logout {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 44px;
+    height: 44px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-logout img {
+    height: 32px;
+    width: 32px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-logout:hover img {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 
-/* --- 4. ELEMENTOS COMUNES EN CABECERAS (Buscador) --- */
+/* --- 3. ELEMENTOS COMUNES EN CABECERAS (Buscador) --- */
 .search-container {
     position: relative;
     max-width: 450px;
@@ -221,6 +184,11 @@
     border-radius: 50px;
     padding: 0.5rem 1.2rem;
     transition: all 0.3s ease;
+}
+
+.cabecera-admin .search-bar-wrapper { /* Estilo específico para admin */
+    background: rgba(0,0,0,0.2);
+    border-color: rgba(0,0,0,0.3);
 }
 
 .search-bar-wrapper:focus-within {
@@ -240,7 +208,7 @@
 }
 
 .search-bar-wrapper:focus-within input {
-    color: var(--azul-primario);
+    color: var(--texto-primario);
 }
 
 .search-icon {
@@ -271,7 +239,7 @@
     transition: background 0.2s;
     border-bottom: 1px solid #f1f5f9;
     text-decoration: none;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
 }
 
 .search-result-item:last-child {
@@ -300,4 +268,55 @@
     font-size: 0.9rem;
     color: var(--azul-vibrante);
     font-weight: 700;
+}
+
+
+/*
+ * ==========================================
+ *  ESTILOS RESPONSIVE (TABLETS Y MÓVILES)
+ * ==========================================
+ */
+
+@media (max-width: 768px) {
+    /* Ajustes generales para tablets */
+    .header-invitado,
+    .cabecera-usuario-logueado {
+        padding: 0.8rem 3%;
+        flex-wrap: wrap;
+    }
+
+    .titulo-web-invitado {
+        display: none;
+    }
+
+    .search-container {
+        order: 3;
+        width: 100%;
+        margin: 0.8rem 0 0 0;
+        max-width: 100%;
+    }
+
+    .menu-invitado a {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .cabecera-usuario-logueado .user-profile-link {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajustes adicionales para móviles */
+    .header-invitado .logo img,
+    .cabecera-usuario-logueado .logo img {
+        height: 50px;
+    }
+
+    .menu-invitado {
+        width: 100%;
+        justify-content: space-around;
+        margin-top: 0.5rem;
+    }
 }

@@ -1,6 +1,6 @@
 <div class="admin-stock">
     <h2 class="titulo-seccion-premium">Gestión de Stock Bajo</h2>
-    <p class="subtitulo-seccion">Productos con 5 unidades o menos.</p>
+    <p class="subtitulo-seccion">Productos con <?php echo htmlspecialchars($stock_bajo_umbral); ?> unidades o menos.</p>
 
     <?php if (empty($productos_stock_bajo)): ?>
         <div class="empty-state">

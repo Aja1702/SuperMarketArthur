@@ -8,7 +8,7 @@
 
 .titulo-seccion-premium {
     font-size: 2.2rem;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
     font-weight: 800;
     margin-bottom: 2.5rem;
     text-align: center;
@@ -45,14 +45,14 @@
 
 .filtro-group label {
     font-weight: 600;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
     font-size: 0.9rem;
 }
 
 .filtro-group input,
 .filtro-group select {
     padding: 0.5rem;
-    border: 2px solid var(--azul-claro);
+    border: 2px solid var(--gris-borde);
     border-radius: 8px;
     font-size: 0.9rem;
     transition: border-color 0.3s;
@@ -89,9 +89,9 @@
 
 .btn-pagina {
     padding: 0.5rem 0.8rem;
-    border: 2px solid var(--azul-claro);
+    border: 2px solid var(--gris-borde);
     background: white;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s;
@@ -106,7 +106,7 @@
 
 .grid-categorias {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.2rem;
 }
 
@@ -117,7 +117,7 @@
     text-align: center;
     box-shadow: var(--sombra-suave);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--gris-borde);
     cursor: pointer;
     text-decoration: none;
     color: inherit;
@@ -132,12 +132,12 @@
 
 .card-categoria h3 {
     font-size: 1.4rem;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
     margin-bottom: 0.8rem;
 }
 
 .card-categoria p {
-    color: #64748b;
+    color: var(--texto-secundario);
     font-size: 0.95rem;
     line-height: 1.5;
 }
@@ -148,13 +148,20 @@
     gap: 1.2rem;
 }
 
+/* Estilo específico para la cuadrícula en la página de favoritos */
+#favorites-page-container .grid-productos {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
 .card-producto {
     background: white;
     border-radius: 24px;
     padding: 1.2rem;
     box-shadow: var(--sombra-suave);
     transition: all 0.3s ease;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--gris-borde);
     display: flex;
     flex-direction: column;
     position: relative;
@@ -194,7 +201,7 @@
 .card-producto h3 {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--azul-primario);
+    color: var(--texto-primario);
     margin: 0 0 0.5rem 0;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -206,7 +213,7 @@
 
 .producto-desc {
     font-size: 0.85rem;
-    color: #64748b;
+    color: var(--texto-secundario);
     margin-bottom: 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -235,7 +242,7 @@
 }
 
 .btn-add-cart-premium {
-    background: var(--azul-primario);
+    background: var(--texto-primario);
     color: white;
     border: none;
     width: 45px;
@@ -252,4 +259,63 @@
 .btn-add-cart-premium:hover {
     background: var(--azul-vibrante);
     transform: scale(1.1);
+}
+
+/* --- ESTILOS RESPONSIVE PARA EL CATÁLOGO --- */
+
+@media (max-width: 1200px) {
+    .grid-categorias,
+    .grid-productos {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .grid-categorias,
+    .grid-productos {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .titulo-seccion-premium {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-categorias,
+    .grid-productos {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .filtros-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .card-categoria {
+        padding: 1.5rem;
+    }
+
+    .card-categoria h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-productos {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-categorias {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-producto h3 {
+        height: auto; /* Allow product titles to take up space as needed */
+    }
+
+    .producto-desc {
+        height: auto;
+    }
 }

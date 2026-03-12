@@ -25,7 +25,7 @@
         <div class="stat-card naranja">
             <i class="fas fa-euro-sign"></i>
             <div>
-                <h3> Ventas totales: €<?php echo number_format($pdo->query("SELECT COALESCE(SUM(total),0) FROM pedidos WHERE estado='pagado'")->fetchColumn(), 2);?></h3>
+                <h3> Ventas totales: <?php echo number_format($pdo->query("SELECT COALESCE(SUM(total),0) FROM pedidos WHERE estado='pagado'")->fetchColumn(), 2);?><?php echo htmlspecialchars($simbolo_moneda); ?></h3>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
                     <tr>
                         <td>#<?php echo $pedido['id_pedido']; ?></td>
                         <td><?php echo htmlspecialchars($pedido['nombre']); ?></td>
-                        <td>€<?php echo number_format($pedido['total'],2); ?></td>
+                        <td><?php echo number_format($pedido['total'],2); ?><?php echo htmlspecialchars($simbolo_moneda); ?></td>
                         <td>
                             <span class="estado <?php echo $pedido['estado']; ?>">
                                 <?php echo ucfirst($pedido['estado']); ?>

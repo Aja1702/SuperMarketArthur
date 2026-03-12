@@ -5,8 +5,8 @@ $nombre_usuario = $_SESSION['usuario_nombre'] ?? 'Usuario';
 <header class="cabecera-usuario-logueado">
     <div class="header-left">
         <div class="logo">
-            <a href="./" aria-label="Ir a la página principal">
-                <img src="./assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
+            <a href="/SuperMarketArthur/" aria-label="Ir a la página principal">
+                <img src="<?php echo BASE_URL; ?>assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
             </a>
         </div>
         <h1 class="titulo-web-invitado">SuperMarketArthur</h1>
@@ -21,13 +21,13 @@ $nombre_usuario = $_SESSION['usuario_nombre'] ?? 'Usuario';
     </div>
 
     <div class="user-actions">
-        <a href="#" id="openCart" class="btn-profile" style="text-decoration: none; color: white;">🛒 Carrito</a>
+        <a href="#" class="btn-profile js-open-cart" style="text-decoration: none; color: white;">🛒 Carrito</a>
         
-        <a href="./?userSession=perfil" class="user-profile-link">
+        <a href="/SuperMarketArthur/mi-cuenta" class="user-profile-link">
             <span class="user-name">Hola, <?php echo htmlspecialchars($nombre_usuario); ?></span>
         </a>
 
-        <form action="./config/cerrar_session.php" method="post" class="cerrar-sesion-usuario" style="margin:0;">
+        <form action="/SuperMarketArthur/logout" method="post" class="cerrar-sesion-usuario" style="margin:0;">
             <?php
 // Generar token CSRF para el cierre de sesión si no existe
 if (empty($_SESSION['csrf_token'])) {
@@ -36,7 +36,7 @@ if (empty($_SESSION['csrf_token'])) {
 ?>
             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <button type="submit" title="Cerrar sesión" class="btn-logout">
-                <img src="./assets/img/cerrar_session/apagar.png" alt="Cerrar sesión" onerror="this.onerror=null;this.src='./assets/img/logo/favicon.ico'">
+                <img src="<?php echo BASE_URL; ?>assets/img/cerrar_session/apagar.png" alt="Cerrar sesión" onerror="this.onerror=null;this.src='<?php echo BASE_URL; ?>assets/img/logo/favicon.ico'">
             </button>
         </form>
     </div>

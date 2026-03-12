@@ -1,36 +1,31 @@
-<footer class="footer-contenido" role="contentinfo" aria-label="Pie de página SuperMarketArthur">
+<footer class="footer-contenido" role="contentinfo" aria-label="Pie de página del Panel de Administración">
     <div class="footer-grid">
         <div class="footer-info">
             <h4 class="footer-logo">SuperMarketArthur</h4>
             <p>Panel de Administración del Sistema.</p>
-            <div class="footer-social">
-                <a href="#" aria-label="Facebook">🔵</a>
-                <a href="#" aria-label="Instagram">📸</a>
-                <a href="#" aria-label="Twitter">🐦</a>
+        </div>
+
+        <div class="footer-col">
+            <h5>Navegación Principal</h5>
+            <div class="footer-enlaces-moderno">
+                <a href="<?php echo BASE_URL; ?>admin">Dashboard</a>
+                <a href="<?php echo BASE_URL; ?>admin/productos">Productos</a>
+                <a href="<?php echo BASE_URL; ?>admin/pedidos">Pedidos</a>
+                <a href="<?php echo BASE_URL; ?>admin/usuarios">Usuarios</a>
             </div>
         </div>
 
         <div class="footer-col">
-            <h5>Navegación</h5>
+            <h5>Configuración</h5>
             <div class="footer-enlaces-moderno">
-                <a href="?vistaMenu=administrador">Dashboard</a>
-                <a href="?vistaMenu=admin_productos">Productos</a>
-                <a href="?vistaMenu=admin_pedidos">Pedidos</a>
-                <a href="?vistaMenu=admin_usuarios">Usuarios</a>
-            </div>
-        </div>
-
-        <div class="footer-col">
-            <h5>Soporte</h5>
-            <div class="footer-enlaces-moderno">
-                <a href="#">Documentación</a>
-                <a href="#">Reportar un problema</a>
+                <a href="<?php echo BASE_URL; ?>admin/categorias">Categorías</a>
+                <a href="<?php echo BASE_URL; ?>admin/config">Ajustes del Sistema</a>
             </div>
         </div>
 
         <div class="footer-contacto-mini" style="text-align: left;">
             <h5>Estado del Sistema</h5>
-            <p>🟢 Todos los sistemas operativos.</p>
+            <p style="display:flex; align-items:center; gap: 0.5rem;"><span style="color: #48bb78; font-size: 1.5rem;">●</span> Todos los sistemas operativos.</p>
         </div>
     </div>
     <div class="copyright-v2">

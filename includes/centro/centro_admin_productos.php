@@ -46,7 +46,7 @@
                                 <?php endif; ?>
                             </td>
                             <td><?php echo htmlspecialchars($producto['nombre_categoria'] ?? 'Sin categoría'); ?></td>
-                            <td>€<?php echo number_format($producto['precio'], 2); ?></td>
+                            <td><?php echo number_format($producto['precio'], 2); ?><?php echo htmlspecialchars($simbolo_moneda); ?></td>
                             <td>
                                 <span class="stock-badge <?php echo $sin_stock ? 'rojo' : ($stock_bajo ? 'amarillo' : 'verde'); ?>">
                                     <?php echo $producto['stock']; ?>
@@ -119,7 +119,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>Precio (€) *</label>
+                    <label>Precio (<?php echo htmlspecialchars($simbolo_moneda); ?>) *</label>
                     <input type="number" name="precio" step="0.01" min="0" required>
                 </div>
                 

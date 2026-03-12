@@ -2,14 +2,14 @@
 class User {
     private $pdo;
 
-    // Constantes para la configuración del Rate Limiting
-    const MAX_LOGIN_ATTEMPTS = 5; // Intentos máximos
-    const LOGIN_ATTEMPT_TIME_WINDOW = 15; // Ventana de tiempo en minutos
+    const MAX_LOGIN_ATTEMPTS = 5;
+    const LOGIN_ATTEMPT_TIME_WINDOW = 15;
 
     public function __construct($pdo) {
         $this->pdo = $pdo;
     }
 
+    // ... (otros métodos como register, login, etc. se mantienen igual)
     public function register($data) {
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
         $sql = "INSERT INTO usuarios (nombre, apellido1, apellido2, provincia, localidad, cp, calle, numero, telefono, email, tipo_doc, num_doc, fecha_nacimiento, pass, tipo_usu) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'u')";
@@ -23,7 +23,6 @@ class User {
     }
 
     public function login($email, $password) {
-        // CORREGIDO: Añadido el campo 'email' a la consulta SELECT
         $sql = "SELECT id_usuario, nombre, email, pass, tipo_usu FROM usuarios WHERE email = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$email]);
@@ -98,6 +97,7 @@ class User {
     }
 
     // --- Métodos para Rate Limiting ---
+    // ... (addLoginAttempt, checkLoginAttempts, clearLoginAttempts)
 
     public function addLoginAttempt($ipAddress) {
         $sql = "INSERT INTO login_attempts (ip_address, attempt_time) VALUES (?, NOW())";
@@ -119,15 +119,25 @@ class User {
         return $stmt->execute([$ipAddress]);
     }
 
-    public function getAdminDashboardStats() {
-        $sql = "SELECT
-                    (SELECT COUNT(*) FROM productos) as total_products,
-                    (SELECT COUNT(*) FROM pedidos WHERE estado = 'pendiente') as pending_orders,
-                    (SELECT COUNT(*) FROM usuarios WHERE tipo_usu = 'u') as total_users,
-                    (SELECT COUNT(*) FROM productos WHERE stock <= 5) as low_stock_products
-                ";
+    /**
+     * Obtiene las estadísticas principales para el dashboard del administrador en una sola consulta.
+     */
+    public function getAdminDashboardStats()
+    {
+        $sql = "
+            SELECT
+                (SELECT COUNT(*) FROM usuarios WHERE tipo_usu = 'u') as total_users,
+                (SELECT COUNT(*) FROM pedidos WHERE estado = 'pendiente') as pending_orders,
+                (SELECT COUNT(*) FROM pedidos WHERE estado = 'pendiente' AND fecha < NOW() - INTERVAL 2 HOUR) as delayed_orders
+        ";
         $stmt = $this->pdo->query($sql);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function countUsers()
+    {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM usuarios WHERE tipo_usu = 'u'");
+        return $stmt->fetchColumn();
     }
 }
 ?>

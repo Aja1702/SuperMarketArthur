@@ -42,16 +42,16 @@ foreach ($cartItems as $item) {
                         <div class="item-details">
                             <h4><?php echo htmlspecialchars($item['nombre_producto']); ?></h4>
                             <p>Cantidad: <?php echo $item['cantidad']; ?></p>
-                            <p>Precio: €<?php echo number_format($item['precio'], 2); ?></p>
+                            <p>Precio: <?php echo number_format($item['precio'], 2); ?><?php echo htmlspecialchars($simbolo_moneda); ?></p>
                         </div>
                         <div class="item-total">
-                            €<?php echo number_format($item['precio'] * $item['cantidad'], 2); ?>
+                            <?php echo number_format($item['precio'] * $item['cantidad'], 2); ?><?php echo htmlspecialchars($simbolo_moneda); ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
             <div class="order-total">
-                <h3>Total: €<?php echo number_format($total, 2); ?></h3>
+                <h3>Total: <?php echo number_format($total, 2); ?><?php echo htmlspecialchars($simbolo_moneda); ?></h3>
             </div>
         </div>
 
@@ -109,143 +109,11 @@ foreach ($cartItems as $item) {
                     <p>Serás redirigido a PayPal para completar el pago de forma segura.</p>
                 </div>
 
-                <button type="submit" class="btn-pagar">Pagar €<?php echo number_format($total, 2); ?></button>
+                <button type="submit" class="btn-pagar">Pagar <?php echo number_format($total, 2); ?><?php echo htmlspecialchars($simbolo_moneda); ?></button>
             </form>
         </div>
     </div>
 </div>
-
-<style>
-.checkout-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 2rem;
-}
-
-.checkout-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.order-summary, .shipping-info, .payment-method {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.cart-items {
-    margin-bottom: 2rem;
-}
-
-.cart-item {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.cart-item img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.item-details h4 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-}
-
-.item-details p {
-    margin: 0.2rem 0;
-    font-size: 0.9rem;
-    color: #64748b;
-}
-
-.item-total {
-    font-weight: 700;
-    color: var(--azul-vibrante);
-}
-
-.order-total {
-    text-align: right;
-    padding-top: 1rem;
-    border-top: 2px solid #e2e8f0;
-}
-
-.payment-options {
-    margin-bottom: 2rem;
-}
-
-.payment-option {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    cursor: pointer;
-}
-
-.card-details, .paypal-details {
-    margin-top: 1rem;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
-
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: var(--azul-primario);
-}
-
-.form-group input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: var(--azul-vibrante);
-}
-
-.btn-pagar {
-    width: 100%;
-    background: var(--azul-vibrante);
-    color: white;
-    border: none;
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.btn-pagar:hover {
-    background: #188fa7;
-    transform: translateY(-2px);
-}
-
-@media (max-width: 768px) {
-    .checkout-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

@@ -42,7 +42,7 @@ if (!$order) {
 
         <h2>Resumen del Pedido #<?php echo htmlspecialchars($order['id_pedido']); ?></h2>
         <p><strong>Fecha:</strong> <?php echo date("d/m/Y", strtotime($order['fecha'])); ?></p>
-        <p><strong>Total:</strong> <?php echo number_format($order['total'], 2, ',', '.'); ?>€</p>
+        <p><strong>Total:</strong> <?php echo number_format($order['total'], 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?></p>
 
         <h3>Artículos del pedido:</h3>
         <ul>
@@ -50,7 +50,7 @@ if (!$order) {
                 <li>
                     <?php echo htmlspecialchars($item['nombre_producto']); ?> -
                     Cantidad: <?php echo htmlspecialchars($item['cantidad']); ?> -
-                    Precio: <?php echo number_format($item['precio_unitario'], 2, ',', '.'); ?>€
+                    Precio: <?php echo number_format($item['precio_unitario'], 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?>
                 </li>
             <?php endforeach; ?>
         </ul>

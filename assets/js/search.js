@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         timeout = setTimeout(async () => {
             try {
-                const response = await fetch(`./controllers/buscar_ajax.php?q=${encodeURIComponent(query)}`);
+                // Usamos la nueva ruta de la API
+                const response = await fetch(`${BASE_URL}api/search?q=${encodeURIComponent(query)}`);
                 const data = await response.json();
 
                 if (data.success && data.results.length > 0) {
@@ -38,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
         searchResults.innerHTML = '';
         results.forEach(item => {
             const div = document.createElement('a');
-            div.href = `./?vistaMenu=categorias_productos&cat=${item.id_categoria}&id=${item.id_producto}`;
+            // Usamos la nueva ruta de producto
+            div.href = `${BASE_URL}producto?id=${item.id_producto}`;
             div.className = 'search-result-item';
             div.innerHTML = `
                 <img src="${item.url_imagen || './assets/img/productos/default.jpg'}" alt="${item.nombre_producto}">
@@ -52,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
         searchResults.style.display = 'block';
     }
 
-    // Cerrar resultados al hacer clic fuera
     document.addEventListener('click', (e) => {
         if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
             searchResults.style.display = 'none';
