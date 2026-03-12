@@ -139,5 +139,44 @@ class User {
         $stmt = $this->pdo->query("SELECT COUNT(*) FROM usuarios WHERE tipo_usu = 'u'");
         return $stmt->fetchColumn();
     }
+
+    /**
+     * Crea un usuario básico (usado en el registro rápido).
+     * 
+     * @param string $nombre
+     * @param string $apellido1
+     * @param string $email
+     * @param string $password
+     * @return array|false Los datos del usuario creado o false si el email ya existe.
+     */
+    public function createUser($nombre, $apellido1, $email, $password)
+    {
+        if ($this->emailExists($email)) {
+            return false;
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        
+        // Usamos valores por defecto para los campos que no se piden en el formulario de registro básico
+        $sql = "INSERT INTO usuarios (
+                    nombre, apellido1, email, pass, tipo_usu, 
+                    apellido2, provincia, localidad, cp, calle, numero, telefono, tipo_doc, num_doc, fecha_nacimiento
+                ) VALUES (?, ?, ?, ?, 'u', '', '', '', '', '', '', '', '', '', '1900-01-01')";
+        
+        $stmt = $this->pdo->prepare($sql);
+        $success = $stmt->execute([$nombre, $apellido1, $email, $hashedPassword]);
+
+        if ($success) {
+            $id = $this->pdo->lastInsertId();
+            return [
+                'id_usuario' => $id,
+                'nombre' => $nombre,
+                'email' => $email,
+                'tipo_usu' => 'u'
+            ];
+        }
+
+        return false;
+    }
 }
 ?>

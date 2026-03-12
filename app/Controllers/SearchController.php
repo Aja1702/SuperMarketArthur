@@ -24,6 +24,7 @@ class SearchController
         }
 
         $productModel = new Product($pdo);
+        $results = []; // Inicializamos para evitar el error de "variable no asignada"
         $results = $productModel->searchProducts($query, 5); // Limitamos a 5 resultados como en el original
 
         $formattedResults = [];

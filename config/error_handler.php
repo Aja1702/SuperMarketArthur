@@ -11,9 +11,9 @@ $handler->registerExceptionHandler();
 $handler->registerErrorHandler();
 $handler->registerFatalHandler();
 
-// --- Configuración adicional de PHP para asegurar que todos los errores se reporten ---
+// --- Configuración adicional de PHP para asegurar que todos los errores se reporten al log, pero NO por pantalla ---
 
-// Mostrar todos los errores (ideal para desarrollo)
-// En producción, esto debería ser 0 y los errores solo irían al log.
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+// Desactivar visualización de errores por pantalla para el usuario final (Estética Premium)
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+error_reporting(E_ALL); // Seguimos capturándolo TODO, pero solo para el log.

@@ -18,7 +18,7 @@ class HomeController
         $productosDestacados = $productModel->getFeaturedProducts(10);
 
         // 4. Comprobar el estado de "favorito" para cada producto si el usuario está logueado
-        if (isset($_SESSION['id_usuario'])) {
+        if (isset($_SESSION['id_usuario']) && is_array($productosDestacados)) {
             $favoriteModel = new \Favorite($pdo);
             $id_usuario = $_SESSION['id_usuario'];
 
@@ -51,7 +51,7 @@ class HomeController
 
         ob_start();
         require_once __DIR__ . "/../../views/{$view}.php";
-        $content = ob_get_clean();
+        $content = (string)ob_get_clean();
 
         require_once __DIR__ . '/../../views/layout.php';
     }

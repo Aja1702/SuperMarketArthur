@@ -41,9 +41,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (data.success) {
                 renderCartItems(data.items);
-                if(cartTotalAmount) {
-                    cartTotalAmount.textContent = data.total_formatted;
-                }
+                if(cartTotalAmount) cartTotalAmount.textContent = data.total_formatted;
+                
+                const cartSubtotalAmount = document.getElementById('cartSubtotalAmount');
+                const cartIvaAmount = document.getElementById('cartIvaAmount');
+                
+                if(cartSubtotalAmount) cartSubtotalAmount.textContent = data.subtotal_formatted;
+                if(cartIvaAmount) cartIvaAmount.textContent = data.iva_formatted;
             }
         } catch (error) {
             console.error('Error cargando el carrito:', error);
@@ -84,8 +88,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.addToCart = async function (id_producto) {
+        const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+        const csrf_token = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '';
+
         const formData = new FormData();
         formData.append('id_producto', id_producto);
+        formData.append('csrf_token', csrf_token);
 
         try {
             const response = await fetch(BASE_URL + 'api/cart/add', {
@@ -105,9 +113,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     async function updateQuantity(id_producto, delta) {
+        const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+        const csrf_token = csrfTokenMeta ? csrfTokenMeta.getAttribute('content') : '';
+
         const formData = new FormData();
         formData.append('id_producto', id_producto);
         formData.append('delta', delta);
+        formData.append('csrf_token', csrf_token);
 
         try {
             const response = await fetch(BASE_URL + 'api/cart/update', {

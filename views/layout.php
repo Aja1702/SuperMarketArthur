@@ -1,7 +1,7 @@
 <?php
-// MODO DEPURACIÓN FORENSE: Forzamos a PHP a mostrar todos los errores.
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// SILENCIO ADMINISTRATIVO: Ocultamos avisos técnicos para una experiencia premium.
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 
 // Generar token CSRF global si no existe
@@ -34,7 +34,7 @@ if (empty($_SESSION['csrf_token'])) {
     ?>
 
     <main role="main">
-        <?php echo $content; // Aquí se inyecta el contenido de la vista específica ?>
+        <?php echo (string)($content ?? ''); // Aquí se inyecta el contenido de la vista específica ?>
     </main>
 
     <?php
@@ -53,7 +53,14 @@ if (empty($_SESSION['csrf_token'])) {
         echo '        <div class="empty-cart-message" style="text-align: center; padding: 2rem; opacity: 0.6;"><p>Tu cesta está vacía</p></div>';
         echo '    </div>';
         echo '    <div class="cart-footer">';
-        echo '        <div class="cart-total"><span>Total:</span> <span id="cartTotalAmount">0,00' . htmlspecialchars($simbolo_moneda) . '</span></div>';
+        echo '        <div class="cart-summary-details" style="border-top: 1px solid #e2e8f0; padding: 1rem 0; margin-top: 1rem; font-size: 0.9rem; color: #64748b;">';
+        echo '            <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;"><span>Subtotal (sin IVA):</span> <span id="cartSubtotalAmount">0,00' . htmlspecialchars($simbolo_moneda) . '</span></div>';
+        echo '            <div style="display: flex; justify-content: space-between;"><span>IVA (10%):</span> <span id="cartIvaAmount">0,00' . htmlspecialchars($simbolo_moneda) . '</span></div>';
+        echo '        </div>';
+        echo '        <div class="cart-total" style="border-top: 2px solid var(--azul-primario); padding-top: 1rem;">';
+        echo '            <div style="display: flex; justify-content: space-between; width: 100%; font-size: 1.3rem; font-weight: 700;"><span>Total:</span> <span id="cartTotalAmount">0,00' . htmlspecialchars($simbolo_moneda) . '</span></div>';
+        echo '            <div class="iva-incl-mini">Todo incluido</div>';
+        echo '        </div>';
         if (isset($_SESSION['id_usuario'])) {
             echo '        <a href="' . BASE_URL . 'checkout" class="btn-checkout">Finalizar Compra</a>';
         } else {

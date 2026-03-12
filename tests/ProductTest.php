@@ -77,4 +77,29 @@ class ProductTest extends TestCase
         $this->assertEquals(2, $product['rating_total']); // 2 valoraciones en total
         $this->assertEquals(4.0, $product['rating_average']); // La media de (5+3)/2 es 4
     }
+
+    /**
+     * Test para verificar que el buscador funciona correctamente.
+     */
+    public function testCanSearchProducts()
+    {
+        // 1. Insertar productos de prueba
+        $this->pdo->prepare("INSERT INTO productos (nombre_producto, descripcion, precio) VALUES (?, ?, ?)")->execute(['Leche Entera', 'Leche de vaca fresca', 1.20]);
+        $this->pdo->prepare("INSERT INTO productos (nombre_producto, descripcion, precio) VALUES (?, ?, ?)")->execute(['Leche Desnatada', 'Leche sin grasa', 1.10]);
+        $this->pdo->prepare("INSERT INTO productos (nombre_producto, descripcion, precio) VALUES (?, ?, ?)")->execute(['Pan de Molde', 'Pan blanco tierno', 0.90]);
+
+        // 2. Buscar por nombre
+        $results = $this->productModel->searchProducts('Leche');
+        $this->assertCount(2, $results);
+        $this->assertEquals('Leche Desnatada', $results[0]['nombre_producto']); // Ordenado alfabéticamente
+
+        // 3. Buscar por descripción
+        $results = $this->productModel->searchProducts('tierno');
+        $this->assertCount(1, $results);
+        $this->assertEquals('Pan de Molde', $results[0]['nombre_producto']);
+
+        // 4. Buscar sin coincidencias
+        $results = $this->productModel->searchProducts('Cerveza');
+        $this->assertCount(0, $results);
+    }
 }

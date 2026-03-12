@@ -13,6 +13,7 @@
                     </span>
                     <img src="<?php echo htmlspecialchars($producto['url_imagen'] ?: './assets/img/productos/default.jpg'); ?>"
                          alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>"
+                         loading="lazy"
                          onerror="this.onerror=null;this.src='./assets/img/logo/logo_supermarket.png'">
                 </div>
                 <div class="producto-info">
@@ -25,6 +26,7 @@
                             <?php echo number_format($producto['precio'] * 1.15, 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?>
                         </span><br>
                         <?php echo number_format($producto['precio'], 2, ',', '.'); ?><span><?php echo htmlspecialchars($simbolo_moneda); ?></span>
+                        <span class="iva-incl">IVA incl.</span>
                     </div>
                     <button onclick="addToCart(<?php echo $producto['id_producto']; ?>)"
                             class="btn-add-cart-premium"

@@ -129,7 +129,7 @@ class Product {
 
         file_put_contents($cacheFile, json_encode($products));
 
-        return $products;
+        return is_array($products) ? $products : [];
     }
 
     public function getCategories() {
@@ -138,8 +138,27 @@ class Product {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getCategoryById($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM categorias WHERE id_categoria = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function searchProducts($query, $limit = null, $offset = 0) {
-        // ... (código existente)
+        $sql = "SELECT * FROM productos WHERE nombre_producto LIKE :query OR descripcion LIKE :query ORDER BY nombre_producto";
+        if ($limit) {
+            $sql .= " LIMIT :limit OFFSET :offset";
+        }
+        $stmt = $this->pdo->prepare($sql);
+        $searchQuery = "%$query%";
+        $stmt->bindValue(':query', $searchQuery, PDO::PARAM_STR);
+        if ($limit) {
+            $stmt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return is_array($results) ? $results : [];
     }
 
     public function getTotalProducts() {

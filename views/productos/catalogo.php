@@ -15,6 +15,7 @@
                             <a href="/SuperMarketArthur/producto?id=<?php echo $producto['id_producto']; ?>">
                                 <img src="<?php echo htmlspecialchars($producto['url_imagen'] ?: './assets/img/productos/default.jpg'); ?>"
                                      alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>"
+                                     loading="lazy"
                                      onerror="this.onerror=null;this.src='./assets/img/logo/logo_supermarket.png'">
                             </a>
                         </div>
@@ -25,6 +26,7 @@
                         <div class="producto-footer">
                             <div class="producto-precio">
                                 <?php echo number_format($producto['precio'], 2, ',', '.'); ?><span><?php echo htmlspecialchars($simbolo_moneda); ?></span>
+                                <span class="iva-incl">IVA incl.</span>
                             </div>
                             <div class="producto-card-actions" style="display:flex; gap: 0.5rem;">
                                 <button class="btn-add-cart-premium" onclick="addToCart(<?php echo $producto['id_producto']; ?>)" title="Añadir al carrito">🛒</button>

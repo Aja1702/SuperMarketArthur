@@ -17,13 +17,18 @@ class ProductoController
 
         if ($id_categoria > 0) {
             $pagina_actual = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-            $offset = ($pagina_actual - 1) * $productos_por_pagina_config;
-            $total_productos = $productModel->getTotalProductsByCategory($id_categoria);
-            $total_paginas = ceil($total_productos / $productos_por_pagina_config);
-            $productos = $productModel->getProductsByCategory($id_categoria, $productos_por_pagina_config, $offset);
-            $nombre_categoria = $productModel->getCategoryById($id_categoria)['nombre_categoria'] ?? 'Categoría no encontrada';
+            
+            // ¡NUEVO!: Asegurarse de que productos_por_pagina NUNCA sea 0 o inferior para evitar colapsar el Catálogo.
+            $productos_por_pagina = (isset($productos_por_pagina_config) && $productos_por_pagina_config > 0) ? $productos_por_pagina_config : 12;
 
-            if (isset($_SESSION['id_usuario'])) {
+            $offset = ($pagina_actual - 1) * $productos_por_pagina;
+            $total_productos = $productModel->getTotalProductsByCategory($id_categoria);
+            $total_paginas = ceil($total_productos / $productos_por_pagina);
+            $productos = $productModel->getProductsByCategory($id_categoria, $productos_por_pagina, $offset) ?: [];
+            $categoria = $productModel->getCategoryById($id_categoria);
+            $nombre_categoria = $categoria['nombre_categoria'] ?? 'Categoría no encontrada';
+
+            if (isset($_SESSION['id_usuario']) && is_array($productos)) {
                 $favoriteModel = new \Favorite($pdo);
                 foreach ($productos as &$producto) {
                     $producto['is_favorite'] = $favoriteModel->isFavorite($_SESSION['id_usuario'], $producto['id_producto']);
@@ -101,7 +106,7 @@ class ProductoController
         extract($data);
         ob_start();
         require_once __DIR__ . "/../../views/{$view}.php";
-        $content = ob_get_clean();
+        $content = (string)ob_get_clean();
         require_once __DIR__ . '/../../views/layout.php';
     }
 }

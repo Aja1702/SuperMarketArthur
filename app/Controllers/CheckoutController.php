@@ -46,6 +46,10 @@ class CheckoutController
             exit();
         }
 
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'])) {
+            die('Error CSRF: Token inválido');
+        }
+
         $id_usuario = $_SESSION['id_usuario'];
         $cart = new Cart($pdo, $id_usuario);
         $cartItems = $cart->getItems();
@@ -94,7 +98,7 @@ class CheckoutController
 
         ob_start();
         require_once __DIR__ . "/../../views/{$view}.php";
-        $content = ob_get_clean();
+        $content = (string)ob_get_clean();
 
         require_once __DIR__ . '/../../views/layout.php';
     }

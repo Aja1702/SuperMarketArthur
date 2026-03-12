@@ -38,10 +38,15 @@ class CartController
                 $item['precio_formatted'] = number_format($item['precio'], 2, ',', '.') . htmlspecialchars($this->simbolo_moneda);
                 $formattedItems[] = $item;
             }
+            $subtotal = $total / 1.10;
+            $iva = $total - $subtotal;
+
             $this->jsonResponse([
                 'success' => true,
                 'items' => $formattedItems,
-                'total_formatted' => number_format($total, 2, ',', '.') . htmlspecialchars($this->simbolo_moneda)
+                'total_formatted' => number_format($total, 2, ',', '.') . htmlspecialchars($this->simbolo_moneda),
+                'subtotal_formatted' => number_format($subtotal, 2, ',', '.') . htmlspecialchars($this->simbolo_moneda),
+                'iva_formatted' => number_format($iva, 2, ',', '.') . htmlspecialchars($this->simbolo_moneda)
             ]);
         } catch (\Exception $e) {
             $this->jsonResponse(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
@@ -49,6 +54,10 @@ class CartController
     }
 
     public function addItem() {
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'])) {
+            return $this->jsonResponse(['success' => false, 'message' => 'Error CSRF: Token inválido']);
+        }
+
         $id_producto = $_POST['id_producto'] ?? 0;
         $cantidad = (int)($_POST['cantidad'] ?? 1);
 
@@ -64,6 +73,10 @@ class CartController
     }
 
     public function updateQuantity() {
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'])) {
+            return $this->jsonResponse(['success' => false, 'message' => 'Error CSRF: Token inválido']);
+        }
+
         $id_producto = $_POST['id_producto'] ?? 0;
         $delta = (int)($_POST['delta'] ?? 0);
 

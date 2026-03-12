@@ -8,6 +8,6 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
 
-    # a index.php, manteniendo la URL original (usando ^ para capturar todo)
-    RewriteRule ^ index.php [L]
+    # a index.php, manteniendo la URL original y los parámetros GET (QSA)
+    RewriteRule ^ index.php [QSA,L]
 </IfModule>

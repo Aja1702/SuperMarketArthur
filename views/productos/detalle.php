@@ -25,7 +25,9 @@ function render_stars($rating) {
 
     <div class="producto-detalle-grid">
         <div class="producto-imagen-container">
-            <img src="<?php echo htmlspecialchars($producto['url_imagen']); ?>" alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>">
+            <img src="<?php echo htmlspecialchars($producto['url_imagen']); ?>" 
+                 alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>"
+                 loading="lazy">
         </div>
         <div class="producto-info-container">
             <h2><?php echo htmlspecialchars($producto['nombre_producto']); ?></h2>
@@ -41,6 +43,7 @@ function render_stars($rating) {
 
             <div class="producto-precio-detalle">
                 <span><?php echo number_format($producto['precio'], 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?></span>
+                <small class="iva-incl" style="font-size: 0.9rem; color: #64748b; font-weight: 500;">(IVA incluido)</small>
             </div>
 
             <div class="producto-acciones" style="display: flex; gap: 1rem; align-items: center;">

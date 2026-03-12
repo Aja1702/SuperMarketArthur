@@ -9,6 +9,7 @@
                 <h3 style="border-bottom: 2px solid var(--azul-claro); padding-bottom: 1rem; margin-bottom: 2rem;">Información de Envío</h3>
 
                 <form action="/SuperMarketArthur/checkout" method="POST" class="form-contacto-premium">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <div class="input-group">
                         <label for="nombre_completo">Nombre Completo</label>
                         <input type="text" id="nombre_completo" name="nombre_completo" required>
@@ -56,9 +57,27 @@
                     <?php endforeach; ?>
                 <?php endif; ?>
 
-                <div class="cart-total" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
-                    <span>Total</span>
-                    <strong><?php echo $cartTotalFormatted; ?></strong>
+                <?php 
+                $base_imponible = $cartTotal / 1.10; // Asumiendo un 10% de IVA como promedio
+                $iva_calculado = $cartTotal - $base_imponible;
+                ?>
+
+                <div class="checkout-totals" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: #64748b;">
+                        <span>Subtotal (Base Imponible)</span>
+                        <span><?php echo number_format($base_imponible, 2, ',', '.') . htmlspecialchars($simbolo_moneda); ?></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; color: #64748b;">
+                        <span>IVA (10%)</span>
+                        <span><?php echo number_format($iva_calculado, 2, ',', '.') . htmlspecialchars($simbolo_moneda); ?></span>
+                    </div>
+                    <div class="cart-total" style="display: flex; flex-direction: column; align-items: flex-end; border-top: 2px solid var(--azul-primario); padding-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; width: 100%; font-size: 1.5rem; font-weight: 700; color: var(--negro-titulos);">
+                            <span>TOTAL</span>
+                            <strong><?php echo $cartTotalFormatted; ?></strong>
+                        </div>
+                        <small style="color: var(--azul-primario); font-weight: 600; font-size: 0.85rem; margin-top: 0.25rem;">IVA INCLUIDO</small>
+                    </div>
                 </div>
             </div>
 

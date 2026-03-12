@@ -47,7 +47,7 @@ class BaseController
         // Capturamos el contenido de la vista específica
         ob_start();
         require __DIR__ . "/../../views/{$view}.php";
-        $content = ob_get_clean();
+        $content = (string)ob_get_clean();
 
         // Y finalmente, cargamos la plantilla principal que envuelve todo
         require __DIR__ . '/../../views/layout.php';
