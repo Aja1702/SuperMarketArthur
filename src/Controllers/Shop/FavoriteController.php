@@ -3,7 +3,10 @@
 namespace App\Controllers\Shop;
 
 require_once __DIR__ . '/../../Models/Favorite.php';
+require_once __DIR__ . '/../../Models/Product.php';
+
 use Favorite;
+use Product;
 
 class FavoriteController
 {
@@ -15,6 +18,67 @@ class FavoriteController
         exit();
     }
 
+    /**
+     * Muestra la página de favoritos del usuario
+     */
+    public function index()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['id_usuario'])) {
+            header('Location: /SuperMarketArthur/login');
+            exit();
+        }
+
+        global $pdo;
+        
+        $favoriteModel = new Favorite($pdo);
+        $productModel = new Product($pdo);
+        
+        $userId = $_SESSION['id_usuario'];
+        
+        // Obtener IDs de productos favoritos
+        $favoriteProducts = $favoriteModel->getUserFavorites($userId);
+        
+        // Obtener información completa de cada producto
+        $products = [];
+        foreach ($favoriteProducts as $fav) {
+            $product = $productModel->getProductById($fav['id_producto']);
+            if ($product) {
+                $products[] = $product;
+            }
+        }
+        
+        $data = [
+            'products' => $products,
+            'nombre_usuario' => $_SESSION['usuario_nombre'] ?? 'Usuario'
+        ];
+        
+        // Cargar vista
+        global $nombre_sitio, $cache_version, $rutas, $tipo_usuario, $simbolo_moneda;
+        
+        $data = array_merge($data, [
+            'nombre_sitio' => $nombre_sitio,
+            'cache_version' => $cache_version,
+            'rutas' => $rutas,
+            'tipo_usuario' => $tipo_usuario,
+            'simbolo_moneda' => $simbolo_moneda
+        ]);
+        
+        extract($data);
+        
+        ob_start();
+        require __DIR__ . '/../../views/favoritos.php';
+        $content = (string)ob_get_clean();
+        
+        require __DIR__ . '/../../views/layout.php';
+    }
+
+    /**
+     * Toggle favorito (API)
+     */
     public function toggle()
     {
         if (session_status() === PHP_SESSION_NONE) {

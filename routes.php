@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/src/Core/Router.php';
 
-// Cargar controllers manualmente (hasta que composer dump-autoload sea ejecutado)
+// Cargar controllers manualmente
 require_once __DIR__ . '/src/Controllers/HomeController.php';
 require_once __DIR__ . '/src/Controllers/OfertasController.php';
 require_once __DIR__ . '/src/Controllers/SobreNosotrosController.php';
@@ -13,7 +13,8 @@ require_once __DIR__ . '/src/Controllers/OrderConfirmationController.php';
 require_once __DIR__ . '/src/Controllers/Shop/ProductoController.php';
 require_once __DIR__ . '/src/Controllers/Shop/CartController.php';
 require_once __DIR__ . '/src/Controllers/Shop/CheckoutController.php';
-require_once __DIR__ . '/src/Controllers/Shop/FavoritosController.php';
+require_once __DIR__ . '/src/Controllers/AccountController.php';
+require_once __DIR__ . '/src/Controllers/Shop/FavoriteController.php';
 require_once __DIR__ . '/src/Controllers/Shop/SearchController.php';
 require_once __DIR__ . '/src/Controllers/Shop/RatingController.php';
 require_once __DIR__ . '/src/Controllers/Auth/AuthController.php';
@@ -25,8 +26,6 @@ require_once __DIR__ . '/src/Controllers/Admin/AdminConfigController.php';
 require_once __DIR__ . '/src/Controllers/Admin/AdminPedidosController.php';
 
 $router = new \App\Core\Router();
-
-// Sintaxis: $router->add('MÉTODO', '/url', [Controlador::class, 'método']);
 
 // --- Rutas Principales ---
 $router->add('GET', '/SuperMarketArthur/', ['App\Controllers\HomeController', 'index']);
@@ -46,7 +45,7 @@ $router->add('POST', '/SuperMarketArthur/registro', ['App\\Controllers\\Auth\\Au
 $router->add('POST', '/SuperMarketArthur/logout', ['App\\Controllers\\Auth\\AuthController', 'logout']);
 
 // --- Rutas de Área de Usuario ---
-$router->add('GET', '/SuperMarketArthur/favoritos', ['App\\Controllers\\Shop\\FavoritosController', 'index']);
+$router->add('GET', '/SuperMarketArthur/favoritos', ['App\\Controllers\\Shop\\FavoriteController', 'index']);
 $router->add('GET', '/SuperMarketArthur/mi-cuenta', ['App\Controllers\AccountController', 'index']);
 
 // --- Rutas del Panel de Administración ---
