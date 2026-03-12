@@ -23,7 +23,7 @@
             </p>
 
             <div style="text-align: center; margin-top: 4rem;">
-                <img src="./assets/img/logo/logo_supermarket.png" alt="SuperMarketArthur" style="width: 150px; opacity: 0.5;">
+                <img src="./public/assets/img/logo/logo_supermarket.png" alt="SuperMarketArthur" style="width: 150px; opacity: 0.5;">
             </div>
         </div>
     </div>

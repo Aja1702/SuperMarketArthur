@@ -13,7 +13,7 @@ Proyecto en desarrollo activo. Estado actual de las características principales
 - **[x]** Diseño Moderno y Responsive con paleta de colores profesional
 - **[x]** Seguridad (Hashing, Prepared Statements, CSRF, Modo Mantenimiento con IP)
 - **[x]** Optimización y Rendimiento (Caching, Paginación, Lazy Loading)
-- **[x]** Arquitectura MVC limpia con Router central y assets compilados
+- **[x]** Arquitectura MVC limpia con Router central
 
 ## 🚀 Características Principales
 
@@ -21,7 +21,7 @@ Proyecto en desarrollo activo. Estado actual de las características principales
 - **Catálogo de Productos**: Navegación por categorías con paginación configurable
 - **Carrito de Compras**: Persistencia de sesión con desglose de IVA
 - **Sistema de Usuarios**: Registro, login y gestión de perfiles
-- **Favoritos**: Los usuarios pueden guardar productos como favoritos
+- **Favoritos**: Los usuarios pueden guardar productos como favorito
 - **Valoraciones**: Sistema de reseñas y puntuaciones por producto
 - **Gestión de Pedidos**: Historial y detalle de pedidos para usuarios y admins
 - **Panel Administrativo**: Dashboard con estadísticas, CRUD de productos, pedidos, usuarios y stock bajo
@@ -42,33 +42,50 @@ Proyecto en desarrollo activo. Estado actual de las características principales
 ### ⚡ Rendimiento
 - **Lazy Loading** de imágenes
 - **Caching** del lado del servidor para consultas frecuentes
-- **Assets compilados**: CSS y JS unificados en `dist/` vía `npm run build`
 - **Desglose de IVA** en carrito y checkout con transparencia de precios
 
 ## 🏗️ Estructura del Proyecto
 
 ```
 SuperMarketArthur/
-├── app/
-│   └── Controllers/        # 22 controladores MVC
-├── models/                 # Modelos (Cart, Config, Favorite, Order, Product, Rating, User)
-├── views/                  # Vistas organizadas por sección (admin/, auth/, productos/, account/)
-├── core/
-│   └── Router.php          # Router central
-├── config/                 # Configuración (BD, sesión, logger, errores)
-├── includes/               # Partiales de layout (cabecera, menú, pie, modals)
-├── assets/                 # Fuentes CSS/JS originales
-├── dist/                   # CSS/JS compilados (generados por npm run build)
+├── src/
+│   ├── Controllers/          # Controladores (Admin/, Auth/, Shop/)
+│   │   ├── Admin/           # Controladores del panel de administración
+│   │   ├── Auth/           # Controladores de autenticación
+│   │   └── Shop/           # Controladores de la tienda
+│   ├── Models/              # Modelos (Cart, Config, Favorite, Order, Product, Rating, User)
+│   ├── Core/                # Router central
+│   ├── Middleware/          # Middlewares de autenticación
+│   ├── Services/            # Servicios (CartService)
+│   ├── Utilities/           # Helpers y funciones auxiliares
+│   └── cache/               # Caché de productos destacados
+├── views/                   # Vistas organizadas por sección
+│   ├── admin/               # Vistas del panel de administración
+│   ├── auth/                # Vistas de login y registro
+│   ├── productos/           # Vistas de catálogo y detalle
+│   └── account/             # Vistas de cuenta de usuario
+├── public/
+│   ├── assets/              # CSS, JS e imágenes públicos
+│   │   ├── css/
+│   │   ├── js/
+│   │   └── img/
+│   └── .htaccess            # Configuración Apache
+├── config/                  # Configuración (BD, sesión, logger, errores)
+├── includes/                # Partiales de layout (cabecera, menú, pie, modals)
 ├── scripts/
-│   └── limpiar_carritos.php  # Script de mantenimiento de carritos expirados
+│   └── limpiar_carritos.php  # Script de mantenimiento
 ├── docs/
 │   └── sql/
-│       └── SuperMarketArthur.sql  # Esquema y datos de la BD
-├── tests/                  # Tests unitarios PHPUnit
-├── logs/                   # Logs de la aplicación (app.log, error.log)
-├── bootstrap.php           # Arranque global de la aplicación
-├── routes.php              # Definición de rutas
-└── index.php               # Punto de entrada (front controller)
+│       └── SuperMarketArthur.sql  # Esquema de la BD
+├── storage/
+│   ├── cache/               # Caché de la aplicación
+│   └── logs/                # Logs de la aplicación
+├── tests/                   # Tests unitarios PHPUnit
+├── bootstrap.php            # Arranque de la aplicación
+├── routes.php               # Definición de rutas
+├── index.php                # Punto de entrada
+├── composer.json            # Dependencias PHP
+└── .env                     # Variables de entorno (NO incluir en git)
 ```
 
 ## 🛠️ Tecnologías
@@ -76,18 +93,16 @@ SuperMarketArthur/
 | Capa | Tecnología |
 |------|-----------|
 | Backend | PHP 8.1+, PDO, MySQL 8.0+ |
-| Frontend | HTML5, CSS3 (variables), JavaScript ES6+ |
+| Frontend | HTML5, CSS3, JavaScript ES6+ |
 | Dependencias PHP | Composer, Monolog, PHPUnit |
-| Build | Node.js + npm |
-| Arquitectura | MVC estricto, Router PSR-4 |
+| Arquitectura | MVC estricto, PSR-4 |
 
 ## 📋 Requisitos Previos
 
-- **PHP 8.1+** (recomendado para Monolog 3.x)
+- **PHP 8.1+**
 - **Servidor web**: Apache/Nginx — se recomienda **XAMPP**
 - **MySQL 8.0+**
 - **[Composer](https://getcomposer.org/)**
-- **[Node.js y npm](https://nodejs.org/)**
 
 ## 🚀 Instalación
 
@@ -102,18 +117,7 @@ cd SuperMarketArthur
 composer install
 ```
 
-### 3. Instalar Dependencias Frontend
-```bash
-npm install
-```
-
-### 4. Compilar Assets
-> ⚠️ **Obligatorio**. Ejecutar también tras cualquier cambio en CSS o JS.
-```bash
-npm run build
-```
-
-### 5. Configurar la Base de Datos
+### 3. Configurar la Base de Datos
 - Crea la base de datos `supermarketarthur` en MySQL
 - Importa el esquema:
 ```sql
@@ -121,15 +125,16 @@ npm run build
 SOURCE docs/sql/SuperMarketArthur.sql;
 ```
 
-### 6. Configurar Credenciales de BD
-Edita `config/iniciar_session.php`:
-```php
-$username = "root";           // Tu usuario de MySQL
-$password = "";               // Tu contraseña de MySQL
-$database = "supermarketarthur";
+### 4. Configurar Credenciales de BD
+Edita el archivo `.env` en la raíz del proyecto:
+```env
+DB_HOST=localhost
+DB_NAME=supermarketarthur
+DB_USER=root
+DB_PASSWORD=
 ```
 
-### 7. ¡Listo!
+### 5. ¡Listo!
 Abre `http://localhost/SuperMarketArthur` en tu navegador.
 
 ## 📖 Uso
@@ -150,21 +155,12 @@ Abre `http://localhost/SuperMarketArthur` en tu navegador.
 
 ## 🔧 Desarrollo
 
-### Compilar Assets
-```bash
-npm run build
-```
-
 ### Ejecutar Tests
 ```bash
-# Linux/Mac
-./vendor/bin/phpunit tests/
-
-# Windows
 vendor\bin\phpunit tests\
 ```
 
-### Limpiar Carritos Expirados (mantenimiento)
+### Limpiar Carritos Expirados
 ```bash
 php scripts/limpiar_carritos.php
 ```

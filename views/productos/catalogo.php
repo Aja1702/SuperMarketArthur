@@ -13,10 +13,10 @@
                     <article class="card-producto">
                         <div class="producto-imagen-wrapper">
                             <a href="/SuperMarketArthur/producto?id=<?php echo $producto['id_producto']; ?>">
-                                <img src="<?php echo htmlspecialchars($producto['url_imagen'] ?: './assets/img/productos/default.jpg'); ?>"
+                                <img src="<?php echo htmlspecialchars($producto['url_imagen'] ?: './public/assets/img/productos/default.jpg'); ?>"
                                      alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>"
                                      loading="lazy"
-                                     onerror="this.onerror=null;this.src='./assets/img/logo/logo_supermarket.png'">
+                                     onerror="this.onerror=null;this.src='./public/assets/img/logo/logo_supermarket.png'">
                             </a>
                         </div>
                         <div class="producto-info">

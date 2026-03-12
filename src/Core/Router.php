@@ -5,11 +5,44 @@ namespace App\Core;
 class Router
 {
     protected $routes = [];
+    protected $basePath = '';
+
+    public function __construct()
+    {
+        // Detectar automáticamente el base path desde la URI actual
+        $this->basePath = dirname($_SERVER['SCRIPT_NAME']);
+        if ($this->basePath === '\\' || $this->basePath === '/') {
+            $this->basePath = '';
+        }
+    }
+
+    /**
+     * Normaliza una ruta quitando el base path si está hardcodeado
+     */
+    private function normalizeUri($uri)
+    {
+        // Si la URI comienza con el base path, quitarlo
+        if (!empty($this->basePath) && strpos($uri, $this->basePath) === 0) {
+            $uri = substr($uri, strlen($this->basePath));
+        }
+        
+        // Asegurar que la URI siempre empieza por /
+        if (empty($uri)) {
+            $uri = '/';
+        } elseif ($uri[0] !== '/') {
+            $uri = '/' . $uri;
+        }
+        
+        return $uri;
+    }
 
     public function add($method, $uri, $controller)
     {
+        // Normalizar la URI antes de guardarla
+        $normalizedUri = $this->normalizeUri($uri);
+        
         $this->routes[] = [
-            'uri' => $uri,
+            'uri' => $normalizedUri,
             'controller' => $controller,
             'method' => $method
         ];
@@ -27,8 +60,11 @@ class Router
 
     public function dispatch($uri, $method)
     {
+        // Normalizar la URI recibida
+        $normalizedUri = $this->normalizeUri($uri);
+        
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
+            if ($route['uri'] === $normalizedUri && $route['method'] === strtoupper($method)) {
 
                 // Descomponemos el controlador: [App\Controllers\HomeController::class, 'index']
                 $controller = $route['controller'][0]; // App\Controllers\HomeController

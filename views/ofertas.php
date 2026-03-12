@@ -11,10 +11,10 @@
                     <span style="position: absolute; top: 1rem; right: 1rem; background: #f43f5e; color: white; padding: 0.4rem 0.8rem; border-radius: 50px; font-weight: 800; font-size: 0.8rem; z-index: 10;">
                         -15%
                     </span>
-                    <img src="<?php echo htmlspecialchars($producto['url_imagen'] ?: './assets/img/productos/default.jpg'); ?>"
+                    <img src="<?php echo htmlspecialchars($producto['url_imagen'] ?: './public/assets/img/productos/default.jpg'); ?>"
                          alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>"
                          loading="lazy"
-                         onerror="this.onerror=null;this.src='./assets/img/logo/logo_supermarket.png'">
+                         onerror="this.onerror=null;this.src='./public/assets/img/logo/logo_supermarket.png'">
                 </div>
                 <div class="producto-info">
                     <h3><?php echo htmlspecialchars($producto['nombre_producto']); ?></h3>
