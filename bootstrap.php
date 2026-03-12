@@ -17,7 +17,7 @@ session_start();
 require_once __DIR__ . '/config/iniciar_session.php';
 
 // --- CARGA GLOBAL DE CONFIGURACIÓN ---
-require_once __DIR__ . '/models/Config.php';
+require_once __DIR__ . '/src/Models/Config.php';
 $configModel = new Config($pdo);
 $nombre_sitio = $configModel->get('NOMBRE_SITIO', 'SuperMarketArthur');
 $stock_bajo_umbral = (int)$configModel->get('STOCK_BAJO_UMBRAL', 5);

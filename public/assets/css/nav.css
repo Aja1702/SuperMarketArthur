@@ -1,0 +1,180 @@
+/*
+ * ==========================================
+ *  ESTILOS DE MENUS DE NAVEGACION (NAV)
+ * ==========================================
+ */
+
+/* --- 1. MENÚ HORIZONTAL (INVITADO Y USUARIO) --- */
+.menu-horizontal {
+    background: var(--azul-primario);
+    padding: 0.7rem 5%;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+.menu-horizontal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    color: var(--blanco-puro);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+    border-radius: var(--curva, 12px);
+    transition: all 0.3s ease;
+    opacity: 0.85;
+}
+
+.menu-link img {
+    width: 32px;
+    height: 32px;
+    transition: all 0.3s ease;
+}
+
+.menu-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--blanco-puro);
+    transform: translateY(-3px);
+    opacity: 1;
+}
+
+.menu-link:hover img {
+    transform: scale(1.1);
+}
+
+/* --- 2. MENÚ ADMINISTRADOR (Vertical/Gris) --- */
+.menu-admin {
+    background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-right: 3px solid #4a5568;
+}
+
+.menu-admin-lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+
+.menu-link-admin {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #e2e8f0;
+    text-decoration: none;
+    padding: 1.2rem 2rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    position: relative;
+}
+
+.menu-link-admin:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #ffffff;
+    border-left-color: #4299e1;
+    transform: translateX(5px);
+}
+
+.menu-link-admin i {
+    width: 20px;
+    font-size: 1.1rem;
+}
+
+.badge {
+    background: #48bb78;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 12px;
+    min-width: 22px;
+    text-align: center;
+}
+
+.menu-item.activo .menu-link-admin {
+    background: rgba(59, 130, 246, 0.2);
+    border-left-color: #4299e1;
+    color: #ffffff;
+}
+
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 1024px) {
+    /* Admin menu becomes scrollable on tablets */
+    .menu-admin-lista {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0;
+        justify-content: flex-start; /* Align items to the start */
+    }
+
+    .menu-link-admin {
+        padding: 1rem 1.5rem;
+        white-space: nowrap; /* Prevent wrapping */
+        min-width: 140px; /* Give it a minimum width */
+        justify-content: center;
+        border-left: 4px solid transparent;
+    }
+     /* Remove hover effects that don't work well with horizontal scrolling */
+    .menu-link-admin:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 992px) {
+    /* Adjust horizontal menu for smaller tablets */
+    .menu-horizontal ul {
+        gap: 1rem; /* Reduce gap between items */
+        justify-content: center;
+    }
+    .menu-link {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Horizontal menu for tablets and large phones */
+    .menu-horizontal ul {
+        justify-content: space-around; /* Distribute items evenly */
+        flex-wrap: wrap; /* Allow items to wrap to the next line */
+        gap: 0.5rem;
+    }
+    .menu-horizontal {
+        padding: 1rem 2%;
+    }
+    .menu-link {
+        flex-basis: 45%; /* Approximately two items per row */
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* For small mobile screens, ensure links have enough space */
+    .menu-link {
+        flex-basis: 45%; /* Keep two items per row */
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
+    .menu-link img {
+        width: 28px;
+        height: 28px;
+    }
+}

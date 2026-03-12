@@ -1,4 +1,11 @@
 <?php
+// Iniciar output buffering para evitar Quirks Mode
+ob_start();
+
+// Establecer Content-Type correcto
+if (!headers_sent()) {
+    header('Content-Type: text/html; charset=UTF-8');
+}
 
 // 1. Cargar el núcleo de la aplicación (configuración, sesión, etc.)
 require_once __DIR__ . '/bootstrap.php';

@@ -1,25 +1,91 @@
-# Ignorar carpeta de dependencias Composer
+# ==========================================
+# Ignorar Archivos y Carpetas
+# ==========================================
+
+# --- Dependencias ---
 vendor/
+node_modules/
+composer.lock
+package-lock.json
+yarn.lock
 
-# Ignorar archivos de entorno con datos sensibles
+# --- Variables de Entorno ---
 .env
+.env.local
+.env.*.local
+.env.backup
 
-# Ignorar logs y archivos temporales
+# --- Storage (Cache y Logs) ---
+storage/cache/*
+storage/logs/*
+!storage/cache/.gitkeep
+!storage/logs/.gitkeep
+
+# --- Archivos Temporales ---
 *.log
-cache/
-tmp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.tmp/
 
-# Ignorar archivos del sistema (Mac, Windows)
-.DS_Store
-Thumbs.db
-
-# Ignorar carpetas y archivos de editores de texto
+# --- IDE y Editores ---
 .vscode/
 .idea/
+.sublime-project
+.sublime-workspace
+*.code-workspace
+.netbeans/
 
-# Ignorar archivos de backups y temporales
-*.bak
-*.tmp
+# --- Sistema Operativo ---
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Ignorar archivos de configuración local
-*.local
+# --- PHP Unit ---
+.phpunit.result.cache
+phpunit.xml.dist
+
+# --- Build y Dist ---
+dist/
+build/
+out/
+.cache/
+
+# --- DevOps ---
+docker-compose.override.yml
+.docker/
+
+# --- Backups ---
+*.backup
+*.sql.gz
+db_backups/
+
+# --- Archivos Específicos ---
+.DS_Store
+.env.production
+config/database.local.php
+
+# --- Archivos de Tests ---
+tests/**/*.log
+tests/**/coverage/
+
+# --- NPM/Node (si se usa) ---
+node_modules/
+.npm
+.eslintcache
+
+# --- Carpetas de Compilación ---
+/dist
+/build
+/coverage
+/out
+
+# --- Archivos de Bloqueo ---
+.lock
+*.lock~
+

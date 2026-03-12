@@ -14,7 +14,7 @@
         </li>
         <li>
             <a href="/SuperMarketArthur/favoritos" class="menu-link">
-                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/rating.png" alt="" aria-hidden="true" />
+                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/favoritos.svg" alt="Favoritos" aria-hidden="true" />
                 <span>Favoritos</span>
             </a>
         </li>

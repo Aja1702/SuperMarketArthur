@@ -1,0 +1,151 @@
+/* --- ESTILOS PARA LA PÁGINA DE DETALLE DE PRODUCTO --- */
+
+.container-detalle-producto {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: var(--blanco-puro);
+    border-radius: 24px;
+    box-shadow: var(--sombra-premium);
+}
+
+.producto-detalle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.producto-imagen-container img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: var(--sombra-suave);
+}
+
+.producto-info-container h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--azul-primario);
+    margin-bottom: 1rem;
+}
+
+.valoracion-summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--azul-secundario);
+}
+
+.valoracion-summary .fa-star {
+    color: #ffc107;
+}
+
+.producto-descripcion {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--azul-secundario);
+    margin-bottom: 2rem;
+}
+
+.producto-precio-detalle {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--azul-vibrante);
+    margin-bottom: 2rem;
+}
+
+.producto-acciones .btn-add-to-cart {
+    background: var(--azul-vibrante);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.producto-acciones .btn-add-to-cart:hover {
+    background: #188fa7;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(33, 158, 188, 0.3);
+}
+
+.valoraciones-seccion {
+    margin-top: 4rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 3rem;
+}
+
+.valoraciones-seccion h3 {
+    font-size: 1.8rem;
+    color: var(--azul-primario);
+    margin-bottom: 2rem;
+}
+
+.valoracion-form-container {
+    background: var(--gris-fondo);
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+}
+
+.lista-valoraciones .valoracion-item {
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1.5rem 0;
+}
+
+.lista-valoraciones .valoracion-item:last-child {
+    border-bottom: none;
+}
+
+.valoracion-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.valoracion-header strong {
+    color: var(--azul-primario);
+}
+
+.valoracion-header .fa-star {
+    color: #ffc107;
+}
+
+.comentario-texto {
+    color: var(--azul-secundario);
+    line-height: 1.6;
+}
+
+/* --- ESTILOS PARA EL SELECTOR DE ESTRELLAS INTERACTIVO --- */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse; /* Para que el hover funcione de derecha a izquierda */
+    justify-content: flex-end;
+    font-size: 1.8rem;
+}
+
+.star-rating input[type="radio"] {
+    display: none; /* Ocultamos los radios */
+}
+
+.star-rating label {
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 0.2rem;
+}
+
+/* Efecto hover: ilumina las estrellas desde la que se apunta hacia la izquierda */
+.star-rating:not(:hover) input[type="radio"]:checked ~ label,
+.star-rating:hover input[type="radio"] ~ label:hover,
+.star-rating:hover input[type="radio"] ~ label:hover ~ label {
+    color: #ffc107;
+}
+
+/* Mantiene el color de las estrellas seleccionadas cuando no hay hover */
+.star-rating input[type="radio"]:checked ~ label {
+    color: #ffc107;
+}

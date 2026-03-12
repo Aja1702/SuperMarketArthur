@@ -1,0 +1,160 @@
+/*
+ * ==========================================
+ *  ESTILOS DEL PIE DE PÁGINA (FOOTER)
+ * ==========================================
+ */
+
+/* --- ESTRUCTURA COMÚN DEL FOOTER --- */
+.footer-contenido {
+    padding: 4rem 4rem 2rem;
+    margin-top: 4rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 3rem;
+}
+
+.footer-info h4, .footer-col h5 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.footer-enlaces-moderno {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.footer-enlaces-moderno a {
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.footer-enlaces-moderno a:hover {
+    opacity: 1;
+}
+
+.copyright-v2 {
+    text-align: center;
+    font-size: 0.85rem;
+    opacity: 0.5;
+}
+
+/* --- BOTONES DEL FOOTER --- */
+.btn-group-footer {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-footer-primary, .btn-footer-secondary {
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-footer-primary {
+    background: var(--azul-vibrante);
+    color: var(--blanco-puro);
+    box-shadow: 0 4px 15px rgba(33, 158, 188, 0.2);
+}
+
+.btn-footer-primary:hover {
+    background: #188fa7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 158, 188, 0.4);
+}
+
+.btn-footer-secondary {
+    background: transparent;
+    color: var(--blanco-puro);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-footer-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--blanco-puro);
+}
+
+
+/* --- ESTILOS UNIFICADOS PARA EL FOOTER (AZUL) --- */
+.role-invitado .footer-contenido,
+.role-usuario .footer-contenido {
+    background: var(--azul-primario);
+    color: var(--blanco-puro);
+}
+
+.role-invitado .footer-info h4, .role-invitado .footer-col h5,
+.role-usuario .footer-info h4, .role-usuario .footer-col h5 {
+    color: var(--azul-claro);
+}
+
+.role-invitado .footer-enlaces-moderno a,
+.role-usuario .footer-enlaces-moderno a {
+    color: var(--blanco-puro);
+    opacity: 0.7;
+}
+
+
+/* --- FOOTER DEL ADMIN (NEUTRO) --- */
+.role-administrador .footer-contenido {
+    background: #34495e;
+    color: #ecf0f1;
+}
+
+.role-administrador .footer-info h4, .role-administrador .footer-col h5 {
+    color: white;
+}
+
+.role-administrador .footer-enlaces-moderno a {
+    color: #ecf0f1;
+    opacity: 0.7;
+}
+
+
+/*
+ * ==========================================
+ *  ESTILOS RESPONSIVE PARA EL FOOTER
+ * ==========================================
+ */
+
+@media (max-width: 768px) {
+    .footer-contenido {
+        padding: 3rem 2rem 1.5rem; /* Reducir padding en tablets */
+        margin-top: 2rem;
+    }
+
+    .footer-grid {
+        gap: 2rem; /* Reducir espacio entre columnas */
+    }
+
+    .footer-info h4, .footer-col h5 {
+        font-size: 1.3rem; /* Reducir tamaño del título */
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-contenido {
+        padding: 2.5rem 1.5rem 1rem; /* Más reducción para móviles */
+    }
+
+    /* En móvil, el auto-fit ya habrá hecho que las columnas sean de 1fr.
+       Podemos centrar el texto para una mejor apariencia. */
+    .footer-col, .footer-info {
+        text-align: center;
+    }
+
+    .footer-enlaces-moderno, .btn-group-footer {
+        align-items: center;
+        justify-content: center;
+    }
+}
