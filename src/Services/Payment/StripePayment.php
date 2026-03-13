@@ -3,6 +3,7 @@
 namespace App\Services\Payment;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/../../../src/Utilities/EnvLoader.php';
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
@@ -16,14 +17,20 @@ class StripePayment
 
     public function __construct()
     {
-        // Configuración de Stripe - Modo prueba
-        // Reemplaza estas claves con las tuyas cuando tengas cuenta de Stripe
-        $this->secretKey = getenv('STRIPE_SECRET_KEY') ?: 'sk_test_placeholder';
-        $this->publishableKey = getenv('STRIPE_PUBLISHABLE_KEY') ?: 'pk_test_placeholder';
-        $this->isTestMode = true;
+        // Cargar variables de entorno
+        \App\Utilities\EnvLoader::load();
         
-        Stripe::setApiKey($this->secretKey);
-        Stripe::setApiVersion('2023-10-16');
+        // Obtener claves de Stripe del .env
+        $this->secretKey = $_ENV['STRIPE_SECRET_KEY'] ?? '';
+        $this->publishableKey = $_ENV['STRIPE_PUBLISHABLE_KEY'] ?? '';
+        
+        // Verificar si estamos en modo prueba
+        $this->isTestMode = (strpos($this->secretKey, 'sk_test_') === 0);
+        
+        if ($this->secretKey) {
+            Stripe::setApiKey($this->secretKey);
+            Stripe::setApiVersion('2023-10-16');
+        }
     }
 
     /**
@@ -61,7 +68,7 @@ class StripePayment
                             ? [($_ENV['BASE_URL'] ?? 'http://localhost/SuperMarketArthur') . $item['url_imagen']]
                             : [],
                     ],
-                    'unit_amount' => (int)($item['precio'] * 100), // Stripe usa centavos
+                    'unit_amount' => (int)($item['precio'] * 100),
                 ],
                 'quantity' => (int)($item['cantidad'] ?? 1),
             ];
