@@ -5,6 +5,25 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Incluir el manejador de errores ANTES de cualquier otra cosa
 require_once __DIR__ . '/config/error_handler.php';
 
+// --- CARGAR .ENV AL INICIO ---
+$envFile = __DIR__ . '/.env';
+if (file_exists($envFile)) {
+    $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) continue;
+        if (strpos($line, '=') !== false) {
+            list($name, $value) = explode('=', $line, 2);
+            $name = trim($name);
+            $value = trim($value);
+            if (preg_match('/^["\'](.*)["\']\s*$/', $value, $matches)) {
+                $value = $matches[1];
+            }
+            $_ENV[$name] = $value;
+            putenv("$name=$value");
+        }
+    }
+}
+
 // --- CONFIGURACIÓN DE RUTA BASE Y CACHÉ ---
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
 $host = $_SERVER['HTTP_HOST'];
@@ -49,19 +68,19 @@ $rutas = [
     'administrador' => [
         'cabecera' => __DIR__ . '/includes/cabecera/cabecera_administrador.php',
         'menu'     => __DIR__ . '/includes/menu/menu_administrador.php',
-        'centro'   => '', // ¡Ya no se usa! El contenido se carga dinámicamente.
+        'centro'   => '',
         'pie'      => __DIR__ . '/includes/pie/pie_administrador.php'
     ],
     'usuario' => [
         'cabecera' => __DIR__ . '/includes/cabecera/cabecera_logueado.php',
         'menu'     => __DIR__ . '/includes/menu/menu_logueado.php',
-        'centro'   => '', // ¡Ya no se usa! El contenido se carga dinámicamente.
+        'centro'   => '',
         'pie'      => __DIR__ . '/includes/pie/pie_logueado.php'
     ],
     'invitado' => [
         'cabecera' => __DIR__ . '/includes/cabecera/cabecera_invitado.php',
         'menu'     => __DIR__ . '/includes/menu/menu_invitado.php',
-        'centro'   => '', // ¡Ya no se usa! El contenido se carga dinámicamente.
+        'centro'   => '',
         'pie'      => __DIR__ . '/includes/pie/pie_invitado.php'
     ]
 ];

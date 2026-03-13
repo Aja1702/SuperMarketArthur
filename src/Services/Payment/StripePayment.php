@@ -16,11 +16,9 @@ class StripePayment
 
     public function __construct()
     {        
-        // Obtener claves de Stripe del .env
-        $this->secretKey = $_ENV['STRIPE_SECRET_KEY'] ?? '';
-        $this->publishableKey = $_ENV['STRIPE_PUBLISHABLE_KEY'] ?? '';
+        $this->secretKey = getenv('STRIPE_SECRET_KEY') ?: ($_ENV['STRIPE_SECRET_KEY'] ?? '');
+        $this->publishableKey = getenv('STRIPE_PUBLISHABLE_KEY') ?: ($_ENV['STRIPE_PUBLISHABLE_KEY'] ?? '');
         
-        // Verificar si estamos en modo prueba
         $this->isTestMode = (strpos($this->secretKey, 'sk_test_') === 0);
         
         if ($this->secretKey) {
@@ -29,51 +27,46 @@ class StripePayment
         }
     }
 
-    /**
-     * Obtiene la clave pública
-     */
     public function getPublishableKey(): string
     {
         return $this->publishableKey;
     }
 
-    /**
-     * Verifica si está en modo prueba
-     */
     public function isTestMode(): bool
     {
         return $this->isTestMode;
     }
 
-    /**
-     * Crea una sesión de pago de Stripe
-     * @throws ApiErrorException
-     */
     public function createCheckoutSession(array $cartItems, float $total, string $currency = 'eur'): Session
     {
         $lineItems = [];
 
         foreach ($cartItems as $item) {
+            $productData = [
+                'name' => $item['nombre_producto'] ?? 'Producto'
+            ];
+            
+            $description = $item['descripcion'] ?? '';
+            if (!empty($description)) {
+                $productData['description'] = $description;
+            }
+            
+            if (!empty($item['url_imagen'])) {
+                $productData['images'] = [($_ENV['BASE_URL'] ?? 'http://localhost/SuperMarketArthur') . $item['url_imagen']];
+            }
+            
             $lineItems[] = [
                 'price_data' => [
                     'currency' => $currency,
-                    'product_data' => [
-                        'name' => $item['nombre_producto'] ?? 'Producto',
-                        'description' => $item['descripcion'] ?? '',
-                        'images' => !empty($item['url_imagen']) 
-                            ? [($_ENV['BASE_URL'] ?? 'http://localhost/SuperMarketArthur') . $item['url_imagen']]
-                            : [],
-                    ],
+                    'product_data' => $productData,
                     'unit_amount' => (int)($item['precio'] * 100),
                 ],
                 'quantity' => (int)($item['cantidad'] ?? 1),
             ];
         }
 
-        // URL base
         $baseUrl = $_ENV['BASE_URL'] ?? 'http://localhost/SuperMarketArthur';
 
-        // Crear sesión de checkout
         $session = Session::create([
             'payment_method_types' => ['card'],
             'line_items' => $lineItems,
@@ -88,22 +81,19 @@ class StripePayment
         return $session;
     }
 
-    /**
-     * Recupera una sesión de checkout
-     * @throws ApiErrorException
-     */
     public function retrieveSession(string $sessionId): Session
     {
         return Session::retrieve($sessionId);
     }
 
-    /**
-     * Verifica el estado del pago
-     */
     public function verifyPayment(string $sessionId): bool
     {
         try {
             $session = $this->retrieveSession($sessionId);
+            
+            // Debug info
+            error_log('Stripe session status: payment_status=' . ($session->payment_status ?? 'null') . ', status=' . ($session->status ?? 'null'));
+            
             return $session->payment_status === 'paid';
         } catch (ApiErrorException $e) {
             error_log('Stripe Payment Error: ' . $e->getMessage());
@@ -111,9 +101,6 @@ class StripePayment
         }
     }
 
-    /**
-     * Crea un cliente en Stripe (opcional)
-     */
     public function createCustomer(string $email, string $name): \Stripe\Customer
     {
         return \Stripe\Customer::create([

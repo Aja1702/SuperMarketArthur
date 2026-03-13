@@ -74,6 +74,10 @@ class CheckoutController
 
         try {
             $stripePayment = new StripePayment();
+            
+            // Debug
+            error_log('Stripe debug - Secret key: ' . substr($_ENV['STRIPE_SECRET_KEY'] ?? 'vacio', 0, 20));
+            
             $session = $stripePayment->createCheckoutSession($cartItems, $cartTotal);
             
             // Guardar datos del pedido en sesión para después del pago
@@ -96,8 +100,8 @@ class CheckoutController
             
         } catch (\Exception $e) {
             error_log('Stripe Error: ' . $e->getMessage());
-            header('Location: /SuperMarketArthur/checkout?error=stripe');
-            exit();
+            // Mostrar error en pantalla para debug
+            die('Error Stripe: ' . $e->getMessage());
         }
     }
 
@@ -140,7 +144,6 @@ class CheckoutController
             header('Location: /SuperMarketArthur/order-confirmation?id=' . $id_pedido);
             exit();
         } else {
-            // Si falla, redirigir de vuelta con un error
             header('Location: /SuperMarketArthur/checkout?error=1');
             exit();
         }
@@ -163,9 +166,7 @@ class CheckoutController
         try {
             $stripePayment = new StripePayment();
             
-            // Verificar el pago
             if ($stripePayment->verifyPayment($sessionId)) {
-                // El pago fue exitoso - crear el pedido
                 $pendingOrder = $_SESSION['pending_order'];
                 
                 $orderModel = new Order($pdo);
@@ -177,7 +178,6 @@ class CheckoutController
                 );
 
                 if ($id_pedido) {
-                    // Limpiar carrito y sesión pendiente
                     $cart = new Cart($pdo, $_SESSION['id_usuario']);
                     $cart->clearCart();
                     unset($_SESSION['pending_order']);
@@ -187,7 +187,6 @@ class CheckoutController
                 }
             }
             
-            // Si falla la verificación
             header('Location: /SuperMarketArthur/checkout?error=payment_failed');
             exit();
             
