@@ -2,7 +2,7 @@
     <div class="header-left">
         <div class="logo">
             <a href="/SuperMarketArthur/" aria-label="Ir a la página principal">
-                <img src="<?php echo BASE_URL; ?>assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
+                <img src="<?php echo BASE_URL; ?>public/assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
             </a>
         </div>
         <h1 class="titulo-web-invitado">SuperMarketArthur</h1>

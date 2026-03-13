@@ -6,7 +6,7 @@ $nombre_usuario = $_SESSION['usuario_nombre'] ?? 'Usuario';
     <div class="header-left">
         <div class="logo">
             <a href="/SuperMarketArthur/" aria-label="Ir a la página principal">
-                <img src="<?php echo BASE_URL; ?>assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
+                <img src="<?php echo BASE_URL; ?>public/assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
             </a>
         </div>
         <h1 class="titulo-web-invitado">SuperMarketArthur</h1>
@@ -36,7 +36,7 @@ if (empty($_SESSION['csrf_token'])) {
 ?>
             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <button type="submit" title="Cerrar sesión" class="btn-logout">
-                <img src="<?php echo BASE_URL; ?>assets/img/cerrar_session/apagar.png" alt="Cerrar sesión" onerror="this.onerror=null;this.src='<?php echo BASE_URL; ?>assets/img/logo/favicon.ico'">
+                <img src="<?php echo BASE_URL; ?>public/assets/img/cerrar_session/apagar.png" alt="Cerrar sesión" onerror="this.onerror=null;this.src='<?php echo BASE_URL; ?>public/assets/img/logo/favicon.ico'">
             </button>
         </form>
     </div>

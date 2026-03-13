@@ -2,13 +2,13 @@
     <ul>
         <li>
             <a href="<?php echo BASE_URL; ?>" class="menu-link">
-                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/home.png" alt="" aria-hidden="true" />
+                <img src="<?php echo BASE_URL; ?>public/assets/img/menu_nav/home.png" alt="" aria-hidden="true" />
                 <span>Inicio</span>
             </a>
         </li>
         <li>
             <a href="<?php echo BASE_URL; ?>productos" class="menu-link">
-                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/tienda.png" alt="" aria-hidden="true" />
+                <img src="<?php echo BASE_URL; ?>public/assets/img/menu_nav/tienda.png" alt="" aria-hidden="true" />
                 <span>Productos</span>
             </a>
         </li>
@@ -20,19 +20,19 @@
         </li>
         <li>
             <a href="<?php echo BASE_URL; ?>ofertas" class="menu-link">
-                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/ofertas.png" alt="" aria-hidden="true" />
+                <img src="<?php echo BASE_URL; ?>public/assets/img/menu_nav/ofertas.png" alt="" aria-hidden="true" />
                 <span>Ofertas</span>
             </a>
         </li>
         <li>
             <a href="<?php echo BASE_URL; ?>soporte" class="menu-link">
-                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/soporte.png" alt="" aria-hidden="true" />
+                <img src="<?php echo BASE_URL; ?>public/assets/img/menu_nav/soporte.png" alt="" aria-hidden="true" />
                 <span>Soporte</span>
             </a>
         </li>
         <li>
             <a href="<?php echo BASE_URL; ?>contacto" class="menu-link">
-                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/contacto.png" alt="" aria-hidden="true" />
+                <img src="<?php echo BASE_URL; ?>public/assets/img/menu_nav/contacto.png" alt="" aria-hidden="true" />
                 <span>Contacto</span>
             </a>
         </li>

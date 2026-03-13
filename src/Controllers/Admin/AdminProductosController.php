@@ -114,12 +114,12 @@ class AdminProductosController extends BaseController
         $productData = $_POST['producto'] ?? [];
 
         if (isset($_FILES['imagen_producto']) && $_FILES['imagen_producto']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/../../assets/img/productos/';
+            $uploadDir = __DIR__ . '/../../public/assets/img/productos/';
             $filename = uniqid() . '-' . basename($_FILES['imagen_producto']['name']);
             $uploadFile = $uploadDir . $filename;
 
             if (move_uploaded_file($_FILES['imagen_producto']['tmp_name'], $uploadFile)) {
-                $productData['url_imagen'] = './assets/img/productos/' . $filename;
+                $productData['url_imagen'] = '/SuperMarketArthur/public/assets/img/productos/' . $filename;
             }
         }
 
@@ -149,12 +149,12 @@ class AdminProductosController extends BaseController
 
         // Gestión de la imagen (similar a createProduct)
         if (isset($_FILES['imagen_producto']) && $_FILES['imagen_producto']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/../../assets/img/productos/';
+            $uploadDir = __DIR__ . '/../../public/assets/img/productos/';
             $filename = uniqid() . '-' . basename($_FILES['imagen_producto']['name']);
             $uploadFile = $uploadDir . $filename;
 
             if (move_uploaded_file($_FILES['imagen_producto']['tmp_name'], $uploadFile)) {
-                $productData['url_imagen'] = './assets/img/productos/' . $filename;
+                $productData['url_imagen'] = '/SuperMarketArthur/public/assets/img/productos/' . $filename;
             }
         }
 

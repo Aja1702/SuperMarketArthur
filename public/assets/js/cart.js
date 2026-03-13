@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         items.forEach(item => {
             html += `
                 <div class="cart-item" data-id="${item.id_producto}">
-                    <img src="${item.url_imagen || './assets/img/productos/default.jpg'}" alt="${item.nombre_producto}">
+                    <img src="${item.url_imagen || BASE_URL + 'public/assets/img/productos/default.jpg'}" alt="${item.nombre_producto}">
                     <div class="item-info">
                         <h4>${item.nombre_producto}</h4>
                         <p class="item-price">${item.precio_formatted}</p>

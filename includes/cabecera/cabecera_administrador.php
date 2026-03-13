@@ -1,7 +1,7 @@
 <header class="cabecera-admin">
     <div class="logo-admin">
         <a href="/SuperMarketArthur/admin" aria-label="Ir al dashboard de administración">
-            <img src="<?php echo BASE_URL; ?>assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
+            <img src="<?php echo BASE_URL; ?>public/assets/img/logo/logo_supermarket.png" alt="Logo SupermarketArthur" />
         </a>
     </div>
     <div class="info-admin">
@@ -22,7 +22,7 @@ if (empty($_SESSION['csrf_token'])) {
 ?>
             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <button type="submit" title="Cerrar sesión" class="btn-cerrar-sesion-admin">
-                <img src="<?php echo BASE_URL; ?>assets/img/cerrar_session/apagar.png" alt="Cerrar sesión">
+                <img src="<?php echo BASE_URL; ?>public/assets/img/cerrar_session/apagar.png" alt="Cerrar sesión">
             </button>
         </form>
     </div>

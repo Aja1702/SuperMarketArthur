@@ -25,7 +25,14 @@ function render_stars($rating) {
 
     <div class="producto-detalle-grid">
         <div class="producto-imagen-container">
-            <img src="<?php echo htmlspecialchars($producto['url_imagen']); ?>" 
+            <?php 
+            // Corregir ruta de imagen si es necesaria
+            $imagen_url = $producto['url_imagen'] ?? '';
+            if (strpos($imagen_url, './assets/img/') === 0) {
+                $imagen_url = '/SuperMarketArthur/public' . substr($imagen_url, 1);
+            }
+            ?>
+            <img src="<?php echo htmlspecialchars($imagen_url); ?>" 
                  alt="<?php echo htmlspecialchars($producto['nombre_producto']); ?>"
                  loading="lazy">
         </div>
