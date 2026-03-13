@@ -35,21 +35,11 @@ class FavoriteController
         global $pdo;
         
         $favoriteModel = new Favorite($pdo);
-        $productModel = new Product($pdo);
         
         $userId = $_SESSION['id_usuario'];
         
-        // Obtener IDs de productos favoritos
-        $favoriteProducts = $favoriteModel->getUserFavorites($userId);
-        
-        // Obtener información completa de cada producto
-        $products = [];
-        foreach ($favoriteProducts as $fav) {
-            $product = $productModel->getProductById($fav['id_producto']);
-            if ($product) {
-                $products[] = $product;
-            }
-        }
+        // Obtener productos favoritos - usar getByUser que ya existe
+        $products = $favoriteModel->getByUser($userId);
         
         $data = [
             'products' => $products,
