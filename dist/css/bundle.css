@@ -1142,7 +1142,7 @@ body {
     opacity: 0.85;
 }
 
-.menu-link img {
+.menu-link img, .menu-link i {
     width: 32px;
     height: 32px;
     transition: all 0.3s ease;
@@ -1155,7 +1155,7 @@ body {
     opacity: 1;
 }
 
-.menu-link:hover img {
+.menu-link:hover img, .menu-link:hover i {
     transform: scale(1.1);
 }
 
@@ -1278,7 +1278,7 @@ body {
         font-size: 0.75rem;
         padding: 0.5rem;
     }
-    .menu-link img {
+    .menu-link img, .menu-link i {
         width: 28px;
         height: 28px;
     }

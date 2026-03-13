@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "prepare-dirs": "npx mkdirp dist/css dist/js dist/img",
-    "copy-js-deps": "npx copyfiles -f assets/js/provin_cp.js dist/js",
-    "copy-images": "npx copyfiles -u 1 assets/img/**/* dist/img",
-    "concat-css": "npx concat -o dist/css/bundle.css assets/css/styles.css assets/css/main.css assets/css/header.css assets/css/nav.css assets/css/footer.css assets/css/modal.css assets/css/forms.css assets/css/catalog.css assets/css/product-detail.css assets/css/checkout.css assets/css/admin.css assets/css/pages.css",
+    "copy-js-deps": "npx copyfiles -f public/assets/js/provin_cp.js dist/js",
+    "copy-images": "npx copyfiles -u 1 public/assets/img/**/* dist/img",
+    "concat-css": "npx concat -o dist/css/bundle.css public/assets/css/styles.css public/assets/css/main.css public/assets/css/header.css public/assets/css/nav.css public/assets/css/footer.css public/assets/css/modal.css public/assets/css/forms.css public/assets/css/catalog.css public/assets/css/product-detail.css public/assets/css/checkout.css public/assets/css/admin.css public/assets/css/pages.css",
     "minify-css": "npx cleancss -o dist/css/bundle.min.css dist/css/bundle.css",
-    "minify-js": "npx terser --compress --mangle --module --output dist/js/app.min.js -- assets/js/cart.js assets/js/search.js assets/js/auth.js assets/js/checkout_modal.js assets/js/rating.js assets/js/favorite.js assets/js/navigation.js",
+    "minify-js": "npx terser --compress --mangle --module --output dist/js/app.min.js -- public/assets/js/cart.js public/assets/js/search.js public/assets/js/auth.js public/assets/js/checkout_modal.js public/assets/js/rating.js public/assets/js/favorite.js public/assets/js/navigation.js",
     "build": "npm run prepare-dirs && npm run copy-js-deps && npm run copy-images && npm run concat-css && npm run minify-css && npm run minify-js"
   },
   "keywords": [],
