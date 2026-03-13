@@ -8,7 +8,7 @@
             <div class="checkout-form">
                 <h3 style="border-bottom: 2px solid var(--azul-claro); padding-bottom: 1rem; margin-bottom: 2rem;">Información de Envío</h3>
 
-                <form action="/SuperMarketArthur/checkout" method="POST" class="form-contacto-premium">
+                <form id="checkout-form" action="/SuperMarketArthur/checkout/pay" method="POST" class="form-contacto-premium">
                     <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <div class="input-group">
                         <label for="nombre_completo">Nombre Completo</label>
@@ -36,7 +36,34 @@
                         <input type="tel" id="telefono" name="telefono" required>
                     </div>
 
-                    <button type="submit" class="btn-enviar-premium">Confirmar y Pagar</button>
+                    <!-- Método de Pago -->
+                    <h3 style="border-bottom: 2px solid var(--azul-claro); padding-bottom: 1rem; margin: 2rem 0 1.5rem;">Método de Pago</h3>
+
+                    <!-- Stripe Payment -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid var(--azul-vibrante); border-radius: 12px; cursor: pointer; background: var(--gris-fondo);">
+                            <input type="radio" name="payment_method" value="stripe" checked style="width: 20px; height: 20px;">
+                            <span style="font-weight: 600;">💳 Pago con Tarjeta (Stripe)</span>
+                        </label>
+                    </div>
+
+                    <!-- Contrareembolso -->
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 2px solid var(--gris-borde); border-radius: 12px; cursor: pointer;">
+                            <input type="radio" name="payment_method" value="contrareembolso" style="width: 20px; height: 20px;">
+                            <span style="font-weight: 600;">💵 Contrareembolso</span>
+                        </label>
+                    </div>
+
+                    <!-- Nota de modo prueba -->
+                    <?php if (isset($stripeTestMode) && $stripeTestMode): ?>
+                    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        ⚠️ <strong>Modo Prueba:</strong> Estás en entorno de pruebas de Stripe. No se procesarán pagos reales.
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- Botón principal -->
+                    <button type="submit" id="pay-button" class="btn-enviar-premium">Confirmar y Pagar</button>
                 </form>
             </div>
 
@@ -84,3 +111,26 @@
         </div>
     </div>
 </div>
+
+<script>
+// Cambiar la acción del formulario según el método de pago seleccionado
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+    const payButton = document.getElementById('pay-button');
+    
+    if (paymentMethod === 'contrareembolso') {
+        // Cambiar la acción para pago contrareembolso
+        this.action = '/SuperMarketArthur/checkout';
+    } else {
+        // Usar Stripe
+        this.action = '/SuperMarketArthur/checkout/pay';
+    }
+    
+    // Cambiar texto del botón
+    if (paymentMethod === 'contrareembolso') {
+        payButton.textContent = 'Confirmar Pedido';
+    } else {
+        payButton.textContent = 'Pagar con Tarjeta';
+    }
+});
+</script>

@@ -63,9 +63,11 @@ $router->add('GET', '/SuperMarketArthur/admin/categorias', ['App\\Controllers\\A
 $router->add('GET', '/SuperMarketArthur/admin/config', ['App\\Controllers\\Admin\\AdminConfigController', 'index']);
 $router->add('POST', '/SuperMarketArthur/admin/config/save', ['App\\Controllers\\Admin\\AdminConfigController', 'save']);
 
-// --- Rutas del Proceso de Compra ---
+// --- Rutas del Proceso de Compra (Stripe) ---
 $router->add('GET', '/SuperMarketArthur/checkout', ['App\\Controllers\\Shop\\CheckoutController', 'index']);
+$router->add('POST', '/SuperMarketArthur/checkout/pay', ['App\\Controllers\\Shop\\CheckoutController', 'createStripeSession']);
 $router->add('POST', '/SuperMarketArthur/checkout', ['App\\Controllers\\Shop\\CheckoutController', 'processOrder']);
+$router->add('GET', '/SuperMarketArthur/checkout/success', ['App\\Controllers\\Shop\\CheckoutController', 'confirmStripePayment']);
 $router->add('GET', '/SuperMarketArthur/order-confirmation', ['App\Controllers\Shop\OrderConfirmationController', 'index']);
 
 // --- Rutas de Contenido Legal ---
