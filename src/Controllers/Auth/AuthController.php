@@ -108,7 +108,7 @@ class AuthController
 
         if (empty($errores)) {
             $userModel = new \User($pdo);
-            $user = $userModel->createUser($nombre, $apellido1, $email, $password); // Asumiendo que tienes un método createUser
+            $user = $userModel->createUser($nombre, $apellido1, $email, $password);
 
             if ($user) {
                 session_regenerate_id(true);
@@ -170,9 +170,9 @@ class AuthController
         extract($data);
 
         ob_start();
-        require_once __DIR__ . "/../../views/{$view}.php";
+        require_once __DIR__ . "/../../../views/{$view}.php";
         $content = (string)ob_get_clean();
 
-        require_once __DIR__ . '/../../views/layout.php';
+        require_once __DIR__ . '/../../../views/layout.php';
     }
 }

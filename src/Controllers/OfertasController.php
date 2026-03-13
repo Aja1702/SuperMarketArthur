@@ -8,10 +8,9 @@ class OfertasController
     {
         global $pdo, $simbolo_moneda;
 
-        require_once __DIR__ . '/../../Models/Product.php';
+        require_once __DIR__ . '/../Models/Product.php';
 
         $productModel = new \Product($pdo);
-        // CORREGIDO: Usamos el método que obtiene los productos más recientes, que es la lógica original.
         $ofertas = $productModel->getFeaturedProducts(8);
 
         $this->view('ofertas', [
