@@ -14,7 +14,7 @@
         </li>
         <li>
             <a href="<?php echo BASE_URL; ?>favoritos" class="menu-link">
-                <i class="fas fa-heart" style="font-size: 20px;"></i>
+                <i class="far fa-heart" style="font-size: 20px;"></i>
                 <span>Favoritos</span>
             </a>
         </li>
