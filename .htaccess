@@ -3,7 +3,7 @@
 
     # Le decimos a Apache que la base del proyecto es /SuperMarketArthur/
     RewriteBase /SuperMarketArthur/
-
+    # recuerde /assets/ ya no existe , ok
     # Redirigir /assets/ a /public/assets/ para compatibilidad
     RewriteRule ^assets/(.*)$ public/assets/$1 [L]
 

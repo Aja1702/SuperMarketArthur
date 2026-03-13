@@ -29,7 +29,40 @@ $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https:
 $host = $_SERVER['HTTP_HOST'];
 $path = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 define('BASE_URL', $protocol . $host . $path . '/');
-$cache_version = time();
+
+// Función para regenerar la versión de caché
+function regenerateCacheVersion($baseDir) {
+    $versionFile = $baseDir . '/storage/cache/.version';
+    // Incluir también los archivos JS en el hash
+    $cssFiles = glob($baseDir . '/public/assets/css/*.css');
+    $jsFiles = glob($baseDir . '/public/assets/js/*.js');
+    $allFiles = array_merge($cssFiles ?? [], $jsFiles ?? []);
+    $hash = '';
+    foreach ($allFiles as $file) {
+        $hash .= filemtime($file);
+    }
+    $cache_version = md5($hash);
+    if (!is_dir($baseDir . '/storage/cache')) {
+        mkdir($baseDir . '/storage/cache', 0777, true);
+    }
+    file_put_contents($versionFile, $cache_version);
+    return $cache_version;
+}
+
+// Caché version - usar hash del archivo para invalidate solo cuando hay cambios
+$versionFile = __DIR__ . '/storage/cache/.version';
+if (file_exists($versionFile)) {
+    $cache_version = trim(file_get_contents($versionFile));
+} else {
+    $cache_version = regenerateCacheVersion(__DIR__);
+}
+
+// Endpoint para regenerar caché (solo admins pueden usarlo)
+if (isset($_GET['regenerar_cache']) && $_SESSION['tipo_usu'] === 'a') {
+    $cache_version = regenerateCacheVersion(__DIR__);
+    echo "Cache regenerado: $cache_version";
+    exit();
+}
 
 // Iniciar la sesión y la conexión a la base de datos
 session_start();
