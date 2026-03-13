@@ -3,7 +3,6 @@
 namespace App\Services\Payment;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
-require_once __DIR__ . '/../../../src/Utilities/EnvLoader.php';
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
@@ -16,10 +15,7 @@ class StripePayment
     private $isTestMode;
 
     public function __construct()
-    {
-        // Cargar variables de entorno
-        \App\Utilities\EnvLoader::load();
-        
+    {        
         // Obtener claves de Stripe del .env
         $this->secretKey = $_ENV['STRIPE_SECRET_KEY'] ?? '';
         $this->publishableKey = $_ENV['STRIPE_PUBLISHABLE_KEY'] ?? '';
