@@ -213,9 +213,9 @@ class CheckoutController
         extract($data);
 
         ob_start();
-        require_once __DIR__ . "/../../views/{$view}.php";
+        require 'c:/XAMPP/htdocs/SuperMarketArthur/views/' . $view . '.php';
         $content = (string)ob_get_clean();
 
-        require_once __DIR__ . '/../../views/layout.php';
+        require 'c:/XAMPP/htdocs/SuperMarketArthur/views/layout.php';
     }
 }
