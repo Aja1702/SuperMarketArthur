@@ -14,7 +14,7 @@
         </li>
         <li>
             <a href="<?php echo BASE_URL; ?>favoritos" class="menu-link">
-                <img src="<?php echo BASE_URL; ?>assets/img/menu_nav/favoritos.svg" alt="Favoritos" aria-hidden="true" />
+                <i class="fas fa-heart" style="font-size: 20px;"></i>
                 <span>Favoritos</span>
             </a>
         </li>
