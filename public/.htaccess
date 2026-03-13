@@ -1,7 +1,15 @@
 # Reescritura de URLs activada
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    
+    # Base del proyecto
+    RewriteBase /SuperMarketArthur/
 
+    # Redirigir /assets/ a /public/assets/ si el archivo no existe en /assets/
+    RewriteCond %{REQUEST_URI} ^/SuperMarketArthur/assets/(.*)$
+    RewriteCond %{DOCUMENT_ROOT}/SuperMarketArthur/public/assets/%1 -f
+    RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+    
     # Si el archivo o carpeta solicitados NO existen
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d

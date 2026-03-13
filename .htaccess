@@ -4,6 +4,9 @@
     # Le decimos a Apache que la base del proyecto es /SuperMarketArthur/
     RewriteBase /SuperMarketArthur/
 
+    # Redirigir /assets/ a /public/assets/ para compatibilidad
+    RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+
     # Redirige todas las peticiones que NO SEAN un archivo o directorio existente
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
