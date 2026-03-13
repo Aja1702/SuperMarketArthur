@@ -12,7 +12,7 @@
                 <?php foreach ($productos as $producto): ?>
                     <article class="card-producto">
                         <div class="producto-imagen-wrapper">
-                            <a href="/SuperMarketArthur/producto?id=<?php echo $producto['id_producto']; ?>">
+                            <a href="/SuperMarketArthur/producto/<?php echo $producto['id_producto']; ?>">
                                 <?php 
                                     $img_url = $producto['url_imagen'] ?? '';
                                     if (strpos($img_url, './assets/img/') === 0) {
@@ -67,7 +67,7 @@
 
         <div class="grid-categorias">
             <?php foreach ($categorias as $categoria): ?>
-                <a href="/SuperMarketArthur/productos?cat=<?php echo $categoria['id_categoria']; ?>" class="card-categoria">
+                <a href="/SuperMarketArthur/productos/<?php echo $categoria['id_categoria']; ?>" class="card-categoria">
                     <h3><?php echo htmlspecialchars($categoria['nombre_categoria']); ?></h3>
                     <p><?php echo htmlspecialchars($categoria['descripcion']); ?></p>
                 </a>

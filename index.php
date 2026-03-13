@@ -23,9 +23,30 @@ $method = $_SERVER['REQUEST_METHOD'];
 try {
     $router->dispatch($uri, $method);
 } catch (Exception $e) {
-    // (Futuro) Aquí podríamos mostrar una página de error 500 bonita
-    // Por ahora, para depuración, podemos mostrar el error.
-    // En un entorno de producción, esto debería registrar el error y mostrar una página amigable.
-    error_log($e->getMessage()); // Registrar el error para nosotros
-    // include 'views/errors/500.php'; // Mostrar una página de error bonita
+    // Registrar el error para nosotros
+    error_log($e->getMessage());
+    
+    // Mostrar página de error 500 bonita
+    http_response_code(500);
+    $errorFile = __DIR__ . '/views/errors/500.php';
+    
+    if (file_exists($errorFile)) {
+        $nombre_sitio = 'SuperMarketArthur';
+        $rutas = ['base_url' => '/SuperMarketArthur/'];
+        include $errorFile;
+    } else {
+        echo "<!DOCTYPE html>
+        <html lang='es'>
+        <head>
+            <meta charset='UTF-8'>
+            <title>Error 500</title>
+        </head>
+        <body>
+            <h1>500 - Error del servidor</h1>
+            <p>Algo salió mal. Por favor, inténtalo más tarde.</p>
+            <a href='/SuperMarketArthur/'>Volver al inicio</a>
+        </body>
+        </html>";
+    }
+    exit();
 }

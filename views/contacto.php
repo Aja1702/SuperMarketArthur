@@ -5,6 +5,22 @@
             Estamos aquí para ayudarte. Envíanos un mensaje y te responderemos lo antes posible.
         </p>
 
+        <?php if (isset($exito) && $exito): ?>
+            <div class="mensaje-exito" style="background-color: #d1fae5; border: 1px solid #10b981; color: #065f46; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; text-align: center;">
+                <?php echo htmlspecialchars($mensaje_exito); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($errores) && !empty($errores)): ?>
+            <div class="mensaje-error" style="background-color: #fee2e2; border: 1px solid #ef4444; color: #991b1b; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+                <ul style="margin: 0; padding-left: 1.5rem;">
+                    <?php foreach ($errores as $error): ?>
+                        <li><?php echo htmlspecialchars($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
         <div class="contacto-grid">
             <div class="info-cards">
                 <div class="info-card-item">
@@ -32,20 +48,20 @@
                 </div>
             </div>
 
-            <form action="#" class="form-contacto-premium">
+            <form action="/SuperMarketArthur/contacto" method="POST" class="form-contacto-premium">
                 <div class="input-group">
                     <label for="nombre">Nombre Completo</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre..." required>
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre..." required value="<?php echo isset($nombre) ? htmlspecialchars($nombre) : ''; ?>">
                 </div>
 
                 <div class="input-group">
                     <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com" required>
+                    <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com" required value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
                 </div>
 
                 <div class="input-group">
                     <label for="mensaje">¿En qué podemos ayudarte?</label>
-                    <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos..." required></textarea>
+                    <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos..." required><?php echo isset($mensaje) ? htmlspecialchars($mensaje) : ''; ?></textarea>
                 </div>
 
                 <button type="submit" class="btn-enviar-premium">Enviar Mensaje</button>

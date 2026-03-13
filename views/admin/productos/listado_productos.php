@@ -30,8 +30,8 @@
                             <td><?php echo number_format($producto['precio'], 2, ',', '.'); ?><?php echo htmlspecialchars($simbolo_moneda); ?></td>
                             <td><?php echo htmlspecialchars($producto['stock']); ?></td>
                             <td class="acciones">
-                                <a href="/SuperMarketArthur/admin/productos/editar?id=<?php echo $producto['id_producto']; ?>" class="btn-sm editar">Editar</a>
-                                <a href="/SuperMarketArthur/admin/productos/eliminar?id=<?php echo $producto['id_producto']; ?>" class="btn-sm eliminar">Eliminar</a>
+                                <a href="/SuperMarketArthur/admin/productos/editar/<?php echo $producto['id_producto']; ?>" class="btn-sm editar">Editar</a>
+                                <a href="/SuperMarketArthur/admin/productos/eliminar/<?php echo $producto['id_producto']; ?>" class="btn-sm eliminar">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -47,21 +47,21 @@
                     <?php // Botón "Anterior" ?>
                     <?php if ($paginacion['pagina_actual'] > 1): ?>
                         <li class="paginacion-item">
-                            <a href="/SuperMarketArthur/admin/productos?page=<?php echo $paginacion['pagina_actual'] - 1; ?>" class="paginacion-enlace">« Anterior</a>
+                            <a href="/SuperMarketArthur/admin/productos/<?php echo $paginacion['pagina_actual'] - 1; ?>" class="paginacion-enlace">« Anterior</a>
                         </li>
                     <?php endif; ?>
 
                     <?php // Números de página ?>
                     <?php for ($i = 1; $i <= $paginacion['total_paginas']; $i++): ?>
                         <li class="paginacion-item <?php echo ($i == $paginacion['pagina_actual']) ? 'active' : ''; ?>">
-                            <a href="/SuperMarketArthur/admin/productos?page=<?php echo $i; ?>" class="paginacion-enlace"><?php echo $i; ?></a>
+                            <a href="/SuperMarketArthur/admin/productos/<?php echo $i; ?>" class="paginacion-enlace"><?php echo $i; ?></a>
                         </li>
                     <?php endfor; ?>
 
                     <?php // Botón "Siguiente" ?>
                     <?php if ($paginacion['pagina_actual'] < $paginacion['total_paginas']): ?>
                         <li class="paginacion-item">
-                            <a href="/SuperMarketArthur/admin/productos?page=<?php echo $paginacion['pagina_actual'] + 1; ?>" class="paginacion-enlace">Siguiente »</a>
+                            <a href="/SuperMarketArthur/admin/productos/<?php echo $paginacion['pagina_actual'] + 1; ?>" class="paginacion-enlace">Siguiente »</a>
                         </li>
                     <?php endif; ?>
 

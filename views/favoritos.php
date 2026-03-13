@@ -20,7 +20,7 @@
  ?>
                     <article class="card-producto">
                         <div class="producto-imagen-wrapper">
-                            <a href="/SuperMarketArthur/producto?id=<?php echo $producto['id_producto']; ?>">
+                            <a href="/SuperMarketArthur/producto/<?php echo $producto['id_producto']; ?>">
                                 <?php 
                                     $img_url = $producto['url_imagen'] ?? '';
                                     if (strpos($img_url, './assets/img/') === 0) {
