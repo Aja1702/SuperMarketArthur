@@ -60,10 +60,10 @@ class FavoriteController
         extract($data);
         
         ob_start();
-        require __DIR__ . '/../../views/favoritos.php';
+        require 'c:/XAMPP/htdocs/SuperMarketArthur/views/favoritos.php';
         $content = (string)ob_get_clean();
         
-        require __DIR__ . '/../../views/layout.php';
+        require 'c:/XAMPP/htdocs/SuperMarketArthur/views/layout.php';
     }
 
     /**
