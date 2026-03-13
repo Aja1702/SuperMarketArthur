@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
             div.href = `${BASE_URL}producto?id=${item.id_producto}`;
             div.className = 'search-result-item';
             div.innerHTML = `
-                <img src="${item.url_imagen || BASE_URL + 'public/assets/img/productos/default.jpg'}" alt="${item.nombre_producto}">
+                <img src="${item.url_imagen || '/SuperMarketArthur/public/assets/img/productos/default.jpg'}" alt="${item.nombre_producto}">
                 <div class="search-result-info">
                     <h4>${item.nombre_producto}</h4>
                     <p>${item.precio_formatted}</p>
